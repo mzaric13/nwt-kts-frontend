@@ -1,0 +1,77 @@
+.arial_font {
+    font-family: Arial;
+}
+
+.bg_gray {
+    background: rgb(238, 237, 237);
+}
+
+.bg_black {
+    background-color: black;
+}
+
+::placeholder {
+    font-family: Arial;
+}
+
+.borderless_input {
+    border: none;
+    outline: none;
+}
+
+.input_size {
+    padding: 12px;
+    line-height: 2px;
+    width: 100%;
+}
+
+.center_text {
+    text-align: center;
+}
+
+input:focus {
+    border: 2px solid black;
+}
+
+input,
+label {
+    display: block;
+}
+
+.delimiter {
+    display: flex;
+    align-content: center;
+    margin: 20px;
+    align-self: center;
+}
+
+.x1iyjqo2 {
+    flex-grow: 1;
+}
+
+.xs83m0k {
+    flex-shrink: 1;
+}
+
+.xjm9jq1 {
+    height: 1px;
+}
+
+.x1n2onr6 {
+    position: relative;
+}
+
+.xwtuau4 {
+    top: 0.45em;
+}
+
+.x11mr3az {
+    background-color: rgb(var(--ig-separator));
+}
+
+.button {
+    margin: 5px;
+    align-self: center;
+    width: 100%;
+    align-items: center;
+}
