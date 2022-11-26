@@ -7,25 +7,21 @@
         </div>
         <div>
             <label for="password" class="arial_font">Password</label>
-            <input type="password" id="password" name="password" class="bg_gray borderless_input input_size mb-2" placeholder="Enter password" formControlName="password" required>
+            <input type="password" id="password" name="password" class="bg_gray borderless_input input_size mb-1" placeholder="Enter password" formControlName="password" required>
         </div>
         <div class="mb-4">
             <a href="#">Forgot password?</a>
         </div>
+        <section>
+            <div class="left_element mb-2">
+                <div id="googleButtonDiv"></div>
+            </div>
+            <div>
+                <button (click)="signInWithFB()" class="right_element fb_button btn"><fa-icon [icon]="faFacebookF" size="lg" class="fb_color"></fa-icon>  Sign in with Facebook</button>
+            </div>
+        </section>
+
         <button type="submit" class="btn btn-dark arial_font">Login</button>
-
-        <div class="delimiter">
-            <div class="x1iyjqo2 xs83m0k xjm9jq1 x1n2onr6 xwtuau4 x11mr3az"></div>
-            <div>OR</div>
-            <div class="x1iyjqo2 xs83m0k xjm9jq1 x1n2onr6 xwtuau4 x11mr3az"></div>
-        </div>
-
-        <div id="googleButtonDiv" class="button">
-
-        </div>
-
-        <button class="btn btn-link arial_font" (click)="signInWithFB() ">Sign in with Facebook</button>
-
     </form>
 
 </div>

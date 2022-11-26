@@ -33,37 +33,36 @@ input:focus {
     border: 2px solid black;
 }
 
-input,
-label {
+input, label {
     display: block;
 }
 
 .left_element {
     float:left;
-    width: 40%;
-    margin-left: 5%;
+    width: 48%;
+    margin-right: 2%;
 }
 
 .right_element {
-    float:right;
-    margin-right:5%;
-    width: 200px;
+    float:left;
+    width: 50%;
 }
 
-.fb_color {
-    color:#4267B2;
+.vehicle_left_element {
+    float:left;
+    width: 32%;
+    margin-right: 2%;
 }
 
-.fb_button {
-    font-family: Arial;
-    font-size: 15px;
-    background-color: white;
-    border-color: #cdcdcd;
-    height: 40px;
-    color: black;
+.vehicle_right_element {
+    float:left;
+    width: 32%;
 }
 
-.fb_button:hover {
-    background-color:#afc9fc;
-    border-color: #4267B2;
+.select_element {
+    width:100%;
+}
+
+.error {
+    color:red;
 }

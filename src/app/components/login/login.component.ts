@@ -5,6 +5,7 @@ import { OauthService } from '../../services/oauth.service';
 import { TokenService } from '../../services/token.service';
 import { FormBuilder } from '@angular/forms';
 import { FacebookTokenDTO, GoogleTokenDto, LoginEmailPassword } from '../../models/token-dto';
+import {faFacebookF} from '@fortawesome/free-brands-svg-icons'
 
 @Component({
     selector: 'app-login',
@@ -12,6 +13,8 @@ import { FacebookTokenDTO, GoogleTokenDto, LoginEmailPassword } from '../../mode
     styleUrls: ['./login.component.css']
   })
   export class LoginComponent implements OnInit {
+
+    faFacebookF = faFacebookF;
 
     socialUser: SocialUser | undefined;
 
