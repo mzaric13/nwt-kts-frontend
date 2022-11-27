@@ -62,10 +62,10 @@
     </div>
     <!-- Ovde se popunajvaju option tagovi sa type-ovima iz baze, neki ngFor -->
     <div class="vehicle_right_element select" formGroupName="vehicleGroup">
-        <label for="type" class="arial_font">Vehicle type:</label>
+        <label for="type" class="arial_font">Vehicle type</label>
         <select formControlName="type" id="type" name="type" class="select_element">
-            <option *ngFor="let type of types" [value]="type">
-                {{ type }}
+            <option *ngFor="let type of types" [value]="type.name">
+                {{ type.name }}
             </option>
         </select>
         <label *ngIf="registrationForm.get('vehicleGroup')?.get('type')?.hasError('required') && registrationForm.get('vehicleGroup')?.get('type')?.touched" class="error">Vehicle type is required.</label>

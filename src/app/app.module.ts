@@ -16,6 +16,7 @@ import {
 } from '@abacritt/angularx-social-login';
 
 import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [
     {
