@@ -1,0 +1,10 @@
+.login {
+    margin: auto;
+    margin-top: 10%;
+}
+
+.bg-pic {
+    background-image: url('../../taxi2.jpg');
+    background-size: cover;
+    height: 969px;
+}

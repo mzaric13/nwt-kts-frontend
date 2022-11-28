@@ -1,0 +1,10 @@
+.register {
+    margin: auto;
+    margin-top: 5%;
+}
+
+.bg-pic {
+    background-image: url('../../taxi2.jpg');
+    background-size: cover;
+    height: 969px;
+}

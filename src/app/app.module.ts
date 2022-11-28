@@ -17,12 +17,18 @@ import {
 
 import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NavbarStartPageComponent } from './components/navbar-start-page/navbar-start-page.component';
+import { PageLoginComponent } from './components/page-login/page-login.component';
+import { PageRegisterComponent } from './components/page-register/page-register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    NavbarStartPageComponent,
+    PageLoginComponent,
+    PageRegisterComponent
   ],
   imports: [
     BrowserModule,
