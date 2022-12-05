@@ -18,8 +18,12 @@ import {
 import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NavbarStartPageComponent } from './components/navbar-start-page/navbar-start-page.component';
-import { PageLoginComponent } from './components/page-login/page-login.component';
-import { PageRegisterComponent } from './components/page-register/page-register.component';
+import { PageLoginComponent } from './pages/page-login/page-login.component';
+import { PageRegisterComponent } from './pages/page-register/page-register.component';
+import { ProfilePageCardComponent } from './components/profile-page-card/profile-page-card.component';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { ProfilePageCardsComponent } from './components/profile-page-cards/profile-page-cards.component';
+import { PagePassengerProfileComponent } from './pages/page-passenger-profile/page-passenger-profile.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { PageRegisterComponent } from './components/page-register/page-register.
     RegistrationComponent,
     NavbarStartPageComponent,
     PageLoginComponent,
-    PageRegisterComponent
+    PageRegisterComponent,
+    ProfilePageCardComponent,
+    ProfileInfoComponent,
+    ProfilePageCardsComponent,
+    PagePassengerProfileComponent
   ],
   imports: [
     BrowserModule,

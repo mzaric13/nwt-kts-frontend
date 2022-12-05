@@ -4,7 +4,7 @@
 }
 
 .bg-pic {
-    background-image: url('../../taxi2.jpg');
+    background-image: url('../../../assets/taxi2.jpg');
     background-size: cover;
     height: 969px;
 }

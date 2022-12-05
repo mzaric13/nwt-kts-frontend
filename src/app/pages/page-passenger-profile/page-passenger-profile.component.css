@@ -1,0 +1,10 @@
+.bg-pic {
+    background-image: url('../../../assets/taxi2.jpg');
+    background-size: cover;
+    height: 969px;
+}
+
+.info {
+    margin: auto;
+    margin-top: 5%;
+}

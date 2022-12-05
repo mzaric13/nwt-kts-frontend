@@ -4,8 +4,11 @@ import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { OauthService } from '../../services/oauth.service';
 import { TokenService } from '../../services/token.service';
 import { FormBuilder } from '@angular/forms';
-import { FacebookTokenDTO, GoogleTokenDto, LoginEmailPassword } from '../../models/token-dto';
+import { FacebookTokenDTO, GoogleTokenDto, JwtToken, LoginEmailPassword } from '../../models/token-dto';
 import {faFacebookF} from '@fortawesome/free-brands-svg-icons'
+import jwtDecode from "jwt-decode";
+import {DecodedToken} from '../../models/decoded-token';
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-login',
@@ -28,7 +31,8 @@ import {faFacebookF} from '@fortawesome/free-brands-svg-icons'
         private oauthService: OauthService,
         private tokenService: TokenService,
         private _ngZone: NgZone,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -56,10 +60,11 @@ import {faFacebookF} from '@fortawesome/free-brands-svg-icons'
     }
 
     async handleCredentialResponse(response: CredentialResponse) {
-      debugger;
       await this.oauthService.google(response.credential).subscribe(
-        (x:any) => {
-          console.log(x);
+        (res:JwtToken) => {
+          let decodedToken : DecodedToken = jwtDecode(res.accessToken);
+          this.tokenService.setToken(res.accessToken, decodedToken.role);
+          this.redirect();
         },
         (error:any) => {
             console.log(error);
@@ -73,9 +78,10 @@ import {faFacebookF} from '@fortawesome/free-brands-svg-icons'
             this.socialUser = data;
             const tokenFace = new FacebookTokenDTO(this.socialUser.authToken, this.socialUser.firstName, this.socialUser.lastName);
             this.oauthService.facebook(tokenFace).subscribe(
-              res => {
-                this.tokenService.setToken(res.accessToken);
-                console.log(res);
+              (res : JwtToken) => {
+                let decodedToken : DecodedToken = jwtDecode(res.accessToken);
+                this.tokenService.setToken(res.accessToken, decodedToken.role);
+                this.redirect();
               },
               err => {
                 console.log(err);
@@ -93,8 +99,9 @@ import {faFacebookF} from '@fortawesome/free-brands-svg-icons'
         try {
           this.oauthService.credentials(new LoginEmailPassword(this.loginForm.value.email as string, this.loginForm.value.password as string)).subscribe(
             res => {
-              this.tokenService.setToken(res.accessToken);
-              console.log(res);
+              let decodedToken : DecodedToken = jwtDecode(res.accessToken);
+              this.tokenService.setToken(res.accessToken, decodedToken.role);
+              this.redirect();
             },
             err => {
               console.log(err);
@@ -103,6 +110,14 @@ import {faFacebookF} from '@fortawesome/free-brands-svg-icons'
         }catch (e){
           console.log(e);
         }
+      }
+
+      redirect(): void {
+        let role = this.tokenService.getRole();
+        if (role === 'ROLE_PASSENGER') {
+          this.router.navigate(['/passenger-profile']);
+        }
+        // TODO: add other profile routing
       }
       
   }

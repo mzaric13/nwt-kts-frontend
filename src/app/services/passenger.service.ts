@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { PassengerCreationDTO } from '../models/passenger-creation-dto';
 import { PassengerDTO} from '../models/passenger-dto';
 import Swal from 'sweetalert2';
+import { TokenService } from './token.service';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -15,7 +16,7 @@ export class PassengerService {
     
   private url = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
   public registerPassenger(passengerCreationDTO: PassengerCreationDTO) {
     if (passengerCreationDTO.password != passengerCreationDTO.passwordConfirm) {
@@ -31,6 +32,11 @@ export class PassengerService {
     else{
       return this.httpClient.post<PassengerDTO>(this.url + '/passengers/register', passengerCreationDTO, cabecera);
     }   
+  }
+
+  public getLoggedPassenger() {
+    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
+    return this.httpClient.get<PassengerDTO>(this.url + '/passengers/get-logged', newHeader);
   }
 
 }
