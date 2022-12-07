@@ -7,6 +7,7 @@ import { DriverService } from 'src/app/services/driver.service';
 import { PassengerService } from '../../services/passenger.service';
 import { VehicleService } from '../../services/vehicle.service';
 import Swal from 'sweetalert2';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +17,7 @@ import Swal from 'sweetalert2';
 export class RegistrationComponent implements OnInit {
 
   types: TypeDTO[] = [];
-  role: boolean = true;
+  tokenService: TokenService = new TokenService;
 
   registrationForm = this.formBuilder.group({
     userGroup: this.formBuilder.group({
@@ -45,7 +46,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     //ucitati tipove vozila sa backa ako je admin taj koji je ulogovan (dodati uslov za admina)
-    if (this.role === true){
+    if (this.tokenService.getRole() === "ROLE_ADMIN"){
       this.vehicleService.getVehicleTypes().subscribe((t) => {
         this.types = t;
       })
@@ -54,7 +55,7 @@ export class RegistrationComponent implements OnInit {
 
   register(): void {
     //if role == admin onda vozaca, else putnika registrujemo
-    if (this.role === true) {
+    if (this.tokenService.getRole() === "ROLE_ADMIN") {
       this.driverService.registerDriver(new DriverCreationDTO(this.registrationForm.controls['userGroup'].value.email as string,
       this.registrationForm.controls['userGroup'].value.name as string, this.registrationForm.controls['userGroup'].value.surname as string,
       this.registrationForm.controls['userGroup'].value.city as string, this.registrationForm.controls['userGroup'].value.phoneNumber as string,

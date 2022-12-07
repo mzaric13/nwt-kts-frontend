@@ -47,30 +47,33 @@
     </div>
     </section>
     <!-- Ovaj deo je hidden ako se registruje passenger! -->
-    <h3 class="mb-3 mt-4"> Vehicle information</h3>
-    <section>
-    <div class="vehicle_left_element" formGroupName="vehicleGroup">
-        <label for="registrationNumber" class="arial_font">Registration number</label>
-        <input formControlName="registrationNumber" type="text" id="registrationNumber" name="registrationNumber" class="bg_gray borderless_input input_size" placeholder="Enter registration number" required>
-        <label *ngIf="registrationForm.get('vehicleGroup')?.get('registrationNumber')?.hasError('required') && registrationForm.get('vehicleGroup')?.get('registrationNumber')?.touched" class="error">Registration number is required.</label>
-        <label *ngIf="registrationForm.get('vehicleGroup')?.get('registrationNumber')?.hasError('pattern') && registrationForm.get('vehicleGroup')?.get('registrationNumber')?.touched" class="error">Registration number isn't entered in correct format. [Example: XX000XX]</label>
+    <div *ngIf="tokenService.getRole() == 'ROLE_ADMIN'">
+        <h3 class="mb-3 mt-4"> Vehicle information</h3>
+        <section>
+        <div class="vehicle_left_element" formGroupName="vehicleGroup">
+            <label for="registrationNumber" class="arial_font">Registration number</label>
+            <input formControlName="registrationNumber" type="text" id="registrationNumber" name="registrationNumber" class="bg_gray borderless_input input_size" placeholder="Enter registration number" required>
+            <label *ngIf="registrationForm.get('vehicleGroup')?.get('registrationNumber')?.hasError('required') && registrationForm.get('vehicleGroup')?.get('registrationNumber')?.touched" class="error">Registration number is required.</label>
+            <label *ngIf="registrationForm.get('vehicleGroup')?.get('registrationNumber')?.hasError('pattern') && registrationForm.get('vehicleGroup')?.get('registrationNumber')?.touched" class="error">Registration number isn't entered in correct format. [Example: XX000XX]</label>
+        </div>
+        <div class="vehicle_left_element" formGroupName="vehicleGroup">
+            <label for="vehicleName" class="arial_font">Vehicle name</label>
+            <input formControlName="vehicleName" type="text" id="vehicleName" name="vehicleName" class="bg_gray borderless_input input_size" placeholder="Enter vehicle name" required>
+            <label *ngIf="registrationForm.get('vehicleGroup')?.get('vehicleName')?.hasError('required') && registrationForm.get('vehicleGroup')?.get('vehicleName')?.touched" class="error">Vehicle name is required.</label>
+        </div>
+        <!-- Ovde se popunajvaju option tagovi sa type-ovima iz baze, neki ngFor -->
+        <div class="vehicle_right_element select" formGroupName="vehicleGroup">
+            <label for="type" class="arial_font">Vehicle type</label>
+            <select formControlName="type" id="type" name="type" class="select_element">
+                <option *ngFor="let type of types" [value]="type.name">
+                    {{ type.name }}
+                </option>
+            </select>
+            <label *ngIf="registrationForm.get('vehicleGroup')?.get('type')?.hasError('required') && registrationForm.get('vehicleGroup')?.get('type')?.touched" class="error">Vehicle type is required.</label>
+        </div>
+        </section>
     </div>
-    <div class="vehicle_left_element" formGroupName="vehicleGroup">
-        <label for="vehicleName" class="arial_font">Vehicle name</label>
-        <input formControlName="vehicleName" type="text" id="vehicleName" name="vehicleName" class="bg_gray borderless_input input_size" placeholder="Enter vehicle name" required>
-        <label *ngIf="registrationForm.get('vehicleGroup')?.get('vehicleName')?.hasError('required') && registrationForm.get('vehicleGroup')?.get('vehicleName')?.touched" class="error">Vehicle name is required.</label>
-    </div>
-    <!-- Ovde se popunajvaju option tagovi sa type-ovima iz baze, neki ngFor -->
-    <div class="vehicle_right_element select" formGroupName="vehicleGroup">
-        <label for="type" class="arial_font">Vehicle type</label>
-        <select formControlName="type" id="type" name="type" class="select_element">
-            <option *ngFor="let type of types" [value]="type.name">
-                {{ type.name }}
-            </option>
-        </select>
-        <label *ngIf="registrationForm.get('vehicleGroup')?.get('type')?.hasError('required') && registrationForm.get('vehicleGroup')?.get('type')?.touched" class="error">Vehicle type is required.</label>
-    </div>
-    </section>
         <!-- dodati neki dodatni uslov u zavisnosti ko je ulogovan u disabled  || !registrationForm.get('vehicleGroup')?.valid> -->
-        <button type="submit" class="btn btn-dark arial_font mt-3" [disabled]="!registrationForm.get('userGroup')?.valid"> Register</button>
+        <button type="submit" class="btn btn-dark arial_font mt-3" [disabled]="!registrationForm.get('userGroup')?.valid
+         || (!registrationForm.get('vehicleGroup')?.valid && tokenService.getRole() === 'ROLE_ADMIN')"> Register</button>
 </form>

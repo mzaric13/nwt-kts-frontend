@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: '[app-profile-page-card]',
@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProfilePageCardComponent implements OnInit {
 
   @Input() type = 'info';
+
+  @Output() newItemEvent = new EventEmitter();
 
   imgSrc = '';
 
@@ -45,6 +47,10 @@ export class ProfilePageCardComponent implements OnInit {
       this.description = 'Press here to select the amount of TaxiTokens you want to buy. TaxiTokens are used as a currency for taking ubers.';
       this.buttonText = 'Buy TaxiTokens';
     }
+  }
+
+  buttonClicked() {
+    this.newItemEvent.emit();
   }
 
 }

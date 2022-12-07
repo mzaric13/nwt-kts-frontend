@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { TokenService } from 'src/app/services/token.service';
 
@@ -13,6 +13,8 @@ export class ProfilePageCardsComponent implements OnInit {
 
   @Input() passenger!: PassengerDTO;
 
+  @Output() modalEvent = new EventEmitter<string>();
+
   name = 'Name Surname';
 
   imgSrc = '../../../assets/default.jpg';
@@ -25,4 +27,19 @@ export class ProfilePageCardsComponent implements OnInit {
     if (this.passenger.profilePicture !== null) this.imgSrc = this.passenger.profilePicture;
   }
 
+  personalInfoClicked() {
+    this.modalEvent.emit("personalInfo");
+  }
+
+  passwordClicked() {
+    this.modalEvent.emit("changePassword");
+  }
+
+  profilePictureClicked() {
+    this.modalEvent.emit("profilePicture");
+  }
+
+  tokensClicked() {
+    this.modalEvent.emit("tokens");
+  }
 }

@@ -39,4 +39,8 @@ export class PassengerService {
     return this.httpClient.get<PassengerDTO>(this.url + '/passengers/get-logged', newHeader);
   }
 
+  public updatePersonalInfoPassenger(passengerDTO: PassengerDTO) {
+    return this.httpClient.put<PassengerDTO>(this.url + '/passengers/update-personal-info', passengerDTO, cabecera);
+  }
+
 }
