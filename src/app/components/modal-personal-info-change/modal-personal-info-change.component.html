@@ -12,7 +12,7 @@
                     <form [formGroup]="personalInfoForm">
                         <div>
                             <label for="name" class="arial_font">Name</label>
-                            <input formControlName="name" [(ngModel)]="passengerForForm.name" type="text" name="name" id="name" class="bg_gray borderless_input input_size" aria-describedby="emailHelp" placeholder="Enter name" default="">
+                            <input formControlName="name" [(ngModel)]="passengerForForm.name" type="text" name="name" id="name" class="bg_gray borderless_input input_size" placeholder="Enter name" default="">
                             <label *ngIf="personalInfoForm.get('name')?.hasError('required') && personalInfoForm.get('name')?.touched" class="error">Name is required.</label>
                             <label *ngIf="personalInfoForm.get('name')?.hasError('pattern') && personalInfoForm.get('name')?.touched" class="error">Name should start with a capital letter.</label>
                         </div>

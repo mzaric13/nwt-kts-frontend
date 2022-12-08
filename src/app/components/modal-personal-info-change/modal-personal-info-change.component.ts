@@ -11,8 +11,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./modal-personal-info-change.component.css']
 })
 export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentInit {
-
-  // treba default vrednosti da budu podaci od ulogovanog korisnika
   personalInfoForm = this.formBuilder.group({
     name: ['', [Validators.required, Validators.pattern("[A-Z]\\w*")]],
     surname: ['', [Validators.required, Validators.pattern("[A-Z]\\w*")]],
@@ -25,8 +23,6 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
   @Output() passengerChange: EventEmitter<PassengerDTO> = new EventEmitter<PassengerDTO>();
 
   @Output() personalInfoModalClosed = new EventEmitter();
-
-  personalInfoModal: any;
 
   displayStyle = "none";
 
@@ -67,7 +63,7 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
       Swal.fire({
         icon: 'error',
         position: 'center',
-        title:  'An unknown error has occured.',
+        title: 'An unknown error has occured.',
         showConfirmButton: false,
         timer: 3000
       })
