@@ -14,6 +14,7 @@ export class PagePassengerProfileComponent implements OnInit  {
   isLoaded = false;
 
   personalInfo = false;
+  passwordChange = false;
 
   constructor(private passengerService: PassengerService) { }
   
@@ -37,12 +38,22 @@ export class PagePassengerProfileComponent implements OnInit  {
   openModal(type: string) : void {
     if (type === "personalInfo" && this.isLoaded) {
       this.personalInfo = true;
-      console.log(this.loggedPassenger);
+      console.log(" tus sam");
     }
+    else if (type === "changePassword" && this.isLoaded) {
+      this.passwordChange = true;
+      console.log(" tusam");
+    }
+
   }
 
   closeModal() : void {
-    this.personalInfo = false;
+    if (this.personalInfo === true) {
+      this.personalInfo = false;
+    }
+    else if (this.passwordChange === true) {
+      this.passwordChange = false;
+    }
   }
 
   

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PassengerCreationDTO } from '../models/passenger-creation-dto';
 import { PassengerDTO} from '../models/passenger-dto';
+import { PasswordChangeCreationDTO } from '../models/password-change-creation-dto';
 import Swal from 'sweetalert2';
 import { TokenService } from './token.service';
 
@@ -41,6 +42,22 @@ export class PassengerService {
 
   public updatePersonalInfoPassenger(passengerDTO: PassengerDTO) {
     return this.httpClient.put<PassengerDTO>(this.url + '/passengers/update-personal-info', passengerDTO, cabecera);
+  }
+
+  public updatePassword(passwordChangeCreationDTO : PasswordChangeCreationDTO) {
+    if (passwordChangeCreationDTO.newPassword != passwordChangeCreationDTO.newPasswordConfirmation) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: "Password don't match!",
+        showConfirmButton: false,
+        timer: 3000
+      })
+      throw new Error("Passwords don't match!");
+    }
+    else {
+      return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-password', passwordChangeCreationDTO, cabecera)
+    }
   }
 
 }

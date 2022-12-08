@@ -35,8 +35,8 @@
                             <label *ngIf="personalInfoForm.get('phoneNumber')?.hasError('pattern') && personalInfoForm.get('phoneNumber')?.touched" class="error">Phone number isn't entered in correct format. [Example: 0611234567]</label>
                         </div>
                         <div>
-                            <button data-dismiss="modal" class="btn btn-dark right_button" (click)="updatePersonalInfo()" [disabled]="!personalInfoForm.valid">Save</button>
-                            <button type="button" data-dismiss="modal" class="btn btn-secondary left_button" (click)="closeModal()">Close</button>
+                            <button data-dismiss="modal" class="btn btn-dark right_button mt-3" (click)="updatePersonalInfo()" [disabled]="!personalInfoForm.valid">Save</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-secondary left_button mt-3" (click)="closeModal()">Close</button>
                         </div>
                     </form>
                 </div>
