@@ -1,44 +1,46 @@
-<div class="modal fade" id="updatePersonalInfo" tabindex="-1" role="dialog" aria-labelledby="updatePersonalInfoLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title arial_font" id="updatePersonalInfoLabel">Edit personal info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div>
-                        <label for="name" class="arial_font">Name</label>
-                        <input type="text" name="name" id="name" class="bg_gray borderless_input input_size mb-4" aria-describedby="emailHelp" placeholder="Enter name">
-                        <label *ngIf="personalInfoForm.get('name')?.hasError('required') && personalInfoForm.get('name')?.touched" class="error">Name is required.</label>
-                        <label *ngIf="personalInfoForm.get('name')?.hasError('pattern') && personalInfoForm.get('name')?.touched" class="error">Name should start with a capital letter.</label>
-                    </div>
-                    <div>
-                        <label for="surname" class="arial_font">Surname</label>
-                        <input type="text" name="surname" id="surname" class="bg_gray borderless_input input_size mb-4" placeholder="Enter surname">
-                        <label *ngIf="personalInfoForm.get('surname')?.hasError('required') && personalInfoForm.get('surname')?.touched" class="error">Surname is required.</label>
-                        <label *ngIf="personalInfoForm.get('surname')?.hasError('pattern') && personalInfoForm.get('surname')?.touched" class="error">Surname should start with a capital letter.</label>
-                    </div>
-                    <div>
-                        <label for="city" class="arial_font">City</label>
-                        <input type="text" name="city" class="bg_gray borderless_input input_size mb-4" id="city" placeholder="Enter city">
-                        <label *ngIf="personalInfoForm.get('city')?.hasError('required') && personalInfoForm.get('city')?.touched" class="error">City is required.</label>
-                        <label *ngIf="personalInfoForm.get('city')?.hasError('pattern') && personalInfoForm.get('city')?.touched" class="error">City isn't entered in the correct format.</label>
-                    </div>
-                    <div>
-                        <label for="phoneNumber" class="arial_font">Phone number</label>
-                        <input type="text" name="phoneNumber" class="bg_gray borderless_input input_size mb-4" id="phoneNumber" placeholder="Enter phone number">
-                        <label *ngIf="personalInfoForm.get('phoneNumber')?.hasError('required') && personalInfoForm.get('phoneNumber')?.touched" class="error">Phone number is required.</label>
-                        <label *ngIf="personalInfoForm.get('phoneNumber')?.hasError('pattern') && personalInfoForm.get('phoneNumber')?.touched" class="error">Phone number isn't entered in correct format. [Example: 0611234567]</label>
-                    </div>
-                    <div>
-                        <button data-dismiss="modal" class="btn btn-dark right_button">Save</button>
-                        <button type="button" data-dismiss="modal" class="btn btn-secondary left_button" (click)="updatePersonalInfo()">Close</button>
-                    </div>
-                </form>
+<div class="modal-container">
+    <div class="modal animate__animated animate__fadeInDown" id="updatePersonalInfo" tabindex="-1" role="dialog" aria-labelledby="updatePersonalInfoLabel" aria-hidden="true" [ngStyle]="{'display':displayStyle}">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title arial_font" id="updatePersonalInfoLabel">Edit personal info</h5>
+                    <button type="button" class="close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="personalInfoForm">
+                        <div>
+                            <label for="name" class="arial_font">Name</label>
+                            <input formControlName="name" [(ngModel)]="passengerForForm.name" type="text" name="name" id="name" class="bg_gray borderless_input input_size" aria-describedby="emailHelp" placeholder="Enter name" default="">
+                            <label *ngIf="personalInfoForm.get('name')?.hasError('required') && personalInfoForm.get('name')?.touched" class="error">Name is required.</label>
+                            <label *ngIf="personalInfoForm.get('name')?.hasError('pattern') && personalInfoForm.get('name')?.touched" class="error">Name should start with a capital letter.</label>
+                        </div>
+                        <div>
+                            <label for="surname" class="arial_font mt-4">Surname</label>
+                            <input formControlName="surname" [(ngModel)]="passengerForForm.surname" type="text" name="surname" id="surname" class="bg_gray borderless_input input_size" placeholder="Enter surname">
+                            <label *ngIf="personalInfoForm.get('surname')?.hasError('required') && personalInfoForm.get('surname')?.touched" class="error">Surname is required.</label>
+                            <label *ngIf="personalInfoForm.get('surname')?.hasError('pattern') && personalInfoForm.get('surname')?.touched" class="error">Surname should start with a capital letter.</label>
+                        </div>
+                        <div>
+                            <label for="city" class="arial_font mt-4">City</label>
+                            <input formControlName="city" [(ngModel)]="passengerForForm.city" type="text" name="city" class="bg_gray borderless_input input_size" id="city" placeholder="Enter city">
+                            <label *ngIf="personalInfoForm.get('city')?.hasError('required') && personalInfoForm.get('city')?.touched" class="error">City is required.</label>
+                            <label *ngIf="personalInfoForm.get('city')?.hasError('pattern') && personalInfoForm.get('city')?.touched" class="error">City isn't entered in the correct format.</label>
+                        </div>
+                        <div>
+                            <label for="phoneNumber" class="arial_font mt-4">Phone number</label>
+                            <input formControlName="phoneNumber" [(ngModel)]="passengerForForm.phoneNumber" type="text" name="phoneNumber" class="bg_gray borderless_input input_size" id="phoneNumber" placeholder="Enter phone number">
+                            <label *ngIf="personalInfoForm.get('phoneNumber')?.hasError('required') && personalInfoForm.get('phoneNumber')?.touched" class="error">Phone number is required.</label>
+                            <label *ngIf="personalInfoForm.get('phoneNumber')?.hasError('pattern') && personalInfoForm.get('phoneNumber')?.touched" class="error">Phone number isn't entered in correct format. [Example: 0611234567]</label>
+                        </div>
+                        <div>
+                            <button data-dismiss="modal" class="btn btn-dark right_button" (click)="updatePersonalInfo()" [disabled]="!personalInfoForm.valid">Save</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-secondary left_button" (click)="closeModal()">Close</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </div>  
 </div>

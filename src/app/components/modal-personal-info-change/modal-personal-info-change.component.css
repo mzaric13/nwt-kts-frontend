@@ -58,3 +58,21 @@ input:focus {
 .new-line {
     clear:both;
 }
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.animate__animated.animate__fadeInDown {
+    --animate-duration: 0.5s;
+}
+
+.error {
+    color:red;
+}

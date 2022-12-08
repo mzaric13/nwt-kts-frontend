@@ -1,15 +1,16 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Modal } from 'bootstrap';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { PassengerService } from 'src/app/services/passenger.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modal-personal-info-change',
   templateUrl: './modal-personal-info-change.component.html',
   styleUrls: ['./modal-personal-info-change.component.css']
 })
-export class ModalPersonalInfoChangeComponent implements OnInit, AfterViewInit {
+export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentInit {
 
   // treba default vrednosti da budu podaci od ulogovanog korisnika
   personalInfoForm = this.formBuilder.group({
@@ -21,12 +22,20 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterViewInit {
 
   @Input() passenger!: PassengerDTO;
 
+  @Output() passengerChange: EventEmitter<PassengerDTO> = new EventEmitter<PassengerDTO>();
+
+  @Output() personalInfoModalClosed = new EventEmitter();
+
   personalInfoModal: any;
 
+  displayStyle = "none";
+
+  passengerForForm!: PassengerDTO;
 
   constructor(
     private formBuilder: FormBuilder,
-    private passengerService: PassengerService
+    private passengerService: PassengerService,
+    private router: Router,
   ) { }
     
   ngOnInit(): void {
@@ -34,24 +43,47 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterViewInit {
     this.personalInfoForm.value.surname = this.passenger.surname;
     this.personalInfoForm.value.city = this.passenger.city;
     this.personalInfoForm.value.phoneNumber = this.passenger.phoneNumber;
+    this.passengerForForm = JSON.parse(JSON.stringify(this.passenger));
   }
 
-  ngAfterViewInit(): void {
-  }
-
-  openModal() {
-    //this.personalInfoModal = new Modal(document.getElementById('updatePersonalInfo')!);
-    //this.personalInfoModal.show();
+  ngAfterContentInit(): void {
+    this.displayStyle = "block";
   }
 
 
   updatePersonalInfo() {
-    this.personalInfoModal.hide();
-    this.passenger.name = this.personalInfoForm.value.name || '';
-    this.passenger.surname = this.personalInfoForm.value.surname || '';
-    this.passenger.city = this.personalInfoForm.value.city || '';
-    this.passenger.phoneNumber = this.personalInfoForm.value.phoneNumber || '';
-    this.passengerService.updatePersonalInfoPassenger(this.passenger).subscribe()
+    this.passenger = this.passengerForForm;
+    this.passengerService.updatePersonalInfoPassenger(this.passenger).subscribe(data => {
+      Swal.fire({
+        icon: 'success',
+        position: 'center',
+        title:  data.name + ' ' + data.surname + ', you have successfully changed your personal information.',
+        showConfirmButton: false,
+        timer: 3000
+      })
+      this.reloadPage();
+    },
+    error => {
+      Swal.fire({
+        icon: 'error',
+        position: 'center',
+        title:  'An unknown error has occured.',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    })
+  }
+
+  closeModal() {
+    this.personalInfoModalClosed.emit();
+    this.passengerForForm = JSON.parse(JSON.stringify(this.passenger));
+  }
+
+
+  reloadPage() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate(['/passenger-profile']);
   }
 
 }

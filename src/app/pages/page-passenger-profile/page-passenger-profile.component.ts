@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ModalPersonalInfoChangeComponent } from 'src/app/components/modal-personal-info-change/modal-personal-info-change.component';
+import { Component, OnChanges, Input, OnInit, SimpleChanges } from '@angular/core';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { PassengerService } from 'src/app/services/passenger.service';
 
@@ -8,18 +7,16 @@ import { PassengerService } from 'src/app/services/passenger.service';
   templateUrl: './page-passenger-profile.component.html',
   styleUrls: ['./page-passenger-profile.component.css']
 })
-export class PagePassengerProfileComponent implements OnInit, AfterViewInit {
-  @ViewChild('modalPersonalInfo', { static: false })
-  modalPersonalInfo!: ModalPersonalInfoChangeComponent;
+export class PagePassengerProfileComponent implements OnInit  {
 
-  loggedPassenger!: PassengerDTO;
+  @Input() loggedPassenger!: PassengerDTO;
 
   isLoaded = false;
 
   personalInfo = false;
 
   constructor(private passengerService: PassengerService) { }
-
+  
   ngOnInit() : void {
     try {
       this.passengerService.getLoggedPassenger().subscribe(
@@ -36,19 +33,18 @@ export class PagePassengerProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    
-  }
 
   openModal(type: string) : void {
     if (type === "personalInfo" && this.isLoaded) {
       this.personalInfo = true;
+      console.log(this.loggedPassenger);
     }
-    this.modalPersonalInfo?.openModal();
   }
 
-  closeModal(type: string) : void {
-    //this.personalInfo = false;
+  closeModal() : void {
+    this.personalInfo = false;
   }
+
+  
 
 }
