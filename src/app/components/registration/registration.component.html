@@ -47,7 +47,7 @@
     </div>
     </section>
     <!-- Ovaj deo je hidden ako se registruje passenger! -->
-    <div *ngIf="tokenService.getRole() == 'ROLE_ADMIN'">
+    <div *ngIf="tokenService.getRole() === 'ROLE_ADMIN'">
         <h3 class="mb-3 mt-4"> Vehicle information</h3>
         <section>
         <div class="vehicle_left_element" formGroupName="vehicleGroup">

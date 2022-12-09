@@ -8,6 +8,7 @@ import { PassengerService } from '../../services/passenger.service';
 import { VehicleService } from '../../services/vehicle.service';
 import Swal from 'sweetalert2';
 import { TokenService } from 'src/app/services/token.service';
+import { VehicleCreationDTO } from 'src/app/models/vehicle-creation-dto';
 
 @Component({
   selector: 'app-registration',
@@ -56,12 +57,26 @@ export class RegistrationComponent implements OnInit {
   register(): void {
     //if role == admin onda vozaca, else putnika registrujemo
     if (this.tokenService.getRole() === "ROLE_ADMIN") {
-      this.driverService.registerDriver(new DriverCreationDTO(this.registrationForm.controls['userGroup'].value.email as string,
-      this.registrationForm.controls['userGroup'].value.name as string, this.registrationForm.controls['userGroup'].value.surname as string,
-      this.registrationForm.controls['userGroup'].value.city as string, this.registrationForm.controls['userGroup'].value.phoneNumber as string,
-      this.registrationForm.controls['userGroup'].value.password as string, this.registrationForm.controls['userGroup'].value.confirmPassword as string,
-      this.registrationForm.controls['vehicleGroup'].value.registrationNumber as string, this.registrationForm.controls['vehicleGroup'].value.vehicleName as string,
-      this.registrationForm.controls['vehicleGroup'].value.type as string)).subscribe(
+
+      let vehicleCreationDTO : VehicleCreationDTO = {
+        registrationNumber : this.registrationForm.controls['vehicleGroup'].value.registrationNumber as string,
+        name : this.registrationForm.controls['vehicleGroup'].value.vehicleName as string,
+        type : this.registrationForm.controls['vehicleGroup'].value.type as string
+      }
+
+      let driverCreationDTO : DriverCreationDTO = {
+        email : this.registrationForm.controls['userGroup'].value.email as string,
+        name : this.registrationForm.controls['userGroup'].value.name as string,
+        surname : this.registrationForm.controls['userGroup'].value.surname as string,
+        city : this.registrationForm.controls['userGroup'].value.city as string,
+        phoneNumber :  this.registrationForm.controls['userGroup'].value.phoneNumber as string,
+        password : this.registrationForm.controls['userGroup'].value.password as string,
+        passwordConfirmation : this.registrationForm.controls['userGroup'].value.confirmPassword as string,
+        vehicleCreationDTO : vehicleCreationDTO
+
+      }
+
+      this.driverService.registerDriver(driverCreationDTO).subscribe(
         driverDTO => {
           Swal.fire({
             icon: 'success',
@@ -93,10 +108,16 @@ export class RegistrationComponent implements OnInit {
       )
     }
     else {
-      this.passengerService.registerPassenger(new PassengerCreationDTO(this.registrationForm.controls['userGroup'].value.email as string, 
-      this.registrationForm.controls['userGroup'].value.name as string, this.registrationForm.controls['userGroup'].value.surname as string,
-      this.registrationForm.controls['userGroup'].value.city as string, this.registrationForm.controls['userGroup'].value.phoneNumber as string, 
-      this.registrationForm.controls['userGroup'].value.password as string, this.registrationForm.controls['userGroup'].value.confirmPassword as string)).subscribe(
+      let passengerCreationDTO : PassengerCreationDTO = {
+        email : this.registrationForm.controls['userGroup'].value.email as string,
+        name : this.registrationForm.controls['userGroup'].value.name as string,
+        surname : this.registrationForm.controls['userGroup'].value.surname as string,
+        city : this.registrationForm.controls['userGroup'].value.city as string,
+        phoneNumber :  this.registrationForm.controls['userGroup'].value.phoneNumber as string,
+        password : this.registrationForm.controls['userGroup'].value.password as string,
+        passwordConfirm : this.registrationForm.controls['userGroup'].value.confirmPassword as string,
+      }
+      this.passengerService.registerPassenger(passengerCreationDTO).subscribe(
         passengerDTO => {
           Swal.fire({
             icon: 'success',

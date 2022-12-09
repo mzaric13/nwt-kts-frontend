@@ -1,10 +1,4 @@
-export class TypeDTO {
+export interface TypeDTO {
     id: number;
     name: string;
-
-    constructor(id: number, name: string) {
-        this.id = id;
-        this.name = name;
-    }
-
 }
