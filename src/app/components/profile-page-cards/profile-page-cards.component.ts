@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AdminDTO } from 'src/app/models/admin-dto';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { TokenService } from 'src/app/services/token.service';
 
@@ -13,6 +14,8 @@ export class ProfilePageCardsComponent implements OnInit {
 
   @Input() passenger!: PassengerDTO;
 
+  @Input() admin!: AdminDTO;
+
   @Output() modalEvent = new EventEmitter<string>();
 
   name = 'Name Surname';
@@ -23,8 +26,15 @@ export class ProfilePageCardsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.name = this.passenger.name + ' ' + this.passenger.surname;
-    if (this.passenger.profilePicture !== null) this.imgSrc = '../../../assets/' + this.passenger.profilePicture;
+    if (this.tokenService.getRole() === "ROLE_PASSENGER") {
+      this.name = this.passenger.name + ' ' + this.passenger.surname;
+      if (this.passenger.profilePicture !== null) this.imgSrc = '../../../assets/' + this.passenger.profilePicture;
+    }
+    else if (this.tokenService.getRole() === "ROLE_ADMIN") {
+      this.name = this.admin.name + ' ' + this.admin.surname;
+      if (this.admin.profilePicture !== null) this.imgSrc = '../../../assets/' + this.admin.profilePicture;
+    }
+    //else if driver
   }
 
   personalInfoClicked() {

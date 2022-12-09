@@ -117,7 +117,12 @@ import { Router } from "@angular/router";
         if (role === 'ROLE_PASSENGER') {
           this.router.navigate(['/passenger-profile']);
         }
-        // TODO: add other profile routing
+        else if (role === 'ROLE_ADMIN') {
+          this.router.navigate(['/admin-profile']);
+        }
+        else if (role === 'ROLE_DRIVER') {
+          this.router.navigate(['driver-profile']);
+        }
       }
       
   }

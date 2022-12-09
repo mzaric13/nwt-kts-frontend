@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { PassengerCreationDTO } from '../models/passenger-creation-dto';
-import { PassengerDTO} from '../models/passenger-dto';
 import { PasswordChangeCreationDTO } from '../models/password-change-creation-dto';
 import Swal from 'sweetalert2';
 import { TokenService } from './token.service';
 import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dto';
+import { AdminDTO } from '../models/admin-dto';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -14,35 +13,19 @@ const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'}
 @Injectable({
   providedIn: 'root'
 })
-export class PassengerService {
+export class AdminService {
     
   private url = environment.apiUrl;
 
   constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
-  public registerPassenger(passengerCreationDTO: PassengerCreationDTO) {
-    if (passengerCreationDTO.password != passengerCreationDTO.passwordConfirm) {
-       Swal.fire({
-        position: 'center',
-        icon: 'error',
-        title: "Passwords don't match!",
-        showConfirmButton: false,
-        timer: 3000
-        })
-        throw new Error("Passwords don't match!");
-    }
-    else{
-      return this.httpClient.post<PassengerDTO>(this.url + '/passengers/register', passengerCreationDTO, cabecera);
-    }   
-  }
-
-  public getLoggedPassenger() {
+  public getLoggedAdministrator() {
     let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
-    return this.httpClient.get<PassengerDTO>(this.url + '/passengers/get-logged', newHeader);
+    return this.httpClient.get<AdminDTO>(this.url + '/administrators/get-logged', newHeader);
   }
 
-  public updatePersonalInfoPassenger(passengerDTO: PassengerDTO) {
-    return this.httpClient.put<PassengerDTO>(this.url + '/passengers/update-personal-info', passengerDTO, cabecera);
+  public updatePersonalInfoAdmin(adminDTO: AdminDTO) {
+    return this.httpClient.put<AdminDTO>(this.url + '/administrators/update-personal-info', adminDTO, cabecera);
   }
 
   public updatePassword(passwordChangeCreationDTO : PasswordChangeCreationDTO) {
@@ -57,12 +40,12 @@ export class PassengerService {
       throw new Error("Passwords don't match!");
     }
     else {
-      return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-password', passwordChangeCreationDTO, cabecera);
+      return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-password', passwordChangeCreationDTO, cabecera);
     }
   }
 
   public changeProfilePicture(profilePictureCreationDTO: ProfilePictureCreationDTO) {
-    return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-profile-picture', profilePictureCreationDTO, cabecera);
+    return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-profile-picture', profilePictureCreationDTO, cabecera);
   }
 
 }

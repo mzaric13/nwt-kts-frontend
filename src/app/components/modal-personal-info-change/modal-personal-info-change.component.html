@@ -12,25 +12,33 @@
                     <form [formGroup]="personalInfoForm">
                         <div>
                             <label for="name" class="arial_font">Name</label>
-                            <input formControlName="name" [(ngModel)]="passengerForForm.name" type="text" name="name" id="name" class="bg_gray borderless_input input_size" placeholder="Enter name" default="">
+                            <input *ngIf="getRole() === 'ROLE_PASSENGER'" formControlName="name" [(ngModel)]="passengerForForm.name" type="text" name="name" id="name" class="bg_gray borderless_input input_size" placeholder="Enter name" default="">
+                            <input *ngIf="getRole() === 'ROLE_ADMIN'" formControlName="name" [(ngModel)]="adminForForm.name" type="text" name="name" id="name" class="bg_gray borderless_input input_size" placeholder="Enter name" default="">
+                            <!--driver-->
                             <label *ngIf="personalInfoForm.get('name')?.hasError('required') && personalInfoForm.get('name')?.touched" class="error">Name is required.</label>
                             <label *ngIf="personalInfoForm.get('name')?.hasError('pattern') && personalInfoForm.get('name')?.touched" class="error">Name should start with a capital letter.</label>
                         </div>
                         <div>
                             <label for="surname" class="arial_font mt-4">Surname</label>
-                            <input formControlName="surname" [(ngModel)]="passengerForForm.surname" type="text" name="surname" id="surname" class="bg_gray borderless_input input_size" placeholder="Enter surname">
+                            <input *ngIf="getRole() === 'ROLE_PASSENGER'" formControlName="surname" [(ngModel)]="passengerForForm.surname" type="text" name="surname" id="surname" class="bg_gray borderless_input input_size" placeholder="Enter surname">
+                            <input *ngIf="getRole() === 'ROLE_ADMIN'" formControlName="surname" [(ngModel)]="adminForForm.surname" type="text" name="surname" id="surname" class="bg_gray borderless_input input_size" placeholder="Enter surname">
+                            <!--driver-->                            
                             <label *ngIf="personalInfoForm.get('surname')?.hasError('required') && personalInfoForm.get('surname')?.touched" class="error">Surname is required.</label>
                             <label *ngIf="personalInfoForm.get('surname')?.hasError('pattern') && personalInfoForm.get('surname')?.touched" class="error">Surname should start with a capital letter.</label>
                         </div>
                         <div>
                             <label for="city" class="arial_font mt-4">City</label>
-                            <input formControlName="city" [(ngModel)]="passengerForForm.city" type="text" name="city" class="bg_gray borderless_input input_size" id="city" placeholder="Enter city">
+                            <input *ngIf="getRole() === 'ROLE_PASSENGER'" formControlName="city" [(ngModel)]="passengerForForm.city" type="text" name="city" class="bg_gray borderless_input input_size" id="city" placeholder="Enter city">
+                            <input *ngIf="getRole() === 'ROLE_ADMIN'" formControlName="city" [(ngModel)]="adminForForm.city" type="text" name="city" class="bg_gray borderless_input input_size" id="city" placeholder="Enter city">
+                            <!--driver-->
                             <label *ngIf="personalInfoForm.get('city')?.hasError('required') && personalInfoForm.get('city')?.touched" class="error">City is required.</label>
                             <label *ngIf="personalInfoForm.get('city')?.hasError('pattern') && personalInfoForm.get('city')?.touched" class="error">City isn't entered in the correct format.</label>
                         </div>
                         <div>
                             <label for="phoneNumber" class="arial_font mt-4">Phone number</label>
-                            <input formControlName="phoneNumber" [(ngModel)]="passengerForForm.phoneNumber" type="text" name="phoneNumber" class="bg_gray borderless_input input_size" id="phoneNumber" placeholder="Enter phone number">
+                            <input *ngIf="getRole() === 'ROLE_PASSENGER'" formControlName="phoneNumber" [(ngModel)]="passengerForForm.phoneNumber" type="text" name="phoneNumber" class="bg_gray borderless_input input_size" id="phoneNumber" placeholder="Enter phone number">
+                            <input *ngIf="getRole() === 'ROLE_ADMIN'" formControlName="phoneNumber" [(ngModel)]="adminForForm.phoneNumber" type="text" name="phoneNumber" class="bg_gray borderless_input input_size" id="phoneNumber" placeholder="Enter phone number">
+                            <!--driver-->
                             <label *ngIf="personalInfoForm.get('phoneNumber')?.hasError('required') && personalInfoForm.get('phoneNumber')?.touched" class="error">Phone number is required.</label>
                             <label *ngIf="personalInfoForm.get('phoneNumber')?.hasError('pattern') && personalInfoForm.get('phoneNumber')?.touched" class="error">Phone number isn't entered in correct format. [Example: 0611234567]</label>
                         </div>

@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AdminDTO } from 'src/app/models/admin-dto';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { ProfilePictureCreationDTO } from 'src/app/models/profile-picture-creation-dto';
+import { AdminService } from 'src/app/services/admin.service';
 import { PassengerService } from 'src/app/services/passenger.service';
+import { TokenService } from 'src/app/services/token.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,9 +15,13 @@ import Swal from 'sweetalert2';
 })
 export class ModalPictureChangeComponent implements OnInit {
 
+  //passenger
   @Input() passenger!: PassengerDTO;
-
   @Output() passengerChange: EventEmitter<PassengerDTO> = new EventEmitter<PassengerDTO>();
+
+  //admin
+  @Input() admin!: AdminDTO;
+  @Output() adminChange: EventEmitter<AdminDTO> = new EventEmitter<AdminDTO>();
 
   @Output() profilePictureChangeModalClosed = new EventEmitter();
 
@@ -26,6 +33,8 @@ export class ModalPictureChangeComponent implements OnInit {
 
   constructor(
     private passengerService: PassengerService,
+    private adminService: AdminService,
+    private tokenService: TokenService,
     private router: Router
   ) { }
 
@@ -42,29 +51,53 @@ export class ModalPictureChangeComponent implements OnInit {
 
   changeProfilePicture() {
     let profilePictureCreationDTO : ProfilePictureCreationDTO = {
-      email : this.passenger.email,
+      email : this.getEmail(),
       profilePicturePath : this.fileName
     }
-    this.passengerService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
-      this.passenger.profilePicture = this.fileName;
-      Swal.fire({
-        icon: 'success',
-        position: 'center',
-        title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
-        showConfirmButton: false,
-        timer: 3000
+    if (this.getRole() === "ROLE_PASSENGER") {
+      this.passengerService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
+        this.passenger.profilePicture = this.fileName;
+        Swal.fire({
+          icon: 'success',
+          position: 'center',
+          title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
+          showConfirmButton: false,
+          timer: 3000
+        })
+        this.reloadPage();
+      },
+      error =>{
+        Swal.fire({
+          icon: 'error',
+          position: 'center',
+          title: 'An unknown error has occured.',
+          showConfirmButton: false,
+          timer: 3000
+        })
       })
-      this.reloadPage();
-    },
-    error =>{
-      Swal.fire({
-        icon: 'error',
-        position: 'center',
-        title: 'An unknown error has occured.',
-        showConfirmButton: false,
-        timer: 3000
+    }
+    else if (this.getRole() === "ROLE_ADMIN") {
+      this.adminService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
+        this.admin.profilePicture = this.fileName;
+        Swal.fire({
+          icon: 'success',
+          position: 'center',
+          title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
+          showConfirmButton: false,
+          timer: 3000
+        })
+        this.reloadPage();
+      },
+      error =>{
+        Swal.fire({
+          icon: 'error',
+          position: 'center',
+          title: 'An unknown error has occured.',
+          showConfirmButton: false,
+          timer: 3000
+        })
       })
-    })
+    }
   }
 
   closeModal() {
@@ -74,7 +107,29 @@ export class ModalPictureChangeComponent implements OnInit {
   reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/passenger-profile']);
+    if (this.getRole() === "ROLE_PASSENGER") {
+      this.router.navigate(['/passenger-profile']);
+    }
+    else if (this.getRole() === "ROLE_ADMIN") {
+      this.router.navigate(['/admin-profile']);
+    }
+  }
+
+  getRole() {
+    return this.tokenService.getRole();
+  }
+
+  getEmail() {
+    if (this.getRole() === "ROLE_PASSENGER") {
+      return this.passenger.email;
+    }
+    else if (this.getRole() === "ROLE_ADMIN") {
+      return this.admin.email;
+    }
+    //driver
+    else{
+      return "def";
+    }
   }
 
 }
