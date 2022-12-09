@@ -24,7 +24,7 @@ export class ProfilePageCardsComponent implements OnInit {
 
   ngOnInit(): void {
     this.name = this.passenger.name + ' ' + this.passenger.surname;
-    if (this.passenger.profilePicture !== null) this.imgSrc = this.passenger.profilePicture;
+    if (this.passenger.profilePicture !== null) this.imgSrc = '../../../assets/' + this.passenger.profilePicture;
   }
 
   personalInfoClicked() {

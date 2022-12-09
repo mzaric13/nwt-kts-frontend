@@ -12,4 +12,7 @@
     <div *ngIf="isLoaded && passwordChange">
         <app-modal-password-change [passenger]="loggedPassenger" (passwordChangeModalClosed)="closeModal()"></app-modal-password-change>
     </div>
+    <div *ngIf="isLoaded && profilePictureChange">
+        <app-modal-picture-change [(passenger)]="loggedPassenger" (profilePictureChangeModalClosed)="closeModal()"></app-modal-picture-change>
+    </div>
 </div>

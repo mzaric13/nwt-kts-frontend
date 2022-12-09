@@ -6,6 +6,7 @@ import { PassengerDTO} from '../models/passenger-dto';
 import { PasswordChangeCreationDTO } from '../models/password-change-creation-dto';
 import Swal from 'sweetalert2';
 import { TokenService } from './token.service';
+import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dto';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -56,8 +57,12 @@ export class PassengerService {
       throw new Error("Passwords don't match!");
     }
     else {
-      return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-password', passwordChangeCreationDTO, cabecera)
+      return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-password', passwordChangeCreationDTO, cabecera);
     }
+  }
+
+  public changeProfilePicture(profilePictureCreationDTO: ProfilePictureCreationDTO) {
+    return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-profile-picture', profilePictureCreationDTO, cabecera);
   }
 
 }

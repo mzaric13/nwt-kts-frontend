@@ -26,6 +26,7 @@ import { ProfilePageCardsComponent } from './components/profile-page-cards/profi
 import { PagePassengerProfileComponent } from './pages/page-passenger-profile/page-passenger-profile.component';
 import { ModalPersonalInfoChangeComponent } from './components/modal-personal-info-change/modal-personal-info-change.component';
 import { ModalPasswordChangeComponent } from './components/modal-password-change/modal-password-change.component';
+import { ModalPictureChangeComponent } from './components/modal-picture-change/modal-picture-change.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ModalPasswordChangeComponent } from './components/modal-password-change
     ProfilePageCardsComponent,
     PagePassengerProfileComponent,
     ModalPersonalInfoChangeComponent,
-    ModalPasswordChangeComponent
+    ModalPasswordChangeComponent,
+    ModalPictureChangeComponent
   ],
   imports: [
     BrowserModule,

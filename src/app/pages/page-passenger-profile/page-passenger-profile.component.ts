@@ -15,6 +15,7 @@ export class PagePassengerProfileComponent implements OnInit  {
 
   personalInfo = false;
   passwordChange = false;
+  profilePictureChange = false;
 
   constructor(private passengerService: PassengerService) { }
   
@@ -38,13 +39,13 @@ export class PagePassengerProfileComponent implements OnInit  {
   openModal(type: string) : void {
     if (type === "personalInfo" && this.isLoaded) {
       this.personalInfo = true;
-      console.log(" tus sam");
     }
     else if (type === "changePassword" && this.isLoaded) {
       this.passwordChange = true;
-      console.log(" tusam");
     }
-
+    else if (type === "profilePicture" && this.isLoaded) {
+      this.profilePictureChange = true;
+    }
   }
 
   closeModal() : void {
@@ -53,6 +54,9 @@ export class PagePassengerProfileComponent implements OnInit  {
     }
     else if (this.passwordChange === true) {
       this.passwordChange = false;
+    }
+    else if (this.profilePictureChange === true) {
+      this.profilePictureChange = false;
     }
   }
 

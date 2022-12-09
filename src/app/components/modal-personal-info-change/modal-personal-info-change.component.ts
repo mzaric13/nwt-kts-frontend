@@ -75,7 +75,6 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
     this.passengerForForm = JSON.parse(JSON.stringify(this.passenger));
   }
 
-
   reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
