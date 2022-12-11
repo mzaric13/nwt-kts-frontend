@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminDTO } from 'src/app/models/admin-dto';
+import { DriverDTO } from 'src/app/models/driver-dto';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { ProfilePictureCreationDTO } from 'src/app/models/profile-picture-creation-dto';
 import { AdminService } from 'src/app/services/admin.service';
+import { DriverService } from 'src/app/services/driver.service';
 import { PassengerService } from 'src/app/services/passenger.service';
 import { TokenService } from 'src/app/services/token.service';
 import Swal from 'sweetalert2';
@@ -23,6 +25,10 @@ export class ModalPictureChangeComponent implements OnInit {
   @Input() admin!: AdminDTO;
   @Output() adminChange: EventEmitter<AdminDTO> = new EventEmitter<AdminDTO>();
 
+  //driver
+  @Input() driver!: DriverDTO;
+  @Output() driverChange: EventEmitter<DriverDTO> = new EventEmitter<DriverDTO>();
+
   @Output() profilePictureChangeModalClosed = new EventEmitter();
 
   newProfilePicture!: string;
@@ -34,6 +40,7 @@ export class ModalPictureChangeComponent implements OnInit {
   constructor(
     private passengerService: PassengerService,
     private adminService: AdminService,
+    private driverService: DriverService,
     private tokenService: TokenService,
     private router: Router
   ) { }
@@ -98,6 +105,28 @@ export class ModalPictureChangeComponent implements OnInit {
         })
       })
     }
+    else if (this.getRole() === "ROLE_DRIVER") {
+      this.driverService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
+        this.driver.profilePicture = this.fileName;
+        Swal.fire({
+          icon: 'success',
+          position: 'center',
+          title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
+          showConfirmButton: false,
+          timer: 3000
+        })
+        this.reloadPage();
+      },
+      error =>{
+        Swal.fire({
+          icon: 'error',
+          position: 'center',
+          title: 'An unknown error has occured.',
+          showConfirmButton: false,
+          timer: 3000
+        })
+      })
+    }
   }
 
   closeModal() {
@@ -113,6 +142,9 @@ export class ModalPictureChangeComponent implements OnInit {
     else if (this.getRole() === "ROLE_ADMIN") {
       this.router.navigate(['/admin-profile']);
     }
+    else if (this.getRole() === "ROLE_DRIVER") {
+      this.router.navigate(['/driver-profile'])
+    }
   }
 
   getRole() {
@@ -127,8 +159,8 @@ export class ModalPictureChangeComponent implements OnInit {
       return this.admin.email;
     }
     //driver
-    else{
-      return "def";
+    else {
+      return this.driver.email;
     }
   }
 

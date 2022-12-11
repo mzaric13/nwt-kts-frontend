@@ -28,6 +28,11 @@ import { ModalPersonalInfoChangeComponent } from './components/modal-personal-in
 import { ModalPasswordChangeComponent } from './components/modal-password-change/modal-password-change.component';
 import { ModalPictureChangeComponent } from './components/modal-picture-change/modal-picture-change.component';
 import { PageAdminProfileComponent } from './pages/page-admin-profile/page-admin-profile.component';
+import { PageDriverProfileComponent } from './pages/page-driver-profile/page-driver-profile.component';
+import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.component';
+import { ModalDriverDataChangeComponent } from './components/modal-driver-data-change/modal-driver-data-change.component';
+import { TableDriverDataChangesComponent } from './components/table-driver-data-changes/table-driver-data-changes.component';
+import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,12 @@ import { PageAdminProfileComponent } from './pages/page-admin-profile/page-admin
     ModalPersonalInfoChangeComponent,
     ModalPasswordChangeComponent,
     ModalPictureChangeComponent,
-    PageAdminProfileComponent
+    PageAdminProfileComponent,
+    PageDriverProfileComponent,
+    NavbarAdminComponent,
+    ModalDriverDataChangeComponent,
+    TableDriverDataChangesComponent,
+    PageAnswerDriverChangesComponent
   ],
   imports: [
     BrowserModule,

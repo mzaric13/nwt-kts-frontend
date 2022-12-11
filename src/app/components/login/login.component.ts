@@ -121,7 +121,7 @@ import { Router } from "@angular/router";
           this.router.navigate(['/admin-profile']);
         }
         else if (role === 'ROLE_DRIVER') {
-          this.router.navigate(['driver-profile']);
+          this.router.navigate(['/driver-profile']);
         }
       }
       

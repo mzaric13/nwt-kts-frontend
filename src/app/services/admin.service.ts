@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { TokenService } from './token.service';
 import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dto';
 import { AdminDTO } from '../models/admin-dto';
+import { AnsweredDriverDataCreationDTO } from '../models/answered-driver-data-creation-dto';
+import { DriverDataDTO } from '../models/driver-data-dto';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -46,6 +48,14 @@ export class AdminService {
 
   public changeProfilePicture(profilePictureCreationDTO: ProfilePictureCreationDTO) {
     return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-profile-picture', profilePictureCreationDTO, cabecera);
+  }
+
+  public answerDataChangeRequest(answeredDriverDataCreationDTO : AnsweredDriverDataCreationDTO){
+    return this.httpClient.put<DriverDataDTO>(this.url + '/administrators/answer-driver-data-change', answeredDriverDataCreationDTO, cabecera);
+  }
+
+  public getUnansweredDriverDataRequests() {
+    return this.httpClient.get<DriverDataDTO[]>(this.url + '/administrators/get-unanswered-driver-data', cabecera);
   }
 
 }

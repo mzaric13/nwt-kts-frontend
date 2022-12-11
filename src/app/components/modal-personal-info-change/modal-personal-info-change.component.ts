@@ -7,6 +7,9 @@ import Swal from 'sweetalert2';
 import { AdminDTO } from 'src/app/models/admin-dto';
 import { TokenService } from 'src/app/services/token.service';
 import { AdminService } from 'src/app/services/admin.service';
+import { DriverDTO } from 'src/app/models/driver-dto';
+import { DriverService } from 'src/app/services/driver.service';
+import { UpdatedUserDataCreationDTO } from 'src/app/models/updated-user-data-creation-dto';
 
 @Component({
   selector: 'app-modal-personal-info-change',
@@ -15,10 +18,10 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentInit {
   personalInfoForm = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.pattern("[A-Z]\\w*")]],
-    surname: ['', [Validators.required, Validators.pattern("[A-Z]\\w*")]],
-    city: ['', [Validators.required, Validators.pattern("^([a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$")]],
-    phoneNumber: ['', [Validators.required, Validators.pattern("^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{2}[-\\s.]?[0-9]{5,7}$")]],
+    name: ['Default', [Validators.required, Validators.pattern("[A-Z]\\w*")]],
+    surname: ['Default', [Validators.required, Validators.pattern("[A-Z]\\w*")]],
+    city: ['Default', [Validators.required, Validators.pattern("^([a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*$")]],
+    phoneNumber: ['0621111111', [Validators.required, Validators.pattern("^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{2}[-\\s.]?[0-9]{5,7}$")]],
   })
 
   //passenger 
@@ -29,22 +32,30 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
   @Input() admin!: AdminDTO;
   @Output() adminChange: EventEmitter<AdminDTO> = new EventEmitter<AdminDTO>();
 
+  //driver
+  @Input() driver!: DriverDTO;
+
   @Output() personalInfoModalClosed = new EventEmitter();
 
   displayStyle = "none";
 
   passengerForForm!: PassengerDTO;
   adminForForm!: AdminDTO;
+  driverForForm!: DriverDTO;
 
   constructor(
     private formBuilder: FormBuilder,
     private passengerService: PassengerService,
     private adminService: AdminService,
+    private driverService: DriverService,
     private router: Router,
     private tokenService: TokenService
   ) { }
     
   ngOnInit(): void {
+  }
+
+  ngAfterContentInit(): void {
     if (this.getRole() === "ROLE_PASSENGER") {
       this.personalInfoForm.value.name = this.passenger.name;
       this.personalInfoForm.value.surname = this.passenger.surname;
@@ -59,39 +70,69 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
       this.personalInfoForm.value.phoneNumber = this.admin.phoneNumber;
       this.adminForForm = JSON.parse(JSON.stringify(this.admin));
     }
-    //else if driver
-  }
-
-  ngAfterContentInit(): void {
+    else if (this.getRole() === "ROLE_DRIVER") {
+      this.personalInfoForm.value.name = this.driver.name;
+      this.personalInfoForm.value.surname = this.driver.surname;
+      this.personalInfoForm.value.city = this.driver.city;
+      this.personalInfoForm.value.phoneNumber = this.driver.phoneNumber;
+      this.driverForForm = JSON.parse(JSON.stringify(this.driver));
+    }
+    else {
+      throw new Error("Unauthorized access to the page.");
+    }
     this.displayStyle = "block";
   }
 
-
   updatePersonalInfo() {
     if (this.getRole() === "ROLE_PASSENGER") {
-      this.passenger = this.passengerForForm;
-      this.passengerService.updatePersonalInfoPassenger(this.passenger).subscribe(data => {
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title:  data.name + ' ' + data.surname + ', you have successfully changed your personal information.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-        this.reloadPage();
-      },
-      error => {
-        Swal.fire({
-          icon: 'error',
-          position: 'center',
-          title: 'An unknown error has occured.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-      })
+      this.updatePassenger();
     }
     else if (this.getRole() === "ROLE_ADMIN") {
-      this.admin = this.adminForForm;
+      this.updateAdmin();
+    }
+    else if (this.getRole() === "ROLE_DRIVER") {
+      this.driverService.isUnansweredDriverDataPresent(this.driverForForm.email).subscribe(data => {
+        if (!data.answered){
+          Swal.fire({
+            icon: 'error',
+            position: 'center',
+            title: 'Your previous personal data change request is still being looked at. Once it is accepted/declined, you will be notified.',
+            showConfirmButton: false,
+            timer: 3000
+          })
+        }
+        else {
+          this.createUpdatedUserData();
+        }
+      })
+    }
+  }
+
+  updatePassenger(){
+    this.passenger = this.passengerForForm;
+    this.passengerService.updatePersonalInfoPassenger(this.passenger).subscribe(data => {
+      Swal.fire({
+        icon: 'success',
+        position: 'center',
+        title:  data.name + ' ' + data.surname + ', you have successfully changed your personal information.',
+        showConfirmButton: false,
+        timer: 3000
+      })
+      this.reloadPage();
+    },
+    error => {
+      Swal.fire({
+        icon: 'error',
+        position: 'center',
+        title: 'An unknown error has occured.',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    })
+  }
+
+  updateAdmin(){
+    this.admin = this.adminForForm;
       this.adminService.updatePersonalInfoAdmin(this.admin).subscribe(data => {
         Swal.fire({
           icon: 'success',
@@ -111,8 +152,34 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
           timer: 3000
         })
       })
+  }
+
+  createUpdatedUserData(){
+    let updatedUserDataCreationDTO : UpdatedUserDataCreationDTO = {
+      name: this.driverForForm.name,
+      city: this.driverForForm.city,
+      surname: this.driverForForm.surname,
+      phoneNumber: this.driverForForm.phoneNumber,
+      email: this.driverForForm.email
     }
-    //else if driver
+    this.driverService.updatePersonalInfoDriver(updatedUserDataCreationDTO).subscribe(data => {
+      Swal.fire({
+        icon: 'success',
+        position: 'center',
+        title: 'Your request for personal data change has been sent to an administrator.',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    },
+    error => {
+      Swal.fire({
+        icon: 'error',
+        position: 'center',
+        title: 'An unknown error has occured.',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    })
   }
 
   closeModal() {
@@ -123,6 +190,9 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
     else if (this.getRole() === "ROLE_ADMIN") {
       this.adminForForm = JSON.parse(JSON.stringify(this.admin));
     }
+    else if (this.getRole() === "ROLE_DRIVER") {
+      this.driverForForm = JSON.parse(JSON.stringify(this.driver));
+    }
   }
 
   reloadPage() {
@@ -132,9 +202,8 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
       this.router.navigate(['/passenger-profile']);      
     }
     else if (this.getRole() === "ROLE_ADMIN") {
-      this.router.navigate(['/admin-profile'])
+      this.router.navigate(['/admin-profile']);
     }
-
   }
 
   getRole() {

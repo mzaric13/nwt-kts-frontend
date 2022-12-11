@@ -1,7 +1,6 @@
 <div class="bg-pic">
     <div>
-        <!-- TODO: add navbar for logged passenger -->
-        <app-navbar-start-page></app-navbar-start-page>
+        <app-navbar-admin></app-navbar-admin>
     </div>
     <div *ngIf="isLoaded" class="info w-37-5">
         <div app-profile-page-cards [admin]="loggedAdmin" (modalEvent)="openModal($event)"></div>

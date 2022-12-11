@@ -1,0 +1,11 @@
+<div class="bg-pic">
+    <div>
+        <app-navbar-admin></app-navbar-admin>
+    </div>
+    <div class="info w-50">
+        <app-table-driver-data-changes (showModalButtonPressedEvent)="openModal($event)"></app-table-driver-data-changes>
+    </div>
+    <div *ngIf="modalIsOpened">
+        <app-modal-driver-data-change [driverData]="driverDataDTO" (modalIsClosed)="closeModal()"></app-modal-driver-data-change>
+    </div>
+</div>

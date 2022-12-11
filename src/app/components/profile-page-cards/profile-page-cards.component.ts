@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AdminDTO } from 'src/app/models/admin-dto';
+import { DriverDTO } from 'src/app/models/driver-dto';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { TokenService } from 'src/app/services/token.service';
 
@@ -15,6 +16,8 @@ export class ProfilePageCardsComponent implements OnInit {
   @Input() passenger!: PassengerDTO;
 
   @Input() admin!: AdminDTO;
+
+  @Input() driver!: DriverDTO;
 
   @Output() modalEvent = new EventEmitter<string>();
 
@@ -34,7 +37,13 @@ export class ProfilePageCardsComponent implements OnInit {
       this.name = this.admin.name + ' ' + this.admin.surname;
       if (this.admin.profilePicture !== null) this.imgSrc = '../../../assets/' + this.admin.profilePicture;
     }
-    //else if driver
+    else if (this.tokenService.getRole() === "ROLE_DRIVER") {
+      this.name = this.driver.name + ' ' + this.driver.surname;
+      if (this.driver.profilePicture !== null) this.imgSrc = '../../../assets/' + this.driver.profilePicture;
+    }
+    else {
+      throw new Error("Unauthorized access to the profile!");
+    }
   }
 
   personalInfoClicked() {
