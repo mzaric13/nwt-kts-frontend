@@ -33,6 +33,8 @@ import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.com
 import { ModalDriverDataChangeComponent } from './components/modal-driver-data-change/modal-driver-data-change.component';
 import { TableDriverDataChangesComponent } from './components/table-driver-data-changes/table-driver-data-changes.component';
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
+import { PageHomeUnregisteredComponent } from './pages/page-home-unregistered/page-home-unregistered.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-cha
     NavbarAdminComponent,
     ModalDriverDataChangeComponent,
     TableDriverDataChangesComponent,
-    PageAnswerDriverChangesComponent
+    PageAnswerDriverChangesComponent,
+    PageHomeUnregisteredComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
