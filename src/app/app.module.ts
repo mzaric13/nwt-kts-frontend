@@ -33,6 +33,9 @@ import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.com
 import { ModalDriverDataChangeComponent } from './components/modal-driver-data-change/modal-driver-data-change.component';
 import { TableDriverDataChangesComponent } from './components/table-driver-data-changes/table-driver-data-changes.component';
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
+import { TableBlockUsersComponent } from './components/table-block-users/table-block-users.component';
+import { ModalViewPersonalInfoComponent } from './components/modal-view-personal-info/modal-view-personal-info.component';
+import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +57,10 @@ import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-cha
     NavbarAdminComponent,
     ModalDriverDataChangeComponent,
     TableDriverDataChangesComponent,
-    PageAnswerDriverChangesComponent
+    PageAnswerDriverChangesComponent,
+    TableBlockUsersComponent,
+    ModalViewPersonalInfoComponent,
+    PageChangeBlockedStatusComponent
   ],
   imports: [
     BrowserModule,

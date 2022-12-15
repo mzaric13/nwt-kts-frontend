@@ -6,6 +6,7 @@ import { PagePassengerProfileComponent } from './pages/page-passenger-profile/pa
 import { PageAdminProfileComponent } from './pages/page-admin-profile/page-admin-profile.component';
 import { PageDriverProfileComponent } from './pages/page-driver-profile/page-driver-profile.component';
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
+import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
 
 const routes: Routes = [
   {path: 'login', component: PageLoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'admin-profile', component: PageAdminProfileComponent},
   {path: 'driver-profile', component: PageDriverProfileComponent},
   {path: 'answer-driver-data-changes', component: PageAnswerDriverChangesComponent},
+  {path: 'change-blocked-status', component: PageChangeBlockedStatusComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

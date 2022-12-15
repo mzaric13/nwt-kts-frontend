@@ -1,7 +1,8 @@
 import { VehicleDTO } from "./vehicle-dto";
 
 export interface DriverDTO {
-
+    
+    id: number;
     email: string;
     name: string;
     surname: string;
@@ -10,7 +11,7 @@ export interface DriverDTO {
     password: string;
     vehicleDTO: VehicleDTO;
     profilePicture: string;
-    isBlocked: boolean;
+    blocked: boolean;
     isAvailable: boolean;
     
 }
