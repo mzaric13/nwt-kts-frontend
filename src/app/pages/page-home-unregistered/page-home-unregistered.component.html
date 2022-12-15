@@ -1,3 +1,19 @@
 <div class="bg-pic">
-    <app-map></app-map>
+    <app-navbar-start-page></app-navbar-start-page>
+    <div class="home bg-light">
+        <p>Welcome to</p>
+        <h1><strong>UBER</strong></h1>
+        <p>We offer taxi services across Novi Sad. Feel free to look at our drivers on the map and choose your desired route.<br> 
+            If you want to schedule a ride please <a [routerLink]="['/register']">Create an account</a> or if you have one 
+            <a class="arial_font" href="/login">Login</a>!
+        </p>
+    </div>
+    <div class="map">
+        <div class="flex-form">
+            <app-route-form></app-route-form>
+        </div>
+        <div class="flex-map">
+            <app-map></app-map>
+        </div>
+    </div>
 </div>

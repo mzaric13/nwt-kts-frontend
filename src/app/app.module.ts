@@ -35,6 +35,7 @@ import { TableDriverDataChangesComponent } from './components/table-driver-data-
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
 import { PageHomeUnregisteredComponent } from './pages/page-home-unregistered/page-home-unregistered.component';
 import { MapComponent } from './components/map/map.component';
+import { RouteFormComponent } from './components/route-form/route-form.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { MapComponent } from './components/map/map.component';
     TableDriverDataChangesComponent,
     PageAnswerDriverChangesComponent,
     PageHomeUnregisteredComponent,
-    MapComponent
+    MapComponent,
+    RouteFormComponent
   ],
   imports: [
     BrowserModule,

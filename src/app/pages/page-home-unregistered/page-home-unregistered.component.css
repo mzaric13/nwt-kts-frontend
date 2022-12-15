@@ -17,3 +17,36 @@
 .w-37-5 {
     width: 37.5%;
 }
+
+.home {
+    margin-inline: 30px;
+    height: 20%;
+    font-family: Arial;
+    text-align: center;
+}
+
+.home p {
+    font-size: 20px;
+}
+
+.home h1 {
+    font-size: 60px;
+}
+
+.map {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 65%;
+    width: 95%;
+    align-items: stretch;
+    margin-inline: 30px;
+}
+
+.flex-form {
+    width: 25%;
+    margin-right: 10px;
+}
+
+.flex-map {
+    width: 75%;
+}
