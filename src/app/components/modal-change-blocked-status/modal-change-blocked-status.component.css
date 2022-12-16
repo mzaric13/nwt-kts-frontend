@@ -1,0 +1,64 @@
+.arial_font {
+    font-family: Arial;
+}
+
+.bg_gray {
+    background: rgb(238, 237, 237);
+}
+
+.bg_black {
+    background-color: black;
+}
+
+::placeholder {
+    font-family: Arial;
+}
+
+.borderless_input {
+    border: none;
+    outline: none;
+}
+
+.input_size {
+    padding: 12px;
+    line-height: 2px;
+    width: 100%;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.left_button {
+    float: right;
+    width: 24%;
+}
+
+.right_button {
+    float: right;
+    width: 24%;
+    margin-left: 2%;
+}
+
+.new-line {
+    clear:both;
+}
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.animate__animated.animate__fadeInDown {
+    --animate-duration: 0.5s;
+}
+
+.left-align{
+    float:left;
+    width: 24%;
+}

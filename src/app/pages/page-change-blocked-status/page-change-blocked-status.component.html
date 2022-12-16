@@ -3,9 +3,10 @@
         <app-navbar-admin></app-navbar-admin>
     </div>
     <div class="info w-50">
-        <app-table-block-users></app-table-block-users>
+        <app-table-block-users (showPassengerInfoButtonPressedEvent)="openPassengerModal($event)"
+         (showDriverInfoButtonPressedEvent)="openDriverModal($event)"></app-table-block-users>
     </div>
-    <!--<div *ngIf="modalIsOpened">
-        <app-modal-driver-data-change [driverData]="driverDataDTO" (modalIsClosed)="closeModal()"></app-modal-driver-data-change>
-    </div>-->
+    <div *ngIf="modalIsOpened">
+        <app-modal-change-blocked-status [passenger]="chosenPassenger" [driver]="chosenDriver" (modalIsClosed)="closeModal()"></app-modal-change-blocked-status>
+    </div>
 </div>

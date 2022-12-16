@@ -1,0 +1,52 @@
+<div class="modal-container">
+    <div class="modal animate__animated animate__fadeInDown" id="driverDataChange" tabindex="-1" role="dialog" aria-labelledby="driverDataChangeLabel" aria-hidden="true" [ngStyle]="{'display':displayStyle}">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title arial_font" id="driverDataChangeLabel">Requested personal information change</h5>
+                    <button type="button" class="close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label for="email arial_font">Email address</label>
+                        <input *ngIf="passenger" type="text" class="bg_gray borderless_input input_size mb-2" id="email" [(ngModel)]="passenger.email" disabled>
+                        <input *ngIf="driver" type="text" class="bg_gray borderless_input input_size mb-2" id="email" [(ngModel)]="driver.email" disabled>
+                    </div>
+                    <div>
+                        <label for="name arial_font">Name</label>
+                        <input *ngIf="passenger" type="text" class="bg_gray borderless_input input_size mb-2" id="name" [(ngModel)]="passenger.name" disabled>
+                        <input *ngIf="driver" type="text" class="bg_gray borderless_input input_size mb-2" id="name" [(ngModel)]="driver.name" disabled>
+                    </div>
+                    <div>
+                        <label for="surname arial_font">Surname</label>
+                        <input *ngIf="passenger" type="text" class="bg_gray borderless_input input_size mb-2" id="surname" [(ngModel)]="passenger.surname" disabled>
+                        <input *ngIf="driver" type="text" class="bg_gray borderless_input input_size mb-2" id="surname" [(ngModel)]="driver.surname" disabled>
+                    </div>
+                    <div>
+                        <label for="city arial_font">City</label>
+                        <input *ngIf="passenger" type="text" class="bg_gray borderless_input input_size mb-2" id="city" [(ngModel)]="passenger.city" disabled>
+                        <input *ngIf="driver" type="text" class="bg_gray borderless_input input_size mb-2" id="city" [(ngModel)]="driver.city" disabled>
+                    </div>
+                    <div>
+                        <label for="phoneNumber arial_font">Phone number</label>
+                        <input *ngIf="passenger" type="text" class="bg_gray borderless_input input_size mb-2" id="phoneNumber" [(ngModel)]="passenger.phoneNumber" disabled>
+                        <input *ngIf="driver" type="text" class="bg_gray borderless_input input_size mb-2" id="phoneNumber" [(ngModel)]="driver.phoneNumber" disabled>
+                    </div>
+                    <div *ngIf="(passenger && passenger.blocked === false) || (driver && driver.blocked === false)">
+                        <label for="reason arial_font">Block reasoning (optional):</label>
+                        <input class="bg_gray borderless_input input_size mb-2" id="reason" [(ngModel)]="reason">
+                    </div>
+                    <div>
+                        <button *ngIf="passenger && passenger.blocked === false" data-dismiss="modal" class="btn btn-danger right_button mt-3" (click)="changeBlockedStatusPassenger(passenger.id)">Block</button>
+                        <button *ngIf="driver && driver.blocked === false" data-dismiss="modal" class="btn btn-danger right_button mt-3" (click)="changeBlockedStatusDriver(driver.id)">Block</button>
+                        <button *ngIf="passenger && passenger.blocked === true" data-dismiss="modal" class="btn btn-success right_button mt-3" (click)="changeBlockedStatusPassenger(passenger.id)">Unblock</button>
+                        <button *ngIf="driver && driver.blocked === true" data-dismiss="modal" class="btn btn-success right_button mt-3" (click)="changeBlockedStatusDriver(driver.id)">Unblock</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-dark left-align mt-3" (click)="closeModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

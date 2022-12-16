@@ -4,7 +4,6 @@
         <tr>
             <th scope="col" class="arial_font">Full name</th>
             <th scope="col" class="arial_font">Role</th>
-            <th scope="col" class="arial_font">User Info</th>
             <th scope="col" class="arial_font">Change Blocked Status</th>
         </tr>
     </thead>
@@ -12,30 +11,14 @@
         <tr>
             <th scope="row" >{{passenger.name}} {{passenger.surname}}</th>
             <td class="arial_font">Passenger</td>
-            <td>
-                <button class="btn btn-dark arial_font" (click)="showPassengerInfoModal(passenger)">Details</button>
-            </td>
-            <td *ngIf="passenger.blocked === true">
-                <button class="btn btn-success arial_font" (click)="changeBlockedStatusPassenger(passenger.id)">Unblock</button>
-            </td>
-            <td *ngIf="passenger.blocked === false">
-                <button class="btn btn-danger arial_font" (click)="changeBlockedStatusPassenger(passenger.id)">Block</button>
-            </td>
+            <button class="btn btn-dark arial_font" (click)="showPassengerInfoModal(passenger)">Change Blocked Status</button>
         </tr>
     </tbody>
     <tbody *ngFor="let driver of drivers">
         <tr>
             <th scope="row" >{{driver.name}} {{driver.surname}}</th>
             <td class="arial_font">Driver</td>
-            <td>
-                <button class="btn btn-dark arial_font" (click)="showDriverInfoModal(driver)">Details</button>
-            </td>
-            <td *ngIf="driver.blocked === true">
-                <button class="btn btn-success arial_font" (click)="changeBlockedStatusDriver(driver.id)">Unblock</button>
-            </td>
-            <td *ngIf="driver.blocked === false">
-                <button class="btn btn-danger arial_font" (click)="changeBlockedStatusDriver(driver.id)">Block</button>
-            </td>
+            <button class="btn btn-dark arial_font" (click)="showDriverInfoModal(driver)">Change Blocked Status</button>
         </tr>
     </tbody>
 </table>

@@ -34,8 +34,8 @@ import { ModalDriverDataChangeComponent } from './components/modal-driver-data-c
 import { TableDriverDataChangesComponent } from './components/table-driver-data-changes/table-driver-data-changes.component';
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
 import { TableBlockUsersComponent } from './components/table-block-users/table-block-users.component';
-import { ModalViewPersonalInfoComponent } from './components/modal-view-personal-info/modal-view-personal-info.component';
 import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
+import { ModalChangeBlockedStatusComponent } from './components/modal-change-blocked-status/modal-change-blocked-status.component';
 
 @NgModule({
   declarations: [
@@ -59,8 +59,8 @@ import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-st
     TableDriverDataChangesComponent,
     PageAnswerDriverChangesComponent,
     TableBlockUsersComponent,
-    ModalViewPersonalInfoComponent,
-    PageChangeBlockedStatusComponent
+    PageChangeBlockedStatusComponent,
+    ModalChangeBlockedStatusComponent
   ],
   imports: [
     BrowserModule,

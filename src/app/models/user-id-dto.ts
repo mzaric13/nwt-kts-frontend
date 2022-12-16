@@ -1,3 +1,4 @@
 export interface UserIdDTO {
-    id : number;
+    id : number,
+    reasoning: string
 }

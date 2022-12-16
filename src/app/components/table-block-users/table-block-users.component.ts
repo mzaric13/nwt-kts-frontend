@@ -28,66 +28,9 @@ export class TableBlockUsersComponent implements OnInit {
   ngOnInit(): void {
     this.adminService.getAllDrivers().subscribe(data => {
       this.drivers = data;
-      console.log(data);
     })
     this.adminService.getAllPassengers().subscribe(data => {
       this.passengers = data;
-    })
-  }
-
-  changeBlockedStatusPassenger(id : number) {
-    let userIdDTO : UserIdDTO = {
-      id : id
-    }
-
-    this.adminService.changeBlockedStatusPassenger(userIdDTO).subscribe(data => {
-      if (data.blocked) {
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title: 'You have successfully blocked passenger ' + data.name + ' ' + data.surname + '.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-      }
-      else {
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title: 'You have sucessfully unblocked passenger ' + data.name + ' ' + data.surname + '.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-      }
-      this.reloadPage();
-    })
-  }
-
-  changeBlockedStatusDriver(id : number) {
-    let userIdDTO : UserIdDTO = {
-      id : id
-    }
-
-    this.adminService.changeBlockedStatusDriver(userIdDTO).subscribe(data => {
-      if (data.blocked) {
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title: 'You have successfully blocked driver ' + data.name + ' ' + data.surname + '.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-      }
-      else {
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title: 'You have sucessfully unblocked driver ' + data.name + ' ' + data.surname + '.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-      }
-      this.reloadPage();
     })
   }
 
@@ -97,12 +40,6 @@ export class TableBlockUsersComponent implements OnInit {
 
   showDriverInfoModal(driver : DriverDTO) {
     this.showDriverInfoButtonPressedEvent.emit(driver);
-  }
-
-  reloadPage() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/change-blocked-status']);
   }
 
 }
