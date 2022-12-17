@@ -9,13 +9,16 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from '@abacritt/angularx-social-login';
 
-import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NavbarStartPageComponent } from './components/navbar-start-page/navbar-start-page.component';
 import { PageLoginComponent } from './pages/page-login/page-login.component';
@@ -36,6 +39,9 @@ import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-cha
 import { PageHomeUnregisteredComponent } from './pages/page-home-unregistered/page-home-unregistered.component';
 import { MapComponent } from './components/map/map.component';
 import { RouteFormComponent } from './components/route-form/route-form.component';
+import { ClickOutsidePickupDirective } from './directives/click-outside-pickup.directive';
+import { LocationFilterPipe } from './pipes/location-filter.pipe';
+import { ClickOutsideDestinationDirective } from './directives/click-outside-destination.directive';
 
 @NgModule({
   declarations: [
@@ -60,7 +66,10 @@ import { RouteFormComponent } from './components/route-form/route-form.component
     PageAnswerDriverChangesComponent,
     PageHomeUnregisteredComponent,
     MapComponent,
-    RouteFormComponent
+    RouteFormComponent,
+    ClickOutsidePickupDirective,
+    LocationFilterPipe,
+    ClickOutsideDestinationDirective,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +79,7 @@ import { RouteFormComponent } from './components/route-form/route-form.component
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     {
@@ -84,8 +93,8 @@ import { RouteFormComponent } from './components/route-form/route-form.component
           },
         ],
       } as SocialAuthServiceConfig,
-    }
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

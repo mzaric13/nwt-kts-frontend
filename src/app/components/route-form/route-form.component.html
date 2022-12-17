@@ -1,14 +1,30 @@
 <!-- mt-16(%) na formu u HTML-u koji obuhvati ovu formu-->
-<form class="route-form card">
+<form [formGroup]="route" (ngSubmit)="onSubmit()" class="route-form card">
     <!-- Bela boja ako se odlucimo za crnu pozadinu-->
     <h2 class="arial_font center_text mt-2 mb-3"><b>Request a ride</b></h2>
     <div class="form-group">
         <label class="arial_font" for="pickup">Pickup location:</label>
-        <input id="pickup" class="bg_gray borderless_input input_size" type="text" placeholder="Enter pickup location" required>
+        <input autocomplete="off" formControlName="pickup" id="pickup" class="bg_gray borderless_input input_size" type="text" 
+        placeholder="Enter pickup location" required (click)="openDropdownPickup()">
+        <div appClickOutsidePickup (clickOutside)="closeDropdownPickup()" class="geoCode-container-dropdown bg_gray">
+            <div *ngIf="showDropdownPickup">
+                <div (click)="selectPickupLocation(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getPickupLocation()">
+                    {{address}}
+                </div>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label class="arial_font" for="destination">Destination:</label>
-        <input id="destination" class="bg_gray borderless_input input_size" type="text" placeholder="Enter destination" required>
+        <input autocomplete="off" formControlName="destination" id="destination" class="bg_gray borderless_input input_size" type="text" 
+        placeholder="Enter destination" required (click)="openDropdownDestination()">
+        <div appClickOutsideDestination (clickOutside)="closeDropdownDestination()" class="geoCode-container-dropdown bg_gray">
+            <div *ngIf="showDropdownDestination">
+                <div (click)="selectDestination(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getDestination()">
+                    {{address}}
+                </div>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-dark arial_font">Search routes</button> 

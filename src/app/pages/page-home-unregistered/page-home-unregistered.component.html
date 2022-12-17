@@ -10,7 +10,7 @@
     </div>
     <div class="map">
         <div class="flex-form">
-            <app-route-form></app-route-form>
+            <app-route-form (makeRoute)="printRoute($event)"></app-route-form>
         </div>
         <div class="flex-map">
             <app-map></app-map>

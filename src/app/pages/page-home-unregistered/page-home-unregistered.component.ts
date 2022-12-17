@@ -9,4 +9,8 @@ export class PageHomeUnregisteredComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  printRoute(route: Array<number[]>) {
+    console.log(route);
+  }
 }
