@@ -1,0 +1,23 @@
+.bg-pic {
+    background-image: url('../../../assets/taxi2.jpg');
+    background-size: contain;
+    background-position: right bottom;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.center-half {
+    position: relative;
+    width: 100%;
+    background-color: darkgray;
+    display: inline;
+    margin: 20px;
+}
+
+.margin-class {
+    margin: 50px;
+    height: 50%;
+}

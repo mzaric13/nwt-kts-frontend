@@ -36,6 +36,8 @@ import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-cha
 import { TableBlockUsersComponent } from './components/table-block-users/table-block-users.component';
 import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
 import { ModalChangeBlockedStatusComponent } from './components/modal-change-blocked-status/modal-change-blocked-status.component';
+import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
+import { PaymentCardComponent } from './components/payment-card/payment-card.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { ModalChangeBlockedStatusComponent } from './components/modal-change-blo
     PageAnswerDriverChangesComponent,
     TableBlockUsersComponent,
     PageChangeBlockedStatusComponent,
-    ModalChangeBlockedStatusComponent
+    ModalChangeBlockedStatusComponent,
+    PagePurchaseTokensComponent,
+    PaymentCardComponent
   ],
   imports: [
     BrowserModule,

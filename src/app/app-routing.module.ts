@@ -7,6 +7,7 @@ import { PageAdminProfileComponent } from './pages/page-admin-profile/page-admin
 import { PageDriverProfileComponent } from './pages/page-driver-profile/page-driver-profile.component';
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
 import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
+import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
 
 const routes: Routes = [
   {path: 'login', component: PageLoginComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'driver-profile', component: PageDriverProfileComponent},
   {path: 'answer-driver-data-changes', component: PageAnswerDriverChangesComponent},
   {path: 'change-blocked-status', component: PageChangeBlockedStatusComponent},
+  {path: 'purchase-tokens', component: PagePurchaseTokensComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 
