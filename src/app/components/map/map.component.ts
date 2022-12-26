@@ -4,17 +4,26 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
+  Input,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
+const l = require('leaflet');
+require('leaflet.animatedmarker/src/AnimatedMarker');
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   private map!: L.Map;
+  private icon!: L.DivIcon;
+
+  @Input() pickupGeoLocation: number[] = [];
+  @Input() destinationGeoLocation: number[] = [];
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -29,13 +38,13 @@ export class MapComponent implements OnInit, AfterViewInit {
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(this.map);
 
-    var icon: L.DivIcon = L.divIcon({
+    this.icon = L.divIcon({
       className: 'position-relative rotate--marker',
       html: '<div><img style="width: 50px;" src="https://www.pngkit.com/png/full/54-544296_red-top-view-clip-art-at-clker-cartoon.png" /></div>',
     });
 
     L.marker([45.25, 19.85], {
-      icon: icon,
+      icon: this.icon,
       riseOnHover: true,
     })
       .addTo(this.map)
@@ -60,6 +69,47 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private elByClassName: ElementRef) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const startingPoint: number[] = changes['pickupGeoLocation'].currentValue;
+    const endPoint: number[] = changes['destinationGeoLocation'].currentValue;
+    if (startingPoint.length !== 0 && endPoint.length !== 0) {
+      const route = L.Routing.control({
+        plan: L.Routing.plan(
+          [
+            L.latLng(startingPoint[0], startingPoint[1]),
+            L.latLng(endPoint[0], endPoint[1]),
+          ],
+          {
+            addWaypoints: false,
+            draggableWaypoints: false,
+          }
+        ),
+        addWaypoints: false,
+        showAlternatives: true,
+        show: false,
+      }).addTo(this.map);
+
+      const that = this;
+
+      route.on('routeselected', function (e) {
+        const routePoints = e.route.coordinates;
+        const lines: L.LatLng[] = [];
+        for (const routePoint of routePoints) {
+          lines.push(new L.LatLng(routePoint.lat, routePoint.lng));
+        }
+        const line = L.polyline(lines);
+
+        const animatedmarker = l
+          .animatedMarker(line.getLatLngs(), {
+            distance: 500,
+            interval: 500,
+            icon: that.icon,
+          })
+          .addTo(that.map);
+      });
+    }
+  }
 
   ngOnInit(): void {}
 

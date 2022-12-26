@@ -10,10 +10,10 @@
     </div>
     <div class="map">
         <div class="flex-form">
-            <app-route-form (makeRoute)="printRoute($event)"></app-route-form>
+            <app-route-form (makeRoute)="makeRoute($event)"></app-route-form>
         </div>
         <div class="flex-map">
-            <app-map></app-map>
+            <app-map [pickupGeoLocation]="pickupGeoLocation" [destinationGeoLocation]="destinationGeoLocation"></app-map>
         </div>
     </div>
 </div>
