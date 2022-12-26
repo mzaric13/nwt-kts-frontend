@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
+import { DriverDTO } from 'src/app/models/driver-dto';
 const l = require('leaflet');
 require('leaflet.animatedmarker/src/AnimatedMarker');
 
@@ -22,8 +23,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   private map!: L.Map;
   private icon!: L.DivIcon;
 
-  @Input() pickupGeoLocation: number[] = [];
-  @Input() destinationGeoLocation: number[] = [];
+  @Input() pickupGeoLocation!: number[];
+  @Input() destinationGeoLocation!: number[];
+  @Input() drivers!: DriverDTO[];
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -42,72 +44,95 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       className: 'position-relative rotate--marker',
       html: '<div><img style="width: 50px;" src="https://www.pngkit.com/png/full/54-544296_red-top-view-clip-art-at-clker-cartoon.png" /></div>',
     });
-
-    L.marker([45.25, 19.85], {
-      icon: this.icon,
-      riseOnHover: true,
-    })
-      .addTo(this.map)
-      .bindTooltip('<div style="font-family: Arial;">Vozi vozi me</div>', {
-        offset: L.point(15, 0),
-        direction: 'top',
-      });
-    L.Routing.control({
-      plan: L.Routing.plan([L.latLng(45.25, 19.85), L.latLng(45.26, 19.87)], {
-        addWaypoints: false,
-        draggableWaypoints: false,
-      }),
-      addWaypoints: false,
-      showAlternatives: true,
-      show: false,
-    }).addTo(this.map);
-
-    const instructions: HTMLElement = (<HTMLElement>(
-      this.elByClassName.nativeElement
-    )).querySelector('.leaflet-routing-alternatives-container') as HTMLElement;
-    instructions.style.display = 'none';
   }
 
   constructor(private elByClassName: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    const startingPoint: number[] = changes['pickupGeoLocation'].currentValue;
-    const endPoint: number[] = changes['destinationGeoLocation'].currentValue;
-    if (startingPoint.length !== 0 && endPoint.length !== 0) {
-      const route = L.Routing.control({
-        plan: L.Routing.plan(
-          [
-            L.latLng(startingPoint[0], startingPoint[1]),
-            L.latLng(endPoint[0], endPoint[1]),
-          ],
-          {
-            addWaypoints: false,
-            draggableWaypoints: false,
+    const startPoint = changes['pickupGeoLocation'];
+    const endPoint = changes['destinationGeoLocation'];
+    const newDrivers = changes['drivers'];
+
+    if (startPoint && endPoint) {
+      const startingPoint: number[] = startPoint.currentValue;
+      const endingPoint: number[] = endPoint.currentValue;
+      if (startingPoint.length !== 0 && endingPoint.length !== 0) {
+        const route = L.Routing.control({
+          plan: L.Routing.plan(
+            [
+              L.latLng(startingPoint[0], startingPoint[1]),
+              L.latLng(endingPoint[0], endingPoint[1]),
+            ],
+            {
+              addWaypoints: false,
+              draggableWaypoints: false,
+            }
+          ),
+          addWaypoints: false,
+          showAlternatives: true,
+          show: false,
+        }).addTo(this.map);
+
+        const instructions: HTMLElement = (<HTMLElement>(
+          this.elByClassName.nativeElement
+        )).querySelector(
+          '.leaflet-routing-alternatives-container'
+        ) as HTMLElement;
+        instructions.style.display = 'none';
+
+        const that = this;
+
+        route.on('routeselected', function (e) {
+          const routePoints = e.route.coordinates;
+          const lines: L.LatLng[] = [];
+          for (const routePoint of routePoints) {
+            lines.push(new L.LatLng(routePoint.lat, routePoint.lng));
           }
-        ),
-        addWaypoints: false,
-        showAlternatives: true,
-        show: false,
-      }).addTo(this.map);
+          const line = L.polyline(lines);
 
-      const that = this;
+          const animatedmarker = l
+            .animatedMarker(line.getLatLngs(), {
+              distance: 500,
+              interval: 100,
+              icon: that.icon,
+            })
+            .addTo(that.map);
+        });
+      }
+    }
 
-      route.on('routeselected', function (e) {
-        const routePoints = e.route.coordinates;
-        const lines: L.LatLng[] = [];
-        for (const routePoint of routePoints) {
-          lines.push(new L.LatLng(routePoint.lat, routePoint.lng));
-        }
-        const line = L.polyline(lines);
+    if (newDrivers) {
+      setTimeout(() => {
+        this.addDriversToTheMap();
+      }, 1000);
+    }
+  }
 
-        const animatedmarker = l
-          .animatedMarker(line.getLatLngs(), {
-            distance: 500,
-            interval: 500,
-            icon: that.icon,
-          })
-          .addTo(that.map);
-      });
+  private addDriversToTheMap() {
+    const latMin: number = 2300;
+    const latMax: number = 3000;
+    const lngMin: number = 7500;
+    const lngMax: number = 9000;
+    for (const driver of this.drivers) {
+      const lat = 45 + (Math.random() * (latMax - latMin) + latMin) / 10000;
+      const lng = 19 + (Math.random() * (lngMax - lngMin) + lngMin) / 10000;
+      driver.geoLocation = [lat, lng];
+      L.marker([lat, lng], {
+        icon: this.icon,
+        riseOnHover: true,
+      })
+        .addTo(this.map)
+        .bindTooltip(
+          '<div style="font-family: Arial;">' +
+            driver.name +
+            ' ' +
+            driver.surname +
+            '</div>',
+          {
+            offset: L.point(15, 0),
+            direction: 'top',
+          }
+        );
     }
   }
 

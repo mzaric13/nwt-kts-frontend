@@ -10,16 +10,24 @@ import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dt
 import { UpdatedUserDataCreationDTO } from '../models/updated-user-data-creation-dto';
 import { DriverDataAnsweredDTO } from '../models/driver-data-answered-dto';
 
-const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
+const cabecera = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DriverService {
-    
   private url = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private tokenService: TokenService
+  ) {}
+
+  public getAllDrivers() {
+    return this.httpClient.get<DriverDTO[]>(this.url + '/drivers/');
+  }
 
   public registerDriver(driverCreationDTO: DriverCreationDTO) {
     if (driverCreationDTO.password != driverCreationDTO.passwordConfirmation) {
@@ -28,45 +36,74 @@ export class DriverService {
         icon: 'error',
         title: "Passwords don't match!",
         showConfirmButton: false,
-        timer: 3000
-       })
+        timer: 3000,
+      });
       throw new Error("Passwords don't match!");
-    }
-    else {
-      return this.httpClient.post<DriverDTO>(this.url + '/drivers/register', driverCreationDTO, cabecera);
+    } else {
+      return this.httpClient.post<DriverDTO>(
+        this.url + '/drivers/register',
+        driverCreationDTO,
+        cabecera
+      );
     }
   }
 
   public getLoggedDriver() {
-    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
-    return this.httpClient.get<DriverDTO>(this.url + '/drivers/get-logged', newHeader);
+    let newHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    return this.httpClient.get<DriverDTO>(
+      this.url + '/drivers/get-logged',
+      newHeader
+    );
   }
 
-  public updatePersonalInfoDriver(updatedUserDataCreationDTO: UpdatedUserDataCreationDTO) {
-    return this.httpClient.post<DriverDTO>(this.url + '/drivers/send-update-request', updatedUserDataCreationDTO, cabecera);
+  public updatePersonalInfoDriver(
+    updatedUserDataCreationDTO: UpdatedUserDataCreationDTO
+  ) {
+    return this.httpClient.post<DriverDTO>(
+      this.url + '/drivers/send-update-request',
+      updatedUserDataCreationDTO,
+      cabecera
+    );
   }
 
-  public updatePassword(passwordChangeCreationDTO : PasswordChangeCreationDTO) {
-    if (passwordChangeCreationDTO.newPassword != passwordChangeCreationDTO.newPasswordConfirmation) {
+  public updatePassword(passwordChangeCreationDTO: PasswordChangeCreationDTO) {
+    if (
+      passwordChangeCreationDTO.newPassword !=
+      passwordChangeCreationDTO.newPasswordConfirmation
+    ) {
       Swal.fire({
         position: 'center',
         icon: 'error',
         title: "Passwords don't match!",
         showConfirmButton: false,
-        timer: 3000
-      })
+        timer: 3000,
+      });
       throw new Error("Passwords don't match!");
-    }
-    else {
-      return this.httpClient.put<DriverDTO>(this.url + '/drivers/change-password', passwordChangeCreationDTO, cabecera);
+    } else {
+      return this.httpClient.put<DriverDTO>(
+        this.url + '/drivers/change-password',
+        passwordChangeCreationDTO,
+        cabecera
+      );
     }
   }
 
-  public changeProfilePicture(profilePictureCreationDTO: ProfilePictureCreationDTO) {
-    return this.httpClient.put<DriverDTO>(this.url + '/drivers/change-profile-picture', profilePictureCreationDTO, cabecera);
+  public changeProfilePicture(
+    profilePictureCreationDTO: ProfilePictureCreationDTO
+  ) {
+    return this.httpClient.put<DriverDTO>(
+      this.url + '/drivers/change-profile-picture',
+      profilePictureCreationDTO,
+      cabecera
+    );
   }
 
-  public isUnansweredDriverDataPresent(email : string) {
+  public isUnansweredDriverDataPresent(email: string) {
     let url = `${this.url}/drivers/is-unanswered-driver-data-present/${email}`;
     return this.httpClient.get<DriverDataAnsweredDTO>(url);
   }

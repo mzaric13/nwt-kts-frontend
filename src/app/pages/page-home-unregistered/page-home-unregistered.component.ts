@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DriverDTO } from 'src/app/models/driver-dto';
+import { DriverService } from 'src/app/services/driver.service';
 import { GeocodeService } from 'src/app/services/geocode.service';
 
 @Component({
@@ -7,12 +9,26 @@ import { GeocodeService } from 'src/app/services/geocode.service';
   styleUrls: ['./page-home-unregistered.component.css'],
 })
 export class PageHomeUnregisteredComponent implements OnInit {
-  constructor(private readonly geocodeService: GeocodeService) {}
-
-  ngOnInit(): void {}
+  constructor(
+    private readonly geocodeService: GeocodeService,
+    private readonly driverService: DriverService
+  ) {}
 
   pickupGeoLocation: number[] = [];
   destinationGeoLocation: number[] = [];
+  drivers: DriverDTO[] = [];
+
+  ngOnInit(): void {
+    try {
+      this.driverService.getAllDrivers().subscribe({
+        next: (drivers: DriverDTO[]) => {
+          this.drivers = drivers;
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   async makeRoute(route: string[]) {
     const pickupResult = await this.geocodeService.getGeocodes(route[0]);
