@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
+import 'leaflet.markercluster';
 import { DriverDTO } from 'src/app/models/driver-dto';
 const l = require('leaflet');
 require('leaflet.animatedmarker/src/AnimatedMarker');
@@ -90,21 +91,21 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           }
           const line = L.polyline(lines);
 
-          const animatedmarker = l
-            .animatedMarker(line.getLatLngs(), {
-              distance: 500,
-              interval: 100,
-              icon: that.icon,
-            })
-            .addTo(that.map);
+          l.animatedMarker(line.getLatLngs(), {
+            distance: 500,
+            interval: 100,
+            icon: that.icon,
+          }).addTo(that.map);
         });
       }
     }
 
     if (newDrivers) {
-      setTimeout(() => {
-        this.addDriversToTheMap();
-      }, 1000);
+      if (newDrivers.previousValue.length === 0) {
+        setTimeout(() => {
+          this.addDriversToTheMap();
+        }, 1000);
+      }
     }
   }
 
@@ -113,27 +114,28 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     const latMax: number = 3000;
     const lngMin: number = 7500;
     const lngMax: number = 9000;
+    const markers = L.markerClusterGroup();
     for (const driver of this.drivers) {
       const lat = 45 + (Math.random() * (latMax - latMin) + latMin) / 10000;
       const lng = 19 + (Math.random() * (lngMax - lngMin) + lngMin) / 10000;
       driver.geoLocation = [lat, lng];
-      L.marker([lat, lng], {
+      const marker = L.marker([lat, lng], {
         icon: this.icon,
         riseOnHover: true,
-      })
-        .addTo(this.map)
-        .bindTooltip(
-          '<div style="font-family: Arial;">' +
-            driver.name +
-            ' ' +
-            driver.surname +
-            '</div>',
-          {
-            offset: L.point(15, 0),
-            direction: 'top',
-          }
-        );
+      }).bindTooltip(
+        '<div style="font-family: Arial;">' +
+          driver.name +
+          ' ' +
+          driver.surname +
+          '</div>',
+        {
+          offset: L.point(15, 0),
+          direction: 'top',
+        }
+      );
+      markers.addLayer(marker);
     }
+    this.map.addLayer(markers);
   }
 
   ngOnInit(): void {}
