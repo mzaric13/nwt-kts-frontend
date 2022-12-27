@@ -123,11 +123,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         icon: this.icon,
         riseOnHover: true,
       }).bindTooltip(
-        '<div style="font-family: Arial;">' +
+        '<div><div style="font-family: Arial;">' +
           driver.name +
           ' ' +
           driver.surname +
-          '</div>',
+          '</div><div style="font-family: Arial;">Available: ' +
+          driver.available +
+          '</div></div>',
         {
           offset: L.point(15, 0),
           direction: 'top',
