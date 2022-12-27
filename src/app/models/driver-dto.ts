@@ -9,7 +9,7 @@ export interface DriverDTO {
   password: string;
   vehicleDTO: VehicleDTO;
   profilePicture: string;
-  isBlocked: boolean;
-  isAvailable: boolean;
+  blocked: boolean;
+  available: boolean;
   geoLocation?: number[];
 }
