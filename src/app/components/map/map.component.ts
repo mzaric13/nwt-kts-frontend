@@ -75,6 +75,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           addWaypoints: false,
           showAlternatives: true,
           show: false,
+          altLineOptions: {
+            addWaypoints: false,
+            styles: [
+              {
+                color: 'blue',
+                stroke: true,
+                opacity: 0.6,
+              },
+            ],
+            extendToWaypoints: false,
+            missingRouteTolerance: 5,
+          },
         }).addTo(this.map);
 
         const instructions: HTMLElement = (<HTMLElement>(
