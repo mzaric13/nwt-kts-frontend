@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { DriverService } from 'src/app/services/driver.service';
 import { GeocodeService } from 'src/app/services/geocode.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-page-home-unregistered',
@@ -34,12 +35,27 @@ export class PageHomeUnregisteredComponent implements OnInit {
   async makeRoute(route: string[]) {
     const pickupResult = await this.geocodeService.getGeocodes(route[0]);
     const destinationResult = await this.geocodeService.getGeocodes(route[1]);
-
-    this.pickupGeoLocation = [pickupResult[0].y, pickupResult[0].x];
-    this.destinationGeoLocation = [
-      destinationResult[0].y,
-      destinationResult[0].x,
-    ];
+    try {
+      this.pickupGeoLocation = [pickupResult[0].y, pickupResult[0].x];
+    } catch (e) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "Pickup location doesn't exist",
+      });
+    }
+    try {
+      this.destinationGeoLocation = [
+        destinationResult[0].y,
+        destinationResult[0].x,
+      ];
+    } catch (e) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: "Destination location doesn't exist",
+      });
+    }
   }
 
   getEstimatedTime(time: number) {
