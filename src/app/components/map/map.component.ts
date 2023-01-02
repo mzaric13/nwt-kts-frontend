@@ -7,6 +7,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
@@ -27,6 +29,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() pickupGeoLocation!: number[];
   @Input() destinationGeoLocation!: number[];
   @Input() drivers!: DriverDTO[];
+  @Output() estimatedTimeEvent = new EventEmitter<number>();
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -84,24 +87,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         const that = this;
 
         route.on('routeselected', function (e) {
-          const routePoints = e.route.coordinates;
-          const lines: L.LatLng[] = [];
-          for (const routePoint of routePoints) {
-            lines.push(new L.LatLng(routePoint.lat, routePoint.lng));
-          }
-          const line = L.polyline(lines);
-
-          l.animatedMarker(line.getLatLngs(), {
-            distance: 500,
-            interval: 100,
-            icon: that.icon,
-          }).addTo(that.map);
+          const time = Math.ceil(e.route.summary.totalTime / 60);
+          that.estimatedTimeEvent.emit(time);
         });
       }
     }
 
     if (newDrivers) {
-      if (newDrivers.previousValue.length === 0) {
+      if (
+        newDrivers.previousValue !== undefined &&
+        newDrivers.previousValue.length === 0
+      ) {
         setTimeout(() => {
           this.addDriversToTheMap();
         }, 1000);

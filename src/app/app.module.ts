@@ -42,6 +42,7 @@ import { RouteFormComponent } from './components/route-form/route-form.component
 import { ClickOutsidePickupDirective } from './directives/click-outside-pickup.directive';
 import { LocationFilterPipe } from './pipes/location-filter.pipe';
 import { ClickOutsideDestinationDirective } from './directives/click-outside-destination.directive';
+import { RouteDetailsComponent } from './components/route-details/route-details.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { ClickOutsideDestinationDirective } from './directives/click-outside-des
     ClickOutsidePickupDirective,
     LocationFilterPipe,
     ClickOutsideDestinationDirective,
+    RouteDetailsComponent,
   ],
   imports: [
     BrowserModule,

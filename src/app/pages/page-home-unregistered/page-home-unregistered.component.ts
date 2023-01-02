@@ -17,6 +17,7 @@ export class PageHomeUnregisteredComponent implements OnInit {
   pickupGeoLocation: number[] = [];
   destinationGeoLocation: number[] = [];
   drivers: DriverDTO[] = [];
+  estimatedTime: number = 0;
 
   ngOnInit(): void {
     try {
@@ -39,5 +40,9 @@ export class PageHomeUnregisteredComponent implements OnInit {
       destinationResult[0].y,
       destinationResult[0].x,
     ];
+  }
+
+  getEstimatedTime(time: number) {
+    this.estimatedTime = time;
   }
 }
