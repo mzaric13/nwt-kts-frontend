@@ -25,6 +25,7 @@ require('leaflet.animatedmarker/src/AnimatedMarker');
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   private map!: L.Map;
   private icon!: L.DivIcon;
+  private route!: L.Routing.Control;
 
   @Input() pickupGeoLocation!: number[];
   @Input() destinationGeoLocation!: number[];
@@ -61,7 +62,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       const startingPoint: number[] = startPoint.currentValue;
       const endingPoint: number[] = endPoint.currentValue;
       if (startingPoint.length !== 0 && endingPoint.length !== 0) {
-        const route = L.Routing.control({
+        if (this.route) {
+          this.map.removeControl(this.route);
+        }
+        this.route = L.Routing.control({
           plan: L.Routing.plan(
             [
               L.latLng(startingPoint[0], startingPoint[1]),
@@ -98,7 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
         const that = this;
 
-        route.on('routeselected', function (e) {
+        this.route.on('routeselected', function (e) {
           const time = Math.ceil(e.route.summary.totalTime / 60);
           that.estimatedTimeEvent.emit(time);
         });
