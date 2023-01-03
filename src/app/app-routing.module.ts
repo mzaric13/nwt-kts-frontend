@@ -8,6 +8,9 @@ import { PageDriverProfileComponent } from './pages/page-driver-profile/page-dri
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
 import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
 import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
+import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
+import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
+import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 
 const routes: Routes = [
   {path: 'login', component: PageLoginComponent},
@@ -18,6 +21,9 @@ const routes: Routes = [
   {path: 'answer-driver-data-changes', component: PageAnswerDriverChangesComponent},
   {path: 'change-blocked-status', component: PageChangeBlockedStatusComponent},
   {path: 'purchase-tokens', component: PagePurchaseTokensComponent},
+  {path: 'forgotten-password', component: PageForgottenPasswordComponent},
+  {path: 'activated-account/:id', component: ActivatedAccountComponent},
+  {path: 'reset-password/:email', component: PageResetPasswordComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

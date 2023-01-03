@@ -37,6 +37,10 @@ export class PassengerService {
     }   
   }
 
+  public activateAccount(id: number) {
+    return this.httpClient.get<PassengerDTO>(this.url + '/passengers/activate-account/' + id, cabecera);
+  }
+
   public getLoggedPassenger() : Observable<PassengerDTO>{
     let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
     return this.httpClient.get<PassengerDTO>(this.url + '/passengers/get-logged', newHeader);

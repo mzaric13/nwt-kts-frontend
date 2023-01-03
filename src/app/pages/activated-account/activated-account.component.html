@@ -1,0 +1,12 @@
+<div class="bg-pic">
+    <div>
+        <app-navbar-start-page></app-navbar-start-page>
+    </div>
+    <div class="title" *ngIf="isActivated">
+        <h1 class="text-center"> Account successfully activated </h1>
+        <h3 class="text-center"> Thank you for using our services! </h3>
+    </div>
+    <div class="title" *ngIf="notActivated">
+        <h1 class="text-center"> {{errorMessage}} </h1>
+    </div>
+</div>

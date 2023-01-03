@@ -38,6 +38,9 @@ import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-st
 import { ModalChangeBlockedStatusComponent } from './components/modal-change-blocked-status/modal-change-blocked-status.component';
 import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
 import { PaymentCardComponent } from './components/payment-card/payment-card.component';
+import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
+import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
+import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +67,10 @@ import { PaymentCardComponent } from './components/payment-card/payment-card.com
     PageChangeBlockedStatusComponent,
     ModalChangeBlockedStatusComponent,
     PagePurchaseTokensComponent,
-    PaymentCardComponent
+    PaymentCardComponent,
+    PageForgottenPasswordComponent,
+    ActivatedAccountComponent,
+    PageResetPasswordComponent
   ],
   imports: [
     BrowserModule,
