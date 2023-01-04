@@ -52,6 +52,7 @@ import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 import { PageHomePassengerComponent } from './pages/page-home-passenger/page-home-passenger.component';
+import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-passenger.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { PageHomePassengerComponent } from './pages/page-home-passenger/page-hom
     ActivatedAccountComponent,
     PageResetPasswordComponent,
     PageHomePassengerComponent,
+    NavbarPassengerComponent,
   ],
   imports: [
     BrowserModule,
