@@ -1,0 +1,68 @@
+.arial_font {
+    font-family: Arial;
+}
+
+.bg_gray {
+    background: rgb(238, 237, 237);
+}
+
+.bg_black {
+    background-color: black;
+}
+
+::placeholder {
+    font-family: Arial;
+}
+
+.borderless_input {
+    border: none;
+    outline: none;
+}
+
+.input_size {
+    padding: 12px;
+    line-height: 2px;
+    width: 100%;
+}
+
+.center_text {
+    text-align: center;
+}
+
+input:focus {
+    border: 2px solid black;
+}
+
+input, label {
+    display: block;
+}
+
+.left_element {
+    float:left;
+    width: 48%;
+    margin-right: 2%;
+}
+
+.right_element {
+    float:left;
+    width: 50%;
+}
+
+.vehicle_left_element {
+    float:left;
+    width: 32%;
+    margin-right: 2%;
+}
+
+.vehicle_right_element {
+    float:left;
+    width: 32%;
+}
+
+.select_element {
+    width:100%;
+}
+
+.error {
+    color:red;
+}

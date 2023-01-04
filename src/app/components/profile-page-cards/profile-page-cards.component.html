@@ -1,0 +1,9 @@
+<div class="card p-3 bg-light border-dark">
+    <app-profile-info [imgSrc]="imgSrc" [name]="name"></app-profile-info>
+    <div class="card-deck mt-4 text-center">
+        <div app-profile-page-card [type]="'info'" class="card border-dark" (newItemEvent)="personalInfoClicked()"></div>
+        <div app-profile-page-card [type]="'profile-picture'" class="card border-dark" (newItemEvent)="profilePictureClicked()"></div>
+        <div app-profile-page-card [type]="'password'" class="card border-dark" (newItemEvent)="passwordClicked()"></div>
+        <div app-profile-page-card [type]="'tokens'" *ngIf="tokenService.getRole() === 'ROLE_PASSENGER'" class="card border-dark" (newItemEvent)="tokensClicked()"></div>
+    </div>
+</div>

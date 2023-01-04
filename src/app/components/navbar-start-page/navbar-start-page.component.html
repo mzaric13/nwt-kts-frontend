@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg_black py-3">
+    <a class="navbar-brand arial_font ml-20" href="#">UBER</a> 
+    <div class="collapse navbar-collapse mr-20">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item mr-2">
+          <a class="nav-link arial_font" routerLink="#">Home</a>
+        </li>
+        <li class="nav-item mr-3">
+          <!-- Ne ucita se google dugme ako se uradi router-link -->
+          <a class="nav-link arial_font" href="/login">Login</a>
+        </li>
+        <li>
+          <button class="btn btn-light btn-md arial_font" (click)="goToRegisterPage()"> Register </button>
+        </li>
+      </ul>
+    </div>
+  </nav>

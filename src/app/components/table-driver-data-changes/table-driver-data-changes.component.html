@@ -1,0 +1,22 @@
+<div *ngIf="unansweredRequests.length > 0">
+  <table class="table table-light table-hover text-center">
+    <thead>
+      <tr>
+        <th scope="col" class="arial_font">ID</th>
+        <th scope="col" class="arial_font">Full name</th>
+        <th scope="col" class="arial_font">Date of request</th>
+        <th scope="col" class="arial_font">Details</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let request of unansweredRequests">
+      <tr>
+        <th scope="row" >{{request.id}}</th>
+        <td class="arial_font">{{request.name}} {{request.surname}}</td>
+        <td class="arial_font">{{request.dateOfRequest}}</td>
+        <td>
+            <button class="btn btn-dark arial_font" (click)="showModal(request)">Answer request</button>
+        </td>
+      </tr>
+    </tbody>
+</table>
+</div>
