@@ -9,13 +9,16 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from '@abacritt/angularx-social-login';
 
-import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NavbarStartPageComponent } from './components/navbar-start-page/navbar-start-page.component';
 import { PageLoginComponent } from './pages/page-login/page-login.component';
@@ -33,6 +36,13 @@ import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.com
 import { ModalDriverDataChangeComponent } from './components/modal-driver-data-change/modal-driver-data-change.component';
 import { TableDriverDataChangesComponent } from './components/table-driver-data-changes/table-driver-data-changes.component';
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
+import { PageHomeUnregisteredComponent } from './pages/page-home-unregistered/page-home-unregistered.component';
+import { MapComponent } from './components/map/map.component';
+import { RouteFormComponent } from './components/route-form/route-form.component';
+import { ClickOutsidePickupDirective } from './directives/click-outside-pickup.directive';
+import { LocationFilterPipe } from './pipes/location-filter.pipe';
+import { ClickOutsideDestinationDirective } from './directives/click-outside-destination.directive';
+import { RouteDetailsComponent } from './components/route-details/route-details.component';
 import { TableBlockUsersComponent } from './components/table-block-users/table-block-users.component';
 import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
 import { ModalChangeBlockedStatusComponent } from './components/modal-change-blocked-status/modal-change-blocked-status.component';
@@ -63,6 +73,13 @@ import { PageResetPasswordComponent } from './pages/page-reset-password/page-res
     ModalDriverDataChangeComponent,
     TableDriverDataChangesComponent,
     PageAnswerDriverChangesComponent,
+    PageHomeUnregisteredComponent,
+    MapComponent,
+    RouteFormComponent,
+    ClickOutsidePickupDirective,
+    LocationFilterPipe,
+    ClickOutsideDestinationDirective,
+    RouteDetailsComponent,
     TableBlockUsersComponent,
     PageChangeBlockedStatusComponent,
     ModalChangeBlockedStatusComponent,
@@ -80,7 +97,7 @@ import { PageResetPasswordComponent } from './pages/page-reset-password/page-res
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     {
@@ -94,8 +111,8 @@ import { PageResetPasswordComponent } from './pages/page-reset-password/page-res
           },
         ],
       } as SocialAuthServiceConfig,
-    }
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
