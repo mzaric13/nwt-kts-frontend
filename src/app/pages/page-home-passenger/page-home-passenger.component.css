@@ -1,0 +1,52 @@
+.bg-pic {
+    background-image: url('../../../assets/taxi2.jpg');
+    background-size: contain;
+    background-position: right bottom;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.info {
+    margin: auto;
+    margin-top: 5%;
+}
+
+.w-37-5 {
+    width: 37.5%;
+}
+
+.home {
+    margin-inline: 30px;
+    height: 20%;
+    font-family: Arial;
+    text-align: center;
+}
+
+.home p {
+    font-size: 20px;
+}
+
+.home h1 {
+    font-size: 60px;
+}
+
+.map {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 65%;
+    width: 95%;
+    align-items: stretch;
+    margin-inline: 30px;
+}
+
+.flex-form {
+    width: 25%;
+    margin-right: 10px;
+}
+
+.flex-map {
+    width: 75%;
+}
