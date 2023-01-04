@@ -8,6 +8,9 @@ import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dt
 import { AdminDTO } from '../models/admin-dto';
 import { AnsweredDriverDataCreationDTO } from '../models/answered-driver-data-creation-dto';
 import { DriverDataDTO } from '../models/driver-data-dto';
+import { DriverDTO } from '../models/driver-dto';
+import { PassengerDTO } from '../models/passenger-dto';
+import { UserIdDTO } from '../models/user-id-dto';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -58,4 +61,19 @@ export class AdminService {
     return this.httpClient.get<DriverDataDTO[]>(this.url + '/administrators/get-unanswered-driver-data', cabecera);
   }
 
+  public getAllDrivers() {
+    return this.httpClient.get<DriverDTO[]>(this.url + '/administrators/get-all-drivers', cabecera);
+  }
+
+  public getAllPassengers() {
+    return this.httpClient.get<PassengerDTO[]>(this.url + '/administrators/get-all-passengers', cabecera);
+  }
+
+  public changeBlockedStatusPassenger(userIdDTO : UserIdDTO) {
+    return this.httpClient.put<PassengerDTO>(this.url + '/administrators/change-block-status-passenger', userIdDTO, cabecera);
+  }
+
+  public changeBlockedStatusDriver(userIdDTO : UserIdDTO) {
+    return this.httpClient.put<DriverDTO>(this.url + '/administrators/change-block-status-driver', userIdDTO, cabecera);
+  }
 }

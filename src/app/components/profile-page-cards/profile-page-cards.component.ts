@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminDTO } from 'src/app/models/admin-dto';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
@@ -26,6 +27,7 @@ export class ProfilePageCardsComponent implements OnInit {
   imgSrc = '../../../assets/default.jpg';
 
   constructor(
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +61,7 @@ export class ProfilePageCardsComponent implements OnInit {
   }
 
   tokensClicked() {
-    this.modalEvent.emit("tokens");
+    // router to buy tokens page
+    this.router.navigate(['/purchase-tokens']);
   }
 }

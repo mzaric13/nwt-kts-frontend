@@ -43,6 +43,14 @@ import { ClickOutsidePickupDirective } from './directives/click-outside-pickup.d
 import { LocationFilterPipe } from './pipes/location-filter.pipe';
 import { ClickOutsideDestinationDirective } from './directives/click-outside-destination.directive';
 import { RouteDetailsComponent } from './components/route-details/route-details.component';
+import { TableBlockUsersComponent } from './components/table-block-users/table-block-users.component';
+import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
+import { ModalChangeBlockedStatusComponent } from './components/modal-change-blocked-status/modal-change-blocked-status.component';
+import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
+import { PaymentCardComponent } from './components/payment-card/payment-card.component';
+import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
+import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
+import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +80,14 @@ import { RouteDetailsComponent } from './components/route-details/route-details.
     LocationFilterPipe,
     ClickOutsideDestinationDirective,
     RouteDetailsComponent,
+    TableBlockUsersComponent,
+    PageChangeBlockedStatusComponent,
+    ModalChangeBlockedStatusComponent,
+    PagePurchaseTokensComponent,
+    PaymentCardComponent,
+    PageForgottenPasswordComponent,
+    ActivatedAccountComponent,
+    PageResetPasswordComponent
   ],
   imports: [
     BrowserModule,

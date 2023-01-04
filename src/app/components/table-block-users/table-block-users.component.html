@@ -1,0 +1,30 @@
+
+<table class="table table-light table-hover text-center">
+    <thead>
+        <th></th>
+        <th class="arial_font">USERS</th>
+        <th></th>
+    </thead>
+    <!-- uredi tabelu -->
+    <thead>
+        <tr>
+            <th scope="col" class="arial_font">Full name</th>
+            <th scope="col" class="arial_font">Role</th>
+            <th scope="col" class="arial_font">Change Blocked Status</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let passenger of passengers">
+        <tr>
+            <th scope="row" >{{passenger.name}} {{passenger.surname}}</th>
+            <td class="arial_font">Passenger</td>
+            <button class="btn btn-dark arial_font" (click)="showPassengerInfoModal(passenger)">Change Blocked Status</button>
+        </tr>
+    </tbody>
+    <tbody *ngFor="let driver of drivers">
+        <tr>
+            <th scope="row" >{{driver.name}} {{driver.surname}}</th>
+            <td class="arial_font">Driver</td>
+            <button class="btn btn-dark arial_font" (click)="showDriverInfoModal(driver)">Change Blocked Status</button>
+        </tr>
+    </tbody>    
+</table>

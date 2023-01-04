@@ -10,6 +10,6 @@ export interface PassengerDTO {
     passwordConfirm: string;
     profilePicture: string;
     activated: boolean;
-    isBlocked: boolean;
+    blocked: boolean;
     
 }

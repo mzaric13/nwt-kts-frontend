@@ -7,20 +7,27 @@ import { PageAdminProfileComponent } from './pages/page-admin-profile/page-admin
 import { PageDriverProfileComponent } from './pages/page-driver-profile/page-driver-profile.component';
 import { PageAnswerDriverChangesComponent } from './pages/page-answer-driver-changes/page-answer-driver-changes.component';
 import { PageHomeUnregisteredComponent } from './pages/page-home-unregistered/page-home-unregistered.component';
+import { PageChangeBlockedStatusComponent } from './pages/page-change-blocked-status/page-change-blocked-status.component';
+import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
+import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
+import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
+import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
   { path: 'home-guest', component: PageHomeUnregisteredComponent },
-  { path: 'login', component: PageLoginComponent },
-  { path: 'register', component: PageRegisterComponent },
-  { path: 'passenger-profile', component: PagePassengerProfileComponent },
-  { path: 'admin-profile', component: PageAdminProfileComponent },
-  { path: 'driver-profile', component: PageDriverProfileComponent },
-  {
-    path: 'answer-driver-data-changes',
-    component: PageAnswerDriverChangesComponent,
-  },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  {path: 'login', component: PageLoginComponent},
+  {path: 'register', component: PageRegisterComponent},
+  {path: 'passenger-profile', component: PagePassengerProfileComponent},
+  {path: 'admin-profile', component: PageAdminProfileComponent},
+  {path: 'driver-profile', component: PageDriverProfileComponent},
+  {path: 'answer-driver-data-changes', component: PageAnswerDriverChangesComponent},
+  {path: 'change-blocked-status', component: PageChangeBlockedStatusComponent},
+  {path: 'purchase-tokens', component: PagePurchaseTokensComponent},
+  {path: 'forgotten-password', component: PageForgottenPasswordComponent},
+  {path: 'activated-account/:id', component: ActivatedAccountComponent},
+  {path: 'reset-password/:email', component: PageResetPasswordComponent},
+  {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 
 @NgModule({

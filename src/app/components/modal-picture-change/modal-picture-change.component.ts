@@ -57,75 +57,86 @@ export class ModalPictureChangeComponent implements OnInit {
   }
 
   changeProfilePicture() {
-    let profilePictureCreationDTO : ProfilePictureCreationDTO = {
-      email : this.getEmail(),
-      profilePicturePath : this.fileName
-    }
-    if (this.getRole() === "ROLE_PASSENGER") {
-      this.passengerService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
-        this.passenger.profilePicture = this.fileName;
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-        this.reloadPage();
-      },
-      error =>{
-        Swal.fire({
-          icon: 'error',
-          position: 'center',
-          title: 'An unknown error has occured.',
-          showConfirmButton: false,
-          timer: 3000
-        })
+    if(this.fileName.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        position: 'center',
+        title: 'No picture was found.',
+        showConfirmButton: false,
+        timer: 3000
       })
     }
-    else if (this.getRole() === "ROLE_ADMIN") {
-      this.adminService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
-        this.admin.profilePicture = this.fileName;
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
-          showConfirmButton: false,
-          timer: 3000
+    else{
+      let profilePictureCreationDTO : ProfilePictureCreationDTO = {
+        email : this.getEmail(),
+        profilePicturePath : this.fileName
+      }
+      if (this.getRole() === "ROLE_PASSENGER") {
+        this.passengerService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
+          this.passenger.profilePicture = this.fileName;
+          Swal.fire({
+            icon: 'success',
+            position: 'center',
+            title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
+            showConfirmButton: false,
+            timer: 3000
+          })
+          this.reloadPage();
+        },
+        error =>{
+          Swal.fire({
+            icon: 'error',
+            position: 'center',
+            title: 'An unknown error has occured.',
+            showConfirmButton: false,
+            timer: 3000
+          })
         })
-        this.reloadPage();
-      },
-      error =>{
-        Swal.fire({
-          icon: 'error',
-          position: 'center',
-          title: 'An unknown error has occured.',
-          showConfirmButton: false,
-          timer: 3000
+      }
+      else if (this.getRole() === "ROLE_ADMIN") {
+        this.adminService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
+          this.admin.profilePicture = this.fileName;
+          Swal.fire({
+            icon: 'success',
+            position: 'center',
+            title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
+            showConfirmButton: false,
+            timer: 3000
+          })
+          this.reloadPage();
+        },
+        error =>{
+          Swal.fire({
+            icon: 'error',
+            position: 'center',
+            title: 'An unknown error has occured.',
+            showConfirmButton: false,
+            timer: 3000
+          })
         })
-      })
-    }
-    else if (this.getRole() === "ROLE_DRIVER") {
-      this.driverService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
-        this.driver.profilePicture = this.fileName;
-        Swal.fire({
-          icon: 'success',
-          position: 'center',
-          title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
-          showConfirmButton: false,
-          timer: 3000
+      }
+      else if (this.getRole() === "ROLE_DRIVER") {
+        this.driverService.changeProfilePicture(profilePictureCreationDTO).subscribe(data => {
+          this.driver.profilePicture = this.fileName;
+          Swal.fire({
+            icon: 'success',
+            position: 'center',
+            title:  data.name + ' ' + data.surname + ', you have successfully changed your profile picture.',
+            showConfirmButton: false,
+            timer: 3000
+          })
+          this.reloadPage();
+        },
+        error =>{
+          Swal.fire({
+            icon: 'error',
+            position: 'center',
+            title: 'An unknown error has occured.',
+            showConfirmButton: false,
+            timer: 3000
+          })
         })
-        this.reloadPage();
-      },
-      error =>{
-        Swal.fire({
-          icon: 'error',
-          position: 'center',
-          title: 'An unknown error has occured.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-      })
+      }
     }
   }
 

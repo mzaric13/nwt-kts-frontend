@@ -1,6 +1,7 @@
 import { VehicleDTO } from './vehicle-dto';
 
 export interface DriverDTO {
+  id: number;
   email: string;
   name: string;
   surname: string;

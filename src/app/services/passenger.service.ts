@@ -7,6 +7,7 @@ import { PasswordChangeCreationDTO } from '../models/password-change-creation-dt
 import Swal from 'sweetalert2';
 import { TokenService } from './token.service';
 import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dto';
+import { Observable } from 'rxjs';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -36,7 +37,11 @@ export class PassengerService {
     }   
   }
 
-  public getLoggedPassenger() {
+  public activateAccount(id: number) {
+    return this.httpClient.get<PassengerDTO>(this.url + '/passengers/activate-account/' + id, cabecera);
+  }
+
+  public getLoggedPassenger() : Observable<PassengerDTO>{
     let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
     return this.httpClient.get<PassengerDTO>(this.url + '/passengers/get-logged', newHeader);
   }
@@ -63,6 +68,11 @@ export class PassengerService {
 
   public changeProfilePicture(profilePictureCreationDTO: ProfilePictureCreationDTO) {
     return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-profile-picture', profilePictureCreationDTO, cabecera);
+  }
+
+  public addTokens(tokensToAdd: number, passengerDTO: PassengerDTO) {
+    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
+    return this.httpClient.put<PassengerDTO>(this.url + '/passengers/add-tokens/' + tokensToAdd, passengerDTO, newHeader);
   }
 
 }
