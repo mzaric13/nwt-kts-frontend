@@ -1,9 +1,0 @@
-.full {
-    height: 100%;
-    margin: 10px;
-}
-
-.card:hover {
-    background: rgb(215, 215, 215);
-    transition: 0.5s;
-}
