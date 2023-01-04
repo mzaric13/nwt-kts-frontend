@@ -131,6 +131,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       const lat = 45 + (Math.random() * (latMax - latMin) + latMin) / 10000;
       const lng = 19 + (Math.random() * (lngMax - lngMin) + lngMin) / 10000;
       driver.geoLocation = [lat, lng];
+      let availability: string = '';
+      if (driver.available) {
+        availability =
+          '<div style="font-family: Arial; color:green">Available</div>';
+      } else {
+        availability =
+          '<div style="font-family: Arial; color:red">NOT available</div>';
+      }
       const marker = L.marker([lat, lng], {
         icon: this.icon,
         riseOnHover: true,
@@ -139,9 +147,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           driver.name +
           ' ' +
           driver.surname +
-          '</div><div style="font-family: Arial;">Available: ' +
-          driver.available +
-          '</div></div>',
+          '</div>' +
+          availability +
+          '</div>',
         {
           offset: L.point(15, 0),
           direction: 'top',
