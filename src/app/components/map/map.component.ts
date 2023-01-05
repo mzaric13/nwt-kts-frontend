@@ -27,9 +27,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   private icon!: L.DivIcon;
   private route!: L.Routing.Control;
 
-  @Input() pickupGeoLocation!: number[];
-  @Input() destinationGeoLocation!: number[];
   @Input() drivers!: DriverDTO[];
+  @Input() rideAddresses!: number[][];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
 
   private initMap(): void {
@@ -54,28 +53,24 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   constructor(private elByClassName: ElementRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    const startPoint = changes['pickupGeoLocation'];
-    const endPoint = changes['destinationGeoLocation'];
     const newDrivers = changes['drivers'];
+    const driveAddresses = changes['rideAddresses'];
 
-    if (startPoint && endPoint) {
-      const startingPoint: number[] = startPoint.currentValue;
-      const endingPoint: number[] = endPoint.currentValue;
-      if (startingPoint.length !== 0 && endingPoint.length !== 0) {
+    if (driveAddresses) {
+      const selectedAddresses: number[][] = driveAddresses.currentValue;
+      if (selectedAddresses.length !== 0) {
         if (this.route) {
           this.map.removeControl(this.route);
         }
+        const waypoints: L.LatLng[] = [];
+        for (let selectedAddress of selectedAddresses) {
+          waypoints.push(new L.LatLng(selectedAddress[0], selectedAddress[1]));
+        }
         this.route = L.Routing.control({
-          plan: L.Routing.plan(
-            [
-              L.latLng(startingPoint[0], startingPoint[1]),
-              L.latLng(endingPoint[0], endingPoint[1]),
-            ],
-            {
-              addWaypoints: false,
-              draggableWaypoints: false,
-            }
-          ),
+          plan: L.Routing.plan(waypoints, {
+            addWaypoints: false,
+            draggableWaypoints: false,
+          }),
           addWaypoints: false,
           showAlternatives: true,
           show: false,

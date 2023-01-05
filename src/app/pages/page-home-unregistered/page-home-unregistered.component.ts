@@ -15,8 +15,7 @@ export class PageHomeUnregisteredComponent implements OnInit {
     private readonly driverService: DriverService
   ) {}
 
-  pickupGeoLocation: number[] = [];
-  destinationGeoLocation: number[] = [];
+  rideAddresses: number[][] = [];
   drivers: DriverDTO[] = [];
   estimatedTime: number = 0;
 
@@ -32,30 +31,22 @@ export class PageHomeUnregisteredComponent implements OnInit {
     }
   }
 
-  async makeRoute(route: string[]) {
-    const pickupResult = await this.geocodeService.getGeocodes(route[0]);
-    const destinationResult = await this.geocodeService.getGeocodes(route[1]);
-    try {
-      this.pickupGeoLocation = [pickupResult[0].y, pickupResult[0].x];
-    } catch (e) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: "Pickup location doesn't exist",
-      });
+  async makeRoute(routes: string[]) {
+    const driveAddresses: number[][] = [];
+    for (let route of routes) {
+      const routeResult = await this.geocodeService.getGeocodes(route);
+      try {
+        driveAddresses.push([routeResult[0].y, routeResult[0].x]);
+      } catch (e) {
+        const text = 'Location ' + route + " doesn't exist";
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text,
+        });
+      }
     }
-    try {
-      this.destinationGeoLocation = [
-        destinationResult[0].y,
-        destinationResult[0].x,
-      ];
-    } catch (e) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: "Destination location doesn't exist",
-      });
-    }
+    this.rideAddresses = driveAddresses;
   }
 
   getEstimatedTime(time: number) {
