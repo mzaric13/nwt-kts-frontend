@@ -30,6 +30,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() drivers!: DriverDTO[];
   @Input() rideAddresses!: number[][];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
+  @Output() estimatedCostEvent = new EventEmitter<number>();
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -71,6 +72,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             addWaypoints: false,
             draggableWaypoints: false,
           }),
+          fitSelectedRoutes: true,
           addWaypoints: false,
           showAlternatives: true,
           show: false,
@@ -98,8 +100,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         const that = this;
 
         this.route.on('routeselected', function (e) {
-          const time = Math.ceil(e.route.summary.totalTime / 60);
+          let distance: number = e.route.summary.totalDistance / 1000;
+          distance = Number.parseFloat(distance.toFixed(1));
+          const time: number = Math.round(e.route.summary.totalTime / 60);
           that.estimatedTimeEvent.emit(time);
+          that.estimatedCostEvent.emit(distance);
         });
       }
     }

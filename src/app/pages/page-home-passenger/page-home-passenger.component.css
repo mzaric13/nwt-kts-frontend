@@ -2,6 +2,7 @@
     background-image: url('../../../assets/taxi2.jpg');
     background-size: contain;
     background-position: right bottom;
+    background-repeat: repeat;
     position: absolute;
     bottom: 0px;
     right: 0px;

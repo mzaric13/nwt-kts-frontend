@@ -3,12 +3,13 @@
     <div class="map">
         <div class="flex-form">
             <app-route-form (makeRoute)="makeRoute($event)"></app-route-form>
-            <app-route-details *ngIf="estimatedTime" [estimatedTime]="estimatedTime"></app-route-details>
+            <app-route-details *ngIf="estimatedTime" [estimatedTime]="estimatedTime" [estimatedCost]="estimatedCost"></app-route-details>
         </div>
         <div class="flex-map">
             <app-map 
                 [drivers]="drivers" [rideAddresses]="rideAddresses"
-                (estimatedTimeEvent)="getEstimatedTime($event)">
+                (estimatedTimeEvent)="getEstimatedTime($event)"
+                (estimatedCostEvent)="getEstimatedCost($event)">
             </app-map>
         </div>
     </div>

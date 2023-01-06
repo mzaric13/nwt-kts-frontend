@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { DriverService } from 'src/app/services/driver.service';
 import { GeocodeService } from 'src/app/services/geocode.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,21 +18,7 @@ export class PageHomePassengerComponent implements OnInit {
   rideAddresses: number[][] = [];
   drivers: DriverDTO[] = [];
   estimatedTime: number = 0;
-
-  demoDragAndDrop: string[] = ['TEst1', 'test2', 'test3', 'test4', 'test5'];
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(
-      this.demoDragAndDrop,
-      event.previousIndex,
-      event.currentIndex
-    );
-  }
-
-  test(item: string) {
-    const index = this.demoDragAndDrop.indexOf(item);
-    this.demoDragAndDrop.splice(index, 1);
-  }
+  estimatedCost: number = 0;
 
   ngOnInit(): void {
     try {
@@ -67,5 +52,9 @@ export class PageHomePassengerComponent implements OnInit {
 
   getEstimatedTime(time: number) {
     this.estimatedTime = time;
+  }
+
+  getEstimatedCost(distance: number) {
+    this.estimatedCost = 150 + distance * 120;
   }
 }
