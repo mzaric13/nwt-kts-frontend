@@ -12,6 +12,7 @@ import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-p
 import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
+import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'forgotten-password', component: PageForgottenPasswordComponent},
   {path: 'activated-account/:id', component: ActivatedAccountComponent},
   {path: 'reset-password/:email', component: PageResetPasswordComponent},
+  {path: 'rate', component: ModalGiveRatingComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

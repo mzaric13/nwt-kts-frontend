@@ -51,6 +51,7 @@ import { PaymentCardComponent } from './components/payment-card/payment-card.com
 import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
+import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { PageResetPasswordComponent } from './pages/page-reset-password/page-res
     PaymentCardComponent,
     PageForgottenPasswordComponent,
     ActivatedAccountComponent,
-    PageResetPasswordComponent
+    PageResetPasswordComponent,
+    ModalGiveRatingComponent
   ],
   imports: [
     BrowserModule,
