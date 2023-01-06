@@ -25,6 +25,30 @@
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-dark arial_font">Search routes</button> 
+        <input formControlName="isChecked" (change)="showInputForExtraLocations()" type="checkbox" id="additionalDestinations" name="additionalDestinations">
+        <label class="checkbox-label" for="additionalDestinations">Add additional locations?</label>
+    </div>
+    <div *ngIf="showAdditionalInput" class="form-group">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let routeLocation of routeLocations" cdkDrag>
+                {{routeLocation}}
+                <button (click)="removeRouteLocation(routeLocation)" mat-icon-button><mat-icon>delete</mat-icon></button>
+            </div>
+        </div>
+        <label class="arial_font" for="extraLocation">Extra location:</label>
+        <input autocomplete="off" formControlName="extraLocation" id="extraLocation" class="bg_gray borderless_input input_size" type="text" 
+        placeholder="Enter destination" (click)="openDropdownExtraDestination()">
+        <div appClickOutsideExtraDestination (clickOutside)="closeDropdownExtraDestination()" class="geoCode-container-dropdown bg_gray">
+            <div *ngIf="showDropdownExtraDestination">
+                <div (click)="selectExtraDestination(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getExtraDestination()">
+                    {{address}}
+                </div>
+            </div>
+        </div>
+        <button type="button" (click)="addExtraLocation()" class="btn btn-dark arial_font">Add extra location</button>
+    </div>
+    <div class="form-group form-group-button">
+        <button type="button" (click)="searchRoute()" class="btn btn-dark arial_font">Search routes</button>
+        <button type="submit" class="btn btn-dark arial_font">Customize ride order</button>
     </div>
 </form>

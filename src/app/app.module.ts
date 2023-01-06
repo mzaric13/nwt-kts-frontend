@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import {
   SocialLoginModule,
@@ -53,6 +56,7 @@ import { ActivatedAccountComponent } from './pages/activated-account/activated-a
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 import { PageHomePassengerComponent } from './pages/page-home-passenger/page-home-passenger.component';
 import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-passenger.component';
+import { ClickOutsideExtraDestinationDirective } from './directives/click-outside-extra-destination.directive';
 
 @NgModule({
   declarations: [
@@ -92,6 +96,7 @@ import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-p
     PageResetPasswordComponent,
     PageHomePassengerComponent,
     NavbarPassengerComponent,
+    ClickOutsideExtraDestinationDirective,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +107,9 @@ import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-p
     ReactiveFormsModule,
     FontAwesomeModule,
     SweetAlert2Module.forRoot(),
+    DragDropModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [
     {
