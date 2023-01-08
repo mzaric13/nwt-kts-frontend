@@ -57,6 +57,7 @@ import { PageResetPasswordComponent } from './pages/page-reset-password/page-res
 import { PageHomePassengerComponent } from './pages/page-home-passenger/page-home-passenger.component';
 import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-passenger.component';
 import { ClickOutsideExtraDestinationDirective } from './directives/click-outside-extra-destination.directive';
+import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-customize-ride.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +98,7 @@ import { ClickOutsideExtraDestinationDirective } from './directives/click-outsid
     PageHomePassengerComponent,
     NavbarPassengerComponent,
     ClickOutsideExtraDestinationDirective,
+    PageCustomizeRideComponent,
   ],
   imports: [
     BrowserModule,

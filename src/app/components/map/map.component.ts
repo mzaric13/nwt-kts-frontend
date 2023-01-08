@@ -14,6 +14,7 @@ import * as L from 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet.markercluster';
 import { DriverDTO } from 'src/app/models/driver-dto';
+import { PointCreationDTO } from 'src/app/models/point-creation-dto';
 const l = require('leaflet');
 require('leaflet.animatedmarker/src/AnimatedMarker');
 
@@ -31,6 +32,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() rideAddresses!: number[][];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
   @Output() estimatedCostEvent = new EventEmitter<number>();
+  @Output() waypointsEvent = new EventEmitter<PointCreationDTO[]>();
 
   private initMap(): void {
     this.map = L.map('map', {
@@ -100,11 +102,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         const that = this;
 
         this.route.on('routeselected', function (e) {
-          let distance: number = e.route.summary.totalDistance / 1000;
-          distance = Number.parseFloat(distance.toFixed(1));
-          const time: number = Math.round(e.route.summary.totalTime / 60);
-          that.estimatedTimeEvent.emit(time);
-          that.estimatedCostEvent.emit(distance);
+          that.waypointsEvent.emit(that.createPoints(e.route.coordinates));
+          that.estimatedTimeEvent.emit(
+            that.calculateEstimatedTime(e.route.summary.totalTime)
+          );
+          that.estimatedCostEvent.emit(
+            that.calculateDistance(e.route.summary.totalDistance)
+          );
         });
       }
     }
@@ -119,6 +123,14 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }, 1000);
       }
     }
+  }
+
+  private createPoints(coordinates: L.LatLng[]) {
+    const waypoints: PointCreationDTO[] = [];
+    for (let coordinate of coordinates) {
+      waypoints.push({ latitude: coordinate.lat, longitude: coordinate.lng });
+    }
+    return waypoints;
   }
 
   private addDriversToTheMap() {
@@ -158,6 +170,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       markers.addLayer(marker);
     }
     this.map.addLayer(markers);
+  }
+
+  private calculateEstimatedTime(time: number) {
+    return Math.round(time / 60);
+  }
+
+  private calculateDistance(totalDistance: number) {
+    const distance: number = totalDistance / 1000;
+    return Number.parseFloat(distance.toFixed(1));
   }
 
   ngOnInit(): void {}

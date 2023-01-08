@@ -29,7 +29,9 @@ export class RouteFormComponent implements OnInit {
 
   public routeLocations: string[] = [];
 
-  @Output() makeRoute = new EventEmitter();
+  @Output() makeRouteEvent = new EventEmitter();
+
+  @Output() customizeRideEvent = new EventEmitter();
 
   constructor() {}
 
@@ -42,10 +44,7 @@ export class RouteFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.makeRoute.emit([
-      this.route.controls.pickup.value,
-      this.route.controls.destination.value,
-    ]);
+    this.customizeRideEvent.emit();
   }
 
   searchRoute() {
@@ -65,7 +64,7 @@ export class RouteFormComponent implements OnInit {
       });
       return;
     }
-    this.makeRoute.emit([
+    this.makeRouteEvent.emit([
       this.route.controls.pickup.value,
       ...this.routeLocations,
       this.route.controls.destination.value,

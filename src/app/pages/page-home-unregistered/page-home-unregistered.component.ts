@@ -18,6 +18,7 @@ export class PageHomeUnregisteredComponent implements OnInit {
   rideAddresses: number[][] = [];
   drivers: DriverDTO[] = [];
   estimatedTime: number = 0;
+  estimatedCost: number = 0;
 
   ngOnInit(): void {
     try {
@@ -51,5 +52,9 @@ export class PageHomeUnregisteredComponent implements OnInit {
 
   getEstimatedTime(time: number) {
     this.estimatedTime = time;
+  }
+
+  getEstimatedCost(distance: number) {
+    this.estimatedCost = 150 + distance * 120;
   }
 }

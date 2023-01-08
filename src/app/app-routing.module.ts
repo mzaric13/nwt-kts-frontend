@@ -13,6 +13,7 @@ import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 import { PageHomePassengerComponent } from './pages/page-home-passenger/page-home-passenger.component';
+import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-customize-ride.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'forgotten-password', component: PageForgottenPasswordComponent },
   { path: 'activated-account/:id', component: ActivatedAccountComponent },
   { path: 'reset-password/:email', component: PageResetPasswordComponent },
+  { path: 'customize-ride/:id', component: PageCustomizeRideComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
