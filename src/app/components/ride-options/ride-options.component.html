@@ -1,4 +1,4 @@
-<form [formGroup]="ride" class="mt-2">
+<form #rideForm [formGroup]="ride" class="mt-2">
     <div class="form-group ride-customization-field card p-3">
         <mat-label class="arial_text form-label">Additional passengers</mat-label>
         <mat-form-field class="example-chip-list" appearance="fill">
@@ -20,6 +20,12 @@
     <div class="form-group ride-customization-field card p-3">
         <mat-label class="arial_text form-label">Additional ride options</mat-label>
         <mat-form-field class="example-chip-list" appearance="fill">
+            <!-- <div>
+
+            </div>
+            <div>
+
+            </div> -->
             <mat-chip-list #tagsChipList aria-label="Tag selection">
                 <mat-chip class="arial_text chip" *ngFor="let tag of selectedTags" (removed)="removeTag(tag)">
                 {{tag.name}}
@@ -28,19 +34,23 @@
                 </button>
                 </mat-chip>
                 <input class="arial_text bg_gray borderless_input input_size" placeholder="Enter option..."
-                    #tagInput
+                    id="tagInput"
+                    #tagsInput
                     [matChipInputFor]="tagsChipList"
-                    [matAutocomplete]="auto"
                     formControlName="tagControl"
                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                     [matChipInputAddOnBlur]="addOnBlur"
-                    (matChipInputTokenEnd)="addTag($event)">
+                    (matChipInputTokenEnd)="addTag($event)"
+                    (click)="openDropdownTag()"
+                    autocomplete="off">
             </mat-chip-list>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="tagSelected($event)">
-                <mat-option appearance="fill" *ngFor="let tag of filteredTags | async" [value]="tag">
-                    {{tag}}
-                </mat-option>
-            </mat-autocomplete>
+            <div appClickOutsideTag (clickOutside)="closeDropdownTag()" class="tag-container-dropdown bg_gray">
+                    <div *ngIf="showDropdownTag">
+                        <div (click)="selectTag(tag)" class="tag arial_font" *ngFor="let tag of tags | tagFilter: getTag() | tagFilterUsed : getSelectedTags()">
+                            {{tag.name}}
+                        </div>
+                    </div>
+                </div>
         </mat-form-field>
     </div>
     <div class="form-group ride-customization-field card p-3">

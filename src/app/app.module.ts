@@ -68,6 +68,9 @@ import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-cus
 import { FavoriteRouteButtonComponent } from './components/favorite-route-button/favorite-route-button.component';
 import { RouteSummaryComponent } from './components/route-summary/route-summary.component';
 import { RideOptionsComponent } from './components/ride-options/ride-options.component';
+import { TagFilterPipe } from './pipes/tag-filter.pipe';
+import { ClickOutsideTagDirective } from './directives/click-outside-tag.directive';
+import { TagFilterUsedPipe } from './pipes/tag-filter-used.pipe';
 
 @NgModule({
   declarations: [
@@ -112,6 +115,9 @@ import { RideOptionsComponent } from './components/ride-options/ride-options.com
     FavoriteRouteButtonComponent,
     RouteSummaryComponent,
     RideOptionsComponent,
+    TagFilterPipe,
+    ClickOutsideTagDirective,
+    TagFilterUsedPipe,
   ],
   imports: [
     BrowserModule,

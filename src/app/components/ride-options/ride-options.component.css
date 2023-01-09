@@ -71,3 +71,19 @@ input:focus {
 .chip-icon {
     color: white;
 }
+
+.tag {
+    padding: 10px;
+}
+
+.tag-container-dropdown {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.tag:hover {
+    background-color: #C2C2C2;
+}
