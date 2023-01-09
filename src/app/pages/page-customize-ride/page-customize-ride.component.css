@@ -1,0 +1,23 @@
+.bg-pic {
+    background-image: url('../../../assets/taxi2.jpg');
+    background-size: contain;
+    background-position: right bottom;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.ride-customization {
+    margin: auto;
+    margin-top: 2%;
+}
+
+.arial_font {
+    font-family: Arial;
+}
+
+.center_text {
+    text-align: center;
+}

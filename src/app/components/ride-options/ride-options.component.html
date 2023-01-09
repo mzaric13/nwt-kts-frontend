@@ -1,0 +1,59 @@
+<form [formGroup]="ride" class="mt-2">
+    <div class="form-group ride-customization-field card p-3">
+        <mat-label class="arial_text form-label">Additional passengers</mat-label>
+        <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-chip-list #peopleChipList aria-label="People selection">
+                <mat-chip class="arial_text chip" *ngFor="let person of people" (removed)="removePerson(person)">
+                {{person}}
+                <button matChipRemove>
+                    <mat-icon class="chip-icon">cancel</mat-icon>
+                </button>
+                </mat-chip>
+                <input class="arial_text bg_gray borderless_input input_size" placeholder="Enter email..."
+                    [matChipInputFor]="peopleChipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="addPerson($event)">
+            </mat-chip-list>
+        </mat-form-field>
+    </div>
+    <div class="form-group ride-customization-field card p-3">
+        <mat-label class="arial_text form-label">Additional ride options</mat-label>
+        <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-chip-list #tagsChipList aria-label="Tag selection">
+                <mat-chip class="arial_text chip" *ngFor="let tag of selectedTags" (removed)="removeTag(tag)">
+                {{tag.name}}
+                <button matChipRemove>
+                    <mat-icon class="chip-icon">cancel</mat-icon>
+                </button>
+                </mat-chip>
+                <input class="arial_text bg_gray borderless_input input_size" placeholder="Enter option..."
+                    #tagInput
+                    [matChipInputFor]="tagsChipList"
+                    [matAutocomplete]="auto"
+                    formControlName="tagControl"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="addTag($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="tagSelected($event)">
+                <mat-option appearance="fill" *ngFor="let tag of filteredTags | async" [value]="tag">
+                    {{tag}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div class="form-group ride-customization-field card p-3">
+        <div>
+            <input formControlName="isChecked" (change)="changeTimeInputVisibility()" type="checkbox" id="additionalDestinations" name="additionalDestinations">
+            <label class="checkbox-label" for="additionalDestinations">Order ride for later?</label>
+        </div>
+        <div *ngIf="showTimeInput" class="24hr-example">
+            <input class="arial_text bg_gray borderless_input input_size" placeholder="24hr format" aria-label="Enter time..." [ngxTimepicker]="fullTime" [format]="24"  readonly>
+            <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+        </div>
+    </div>
+    <div class="form-group form-group-button">
+        <button class="btn btn-dark arial_font" type="submit">Create ride</button>
+    </div>
+</form>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,6 +12,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatOptionModule } from '@angular/material/core';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import {
   SocialLoginModule,
@@ -58,6 +65,9 @@ import { PageHomePassengerComponent } from './pages/page-home-passenger/page-hom
 import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-passenger.component';
 import { ClickOutsideExtraDestinationDirective } from './directives/click-outside-extra-destination.directive';
 import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-customize-ride.component';
+import { FavoriteRouteButtonComponent } from './components/favorite-route-button/favorite-route-button.component';
+import { RouteSummaryComponent } from './components/route-summary/route-summary.component';
+import { RideOptionsComponent } from './components/ride-options/ride-options.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +109,9 @@ import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-cus
     NavbarPassengerComponent,
     ClickOutsideExtraDestinationDirective,
     PageCustomizeRideComponent,
+    FavoriteRouteButtonComponent,
+    RouteSummaryComponent,
+    RideOptionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +125,13 @@ import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-cus
     DragDropModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    NgxMaterialTimepickerModule,
+    MatAutocompleteModule,
+    MatOptionModule,
   ],
   providers: [
     {

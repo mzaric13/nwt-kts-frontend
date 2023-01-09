@@ -1,0 +1,7 @@
+.mat-focus-indicator {
+    outline: 0px;
+}
+
+.mat-icon-button:hover {
+    color: grey;
+}

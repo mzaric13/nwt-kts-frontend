@@ -92,11 +92,7 @@ export class RouteFormComponent implements OnInit {
   }
 
   showInputForExtraLocations() {
-    if (this.route.controls.isChecked.value) {
-      this.showAdditionalInput = true;
-    } else {
-      this.showAdditionalInput = false;
-    }
+    this.showAdditionalInput = this.route.controls.isChecked.value!;
   }
 
   openDropdownPickup() {

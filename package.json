@@ -40,6 +40,7 @@
         "leaflet-routing-machine": "^3.2.12",
         "leaflet.animatedmarker": "^1.0.0",
         "leaflet.markercluster": "^1.5.3",
+        "ngx-material-timepicker": "^5.5.3",
         "popper.js": "^1.16.1",
         "rxjs": "~7.5.0",
         "sweetalert2": "^11.6.14",

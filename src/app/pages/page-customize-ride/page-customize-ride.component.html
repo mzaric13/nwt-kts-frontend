@@ -1,1 +1,10 @@
-<p>page-customize-ride works!</p>
+<div class="bg-pic">
+    <app-navbar-passenger></app-navbar-passenger>
+    <div class="ride-customization w-50">
+        <div class="card p-3 bg-light border-dark">
+            <h1 class="arial_font center_text mt-2 mb-3">Customize your next drive!</h1> 
+            <app-route-summary [passenger]="loggedPassenger" [route]="routeDTO" (changeFavoriteRouteEvent)="changeFavoriteRoute($event)"></app-route-summary>
+            <app-ride-options [tags]="tags"></app-ride-options>
+        </div>
+    </div>
+</div>

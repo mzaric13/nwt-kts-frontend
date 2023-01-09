@@ -1,15 +1,16 @@
-export interface PassengerDTO {
+import { RouteDTO } from './route-dto';
 
-    id: number;
-    email: string;
-    name: string;
-    surname: string;
-    city: string;
-    phoneNumber: string;
-    password: string;
-    passwordConfirm: string;
-    profilePicture: string;
-    activated: boolean;
-    blocked: boolean;
-    
+export interface PassengerDTO {
+  id: number;
+  email: string;
+  name: string;
+  surname: string;
+  city: string;
+  phoneNumber: string;
+  password: string;
+  passwordConfirm: string;
+  profilePicture: string;
+  activated: boolean;
+  blocked: boolean;
+  favoriteRoutes: RouteDTO[];
 }
