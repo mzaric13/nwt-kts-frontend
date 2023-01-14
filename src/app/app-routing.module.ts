@@ -13,6 +13,7 @@ import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
+import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
@@ -28,7 +29,9 @@ const routes: Routes = [
   {path: 'forgotten-password', component: PageForgottenPasswordComponent},
   {path: 'activated-account/:id', component: ActivatedAccountComponent},
   {path: 'reset-password/:email', component: PageResetPasswordComponent},
+  //temporary
   {path: 'rate', component: ModalGiveRatingComponent},
+  {path: 'view-drive-history', component: PageViewDriveHistoryComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

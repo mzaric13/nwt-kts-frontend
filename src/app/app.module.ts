@@ -8,6 +8,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
   SocialLoginModule,
@@ -52,6 +57,8 @@ import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
+import { ViewHistoryComponent } from './components/view-history/view-history.component';
+import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +96,9 @@ import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-g
     PageForgottenPasswordComponent,
     ActivatedAccountComponent,
     PageResetPasswordComponent,
-    ModalGiveRatingComponent
+    ModalGiveRatingComponent,
+    ViewHistoryComponent,
+    PageViewDriveHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +109,11 @@ import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-g
     ReactiveFormsModule,
     FontAwesomeModule,
     SweetAlert2Module.forRoot(),
+    MatTableModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatSortModule,
+    MatProgressSpinnerModule 
   ],
   providers: [
     {
