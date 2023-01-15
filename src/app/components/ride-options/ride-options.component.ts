@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TagDTO } from 'src/app/models/tag-dto';
+import CreateRide from 'src/app/models/create-ride';
 
 @Component({
   selector: 'app-ride-options',
@@ -13,6 +14,7 @@ export class RideOptionsComponent implements OnInit {
   ride = new FormGroup({
     isChecked: new FormControl(false),
     tagControl: new FormControl(),
+    time: new FormControl(""),
   });
 
   @Input() tags: TagDTO[] = [];
@@ -28,9 +30,27 @@ export class RideOptionsComponent implements OnInit {
 
   showDropdownTag: boolean = false;
 
+  @Output() createRideEvent = new EventEmitter();
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+  
+  public onSubmit() {
+    const time = new Date();
+    if (this.ride.controls.time.value) {
+      const hour = Number.parseInt(this.ride.controls.time.value.split(':')[0]);
+      const minute = Number.parseInt(this.ride.controls.time.value.split(':')[1]);
+      time.setHours(hour);
+      time.setMinutes(minute);
+    }
+
+    this.createRideEvent.emit({
+      passengers: this.people,
+      tags: this.selectedTags,
+      time
+    })
+  }
 
   public addTag(event: MatChipInputEvent): void {
     const value = event.value;

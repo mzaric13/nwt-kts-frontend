@@ -45,7 +45,6 @@ export class PageHomePassengerComponent implements OnInit {
       this.passengerService.getLoggedPassenger().subscribe({
       next: (passenger: PassengerDTO) => {
         this.loggedPassenger = passenger;
-        console.log(this.loggedPassenger);
       },
     });
     } catch (e) {

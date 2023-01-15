@@ -126,7 +126,7 @@ export class PassengerService {
       }),
     };
 
-    return this.httpClient.put<void>(
+    return this.httpClient.put<RouteDTO>(
       this.url + '/passengers/add-favorite-route/',
       routeDTO,
       newHeader
