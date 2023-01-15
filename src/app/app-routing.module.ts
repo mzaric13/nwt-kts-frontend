@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'forgotten-password', component: PageForgottenPasswordComponent },
   { path: 'activated-account/:id', component: ActivatedAccountComponent },
   { path: 'reset-password/:email', component: PageResetPasswordComponent },
-  { path: 'customize-ride/:id', component: PageCustomizeRideComponent },
+  { path: 'customize-ride', component: PageCustomizeRideComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
