@@ -13,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
 
 import {
   SocialLoginModule,
@@ -59,6 +60,8 @@ import { PageResetPasswordComponent } from './pages/page-reset-password/page-res
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 import { ViewHistoryComponent } from './components/view-history/view-history.component';
 import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
+import { ModalDetailedHistoryViewComponent } from './components/modal-detailed-history-view/modal-detailed-history-view.component';
+import { ModalMapHistoryViewComponent } from './components/modal-map-history-view/modal-map-history-view.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +101,9 @@ import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/p
     PageResetPasswordComponent,
     ModalGiveRatingComponent,
     ViewHistoryComponent,
-    PageViewDriveHistoryComponent
+    PageViewDriveHistoryComponent,
+    ModalDetailedHistoryViewComponent,
+    ModalMapHistoryViewComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +118,8 @@ import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/p
     MatPaginatorModule,
     BrowserAnimationsModule,
     MatSortModule,
-    MatProgressSpinnerModule 
+    MatProgressSpinnerModule,
+    MatButtonModule 
   ],
   providers: [
     {

@@ -1,5 +1,5 @@
 export interface RatingDTO {
-    driveRating: number,
+    driverRating: number,
     vehicleRating: number,
     comment: string,
     driveId: number,
