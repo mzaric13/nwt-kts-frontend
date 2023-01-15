@@ -2,8 +2,6 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  ViewChild,
-  ElementRef,
   Input,
   OnChanges,
   SimpleChanges,
@@ -11,12 +9,9 @@ import {
   EventEmitter,
 } from '@angular/core';
 import * as L from 'leaflet';
-import 'leaflet-routing-machine';
 import 'leaflet.markercluster';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { PointCreationDTO } from 'src/app/models/point-creation-dto';
-const l = require('leaflet');
-require('leaflet.animatedmarker/src/AnimatedMarker');
 
 @Component({
   selector: 'app-map',
@@ -24,92 +19,96 @@ require('leaflet.animatedmarker/src/AnimatedMarker');
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
-  private map!: L.Map;
   private icon!: L.DivIcon;
-  private route!: L.Routing.Control;
+  private routeLayers: L.LayerGroup[] = [];
 
+  @Input() waypoints: PointCreationDTO[] = [];
   @Input() drivers!: DriverDTO[];
-  @Input() rideAddresses!: number[][];
+  @Input() routes: any = [];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
   @Output() estimatedCostEvent = new EventEmitter<number>();
   @Output() waypointsEvent = new EventEmitter<PointCreationDTO[]>();
+  @Output() routeIdxEvent = new EventEmitter<number>();
+
+  private routeIdxs = new Map<string, number>();
+
+  options = {
+    layers: [
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 5,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }),
+    ],
+    center: L.latLng(45.25, 19.8345),
+    zoom: 14,
+  }
+
+  mainGroup: L.LayerGroup[] = [];
 
   private initMap(): void {
-    this.map = L.map('map', {
-      center: [45.25, 19.8345],
-      zoom: 14,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      minZoom: 5,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(this.map);
-
     this.icon = L.divIcon({
       className: 'position-relative rotate--marker',
       html: '<div><img style="width: 50px;" src="https://www.pngkit.com/png/full/54-544296_red-top-view-clip-art-at-clker-cartoon.png" /></div>',
     });
   }
 
-  constructor(private elByClassName: ElementRef) {}
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     const newDrivers = changes['drivers'];
-    const driveAddresses = changes['rideAddresses'];
+    const newRoutes = changes['routes'];
 
-    if (driveAddresses) {
-      const selectedAddresses: number[][] = driveAddresses.currentValue;
-      if (selectedAddresses.length !== 0) {
-        if (this.route) {
-          this.map.removeControl(this.route);
+    if (newRoutes) {
+      const routes: any = newRoutes.currentValue;
+      if (routes.length !== 0) {
+        if (this.routeLayers) {
+          for (let routeLayer of this.routeLayers) {
+            const idx = this.mainGroup.indexOf(routeLayer);
+            this.mainGroup.splice(idx, 1);
+          }
         }
-        const waypoints: L.LatLng[] = [];
-        for (let selectedAddress of selectedAddresses) {
-          waypoints.push(new L.LatLng(selectedAddress[0], selectedAddress[1]));
+        const routeWaypoints = changes['waypoints'].currentValue;
+        let markerLayerGroup: L.LayerGroup = new L.LayerGroup();
+        for (let waypoint of routeWaypoints) {
+          let marker = L.marker(L.latLng(waypoint.latitude, waypoint.longitude));
+          marker.addTo(markerLayerGroup);
         }
-        this.route = L.Routing.control({
-          plan: L.Routing.plan(waypoints, {
-            addWaypoints: false,
-            draggableWaypoints: false,
-          }),
-          fitSelectedRoutes: true,
-          addWaypoints: false,
-          showAlternatives: true,
-          show: false,
-          altLineOptions: {
-            addWaypoints: false,
-            styles: [
-              {
-                color: 'blue',
-                stroke: true,
-                opacity: 0.6,
-              },
-            ],
-            extendToWaypoints: false,
-            missingRouteTolerance: 5,
-          },
-        }).addTo(this.map);
+        this.routeLayers.push(markerLayerGroup);
+        this.mainGroup = [...this.mainGroup, markerLayerGroup];
 
-        const instructions: HTMLElement = (<HTMLElement>(
-          this.elByClassName.nativeElement
-        )).querySelector(
-          '.leaflet-routing-alternatives-container'
-        ) as HTMLElement;
-        instructions.style.display = 'none';
+        setTimeout(() => {
+          this.routeIdxEvent.emit(0);
+          this.estimatedTimeEvent.emit(this.calculateEstimatedTime(routes[0].duration));
+          this.estimatedCostEvent.emit(this.calculateDistance(routes[0].distance));
+        }, 100)
+        
+        for (let i = 0; i < routes.length; i++) {
+          const route = routes[i];
+          let geoLayerGroup: L.LayerGroup = new L.LayerGroup();
+          let color = Math.floor(Math.random() * 16777215).toString(16);
+          this.routeIdxs.set(color, i);
+          for (let leg of route['legs']) {
+            for (let step of leg['steps']) {
+              let routeLayer = L.geoJSON(step.geometry);
+              routeLayer.setStyle({ color: `#${color}` });
 
-        const that = this;
+              const that = this;
+              routeLayer.on('click', function (e) {
+                let routeColor = e.propagatedFrom.options.color.substring(1);
+                let routeIdx: number = that.routeIdxs.get(routeColor)!;
+                that.routeIdxEvent.emit(routeIdx);
+                that.estimatedTimeEvent.emit(that.calculateEstimatedTime(routes[routeIdx].duration));
+                that.estimatedCostEvent.emit(that.calculateDistance(routes[routeIdx].distance));
+              })
 
-        this.route.on('routeselected', function (e) {
-          that.waypointsEvent.emit(that.createPoints(e.route.coordinates));
-          that.estimatedTimeEvent.emit(
-            that.calculateEstimatedTime(e.route.summary.totalTime)
-          );
-          that.estimatedCostEvent.emit(
-            that.calculateDistance(e.route.summary.totalDistance)
-          );
-        });
+              routeLayer.addTo(geoLayerGroup);
+            }
+          }
+          this.routeLayers.push(geoLayerGroup);
+          this.mainGroup = [...this.mainGroup, geoLayerGroup];
+        }
       }
     }
 
@@ -125,24 +124,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  private createPoints(coordinates: L.LatLng[]) {
-    const waypoints: PointCreationDTO[] = [];
-    for (let coordinate of coordinates) {
-      waypoints.push({ latitude: coordinate.lat, longitude: coordinate.lng });
-    }
-    return waypoints;
-  }
-
   private addDriversToTheMap() {
-    const latMin: number = 2300;
-    const latMax: number = 3000;
-    const lngMin: number = 7500;
-    const lngMax: number = 9000;
     const markers = L.markerClusterGroup();
     for (const driver of this.drivers) {
-      const lat = 45 + (Math.random() * (latMax - latMin) + latMin) / 10000;
-      const lng = 19 + (Math.random() * (lngMax - lngMin) + lngMin) / 10000;
-      driver.geoLocation = [lat, lng];
       let availability: string = '';
       if (driver.available) {
         availability =
@@ -151,7 +135,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         availability =
           '<div style="font-family: Arial; color:red">NOT available</div>';
       }
-      const marker = L.marker([lat, lng], {
+      const marker = L.marker([driver.location.latitude, driver.location.longitude], {
         icon: this.icon,
         riseOnHover: true,
       }).bindTooltip(
@@ -169,7 +153,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       );
       markers.addLayer(marker);
     }
-    this.map.addLayer(markers);
+    this.mainGroup.push(markers);
   }
 
   private calculateEstimatedTime(time: number) {

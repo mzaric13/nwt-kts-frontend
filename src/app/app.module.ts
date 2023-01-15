@@ -18,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import {
   SocialLoginModule,
@@ -138,6 +139,7 @@ import { TagFilterUsedPipe } from './pipes/tag-filter-used.pipe';
     NgxMaterialTimepickerModule,
     MatAutocompleteModule,
     MatOptionModule,
+    LeafletModule,
   ],
   providers: [
     {
