@@ -6,6 +6,8 @@ import { DriverService } from 'src/app/services/driver.service';
 import { GeocodeService } from 'src/app/services/geocode.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { PassengerService } from 'src/app/services/passenger.service';
+import { PassengerDTO } from 'src/app/models/passenger-dto';
 
 @Component({
   selector: 'app-page-home-passenger',
@@ -16,6 +18,7 @@ export class PageHomePassengerComponent implements OnInit {
   constructor(
     private readonly geocodeService: GeocodeService,
     private readonly driverService: DriverService,
+    private readonly passengerService: PassengerService,
     private readonly router: Router
   ) { }
   
@@ -29,6 +32,8 @@ export class PageHomePassengerComponent implements OnInit {
 
   routes: any = [];
 
+  loggedPassenger!: PassengerDTO;
+
   ngOnInit(): void {
     try {
       this.driverService.getAllDrivers().subscribe({
@@ -36,6 +41,13 @@ export class PageHomePassengerComponent implements OnInit {
           this.drivers = drivers;
         },
       });
+
+      this.passengerService.getLoggedPassenger().subscribe({
+      next: (passenger: PassengerDTO) => {
+        this.loggedPassenger = passenger;
+        console.log(this.loggedPassenger);
+      },
+    });
     } catch (e) {
       console.log(e);
     }

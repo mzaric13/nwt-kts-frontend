@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DriverDTO } from 'src/app/models/driver-dto';
+import { PassengerDTO } from 'src/app/models/passenger-dto';
+import { PointCreationDTO } from 'src/app/models/point-creation-dto';
 import { DriverService } from 'src/app/services/driver.service';
 import { GeocodeService } from 'src/app/services/geocode.service';
+import { PassengerService } from 'src/app/services/passenger.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,13 +15,16 @@ import Swal from 'sweetalert2';
 export class PageHomeUnregisteredComponent implements OnInit {
   constructor(
     private readonly geocodeService: GeocodeService,
-    private readonly driverService: DriverService
+    private readonly driverService: DriverService,
   ) {}
 
-  rideAddresses: number[][] = [];
+  routeWaypoints: PointCreationDTO[] = [];
   drivers: DriverDTO[] = [];
   estimatedTime: number = 0;
   estimatedCost: number = 0;
+  routes: any = [];
+
+  loggedPassenger!: PassengerDTO;
 
   ngOnInit(): void {
     try {
@@ -33,11 +39,11 @@ export class PageHomeUnregisteredComponent implements OnInit {
   }
 
   async makeRoute(routes: string[]) {
-    const driveAddresses: number[][] = [];
+    const waypoints: PointCreationDTO[] = [];
     for (let route of routes) {
       const routeResult = await this.geocodeService.getGeocodes(route);
       try {
-        driveAddresses.push([routeResult[0].y, routeResult[0].x]);
+        waypoints.push({ latitude: routeResult[0].y, longitude: routeResult[0].x });
       } catch (e) {
         const text = 'Location ' + route + " doesn't exist";
         Swal.fire({
@@ -47,7 +53,12 @@ export class PageHomeUnregisteredComponent implements OnInit {
         });
       }
     }
-    this.rideAddresses = driveAddresses;
+    this.geocodeService.getRoutes(waypoints).subscribe({
+      next: (routes: any) => {
+        this.routes = routes.routes;
+        this.routeWaypoints = waypoints;
+      }
+    })
   }
 
   getEstimatedTime(time: number) {

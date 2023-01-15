@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import * as locationsJson from '../../../assets/locations.json';
 import Swal from 'sweetalert2';
+import { PassengerDTO } from 'src/app/models/passenger-dto';
 
 @Component({
   selector: 'app-route-form',
@@ -33,7 +34,9 @@ export class RouteFormComponent implements OnInit {
 
   @Output() customizeRideEvent = new EventEmitter();
 
-  constructor() {}
+  @Input() loggedPassenger!: PassengerDTO;
+
+  constructor() { }
 
   private initGeoCodeSearch() {
     this.locations.splice(this.locations.length - 2, 2);
