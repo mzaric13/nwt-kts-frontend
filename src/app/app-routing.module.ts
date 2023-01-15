@@ -14,6 +14,7 @@ import { ActivatedAccountComponent } from './pages/activated-account/activated-a
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 import { PageHomePassengerComponent } from './pages/page-home-passenger/page-home-passenger.component';
 import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-customize-ride.component';
+import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'reset-password/:email', component: PageResetPasswordComponent },
   { path: 'customize-ride', component: PageCustomizeRideComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: 'rate', component: ModalGiveRatingComponent },
 ];
 
 @NgModule({

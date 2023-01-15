@@ -72,6 +72,7 @@ import { RideOptionsComponent } from './components/ride-options/ride-options.com
 import { TagFilterPipe } from './pipes/tag-filter.pipe';
 import { ClickOutsideTagDirective } from './directives/click-outside-tag.directive';
 import { TagFilterUsedPipe } from './pipes/tag-filter-used.pipe';
+import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { TagFilterUsedPipe } from './pipes/tag-filter-used.pipe';
     TagFilterPipe,
     ClickOutsideTagDirective,
     TagFilterUsedPipe,
+    ModalGiveRatingComponent
   ],
   imports: [
     BrowserModule,
