@@ -12,24 +12,34 @@ import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-p
 import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
+import { PageHomePassengerComponent } from './pages/page-home-passenger/page-home-passenger.component';
+import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-customize-ride.component';
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
   { path: 'home-guest', component: PageHomeUnregisteredComponent },
-  {path: 'login', component: PageLoginComponent},
-  {path: 'register', component: PageRegisterComponent},
-  {path: 'passenger-profile', component: PagePassengerProfileComponent},
-  {path: 'admin-profile', component: PageAdminProfileComponent},
-  {path: 'driver-profile', component: PageDriverProfileComponent},
-  {path: 'answer-driver-data-changes', component: PageAnswerDriverChangesComponent},
-  {path: 'change-blocked-status', component: PageChangeBlockedStatusComponent},
-  {path: 'purchase-tokens', component: PagePurchaseTokensComponent},
-  {path: 'forgotten-password', component: PageForgottenPasswordComponent},
-  {path: 'activated-account/:id', component: ActivatedAccountComponent},
-  {path: 'reset-password/:email', component: PageResetPasswordComponent},
-  {path: 'rate', component: ModalGiveRatingComponent},
-  {path: '**', redirectTo: '', pathMatch: 'full'}
+  { path: 'home-passenger', component: PageHomePassengerComponent },
+  { path: 'login', component: PageLoginComponent },
+  { path: 'register', component: PageRegisterComponent },
+  { path: 'passenger-profile', component: PagePassengerProfileComponent },
+  { path: 'admin-profile', component: PageAdminProfileComponent },
+  { path: 'driver-profile', component: PageDriverProfileComponent },
+  {
+    path: 'answer-driver-data-changes',
+    component: PageAnswerDriverChangesComponent,
+  },
+  {
+    path: 'change-blocked-status',
+    component: PageChangeBlockedStatusComponent,
+  },
+  { path: 'purchase-tokens', component: PagePurchaseTokensComponent },
+  { path: 'forgotten-password', component: PageForgottenPasswordComponent },
+  { path: 'activated-account/:id', component: ActivatedAccountComponent },
+  { path: 'reset-password/:email', component: PageResetPasswordComponent },
+  { path: 'customize-ride', component: PageCustomizeRideComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: 'rate', component: ModalGiveRatingComponent },
 ];
 
 @NgModule({

@@ -2,8 +2,6 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  ViewChild,
-  ElementRef,
   Input,
   OnChanges,
   SimpleChanges,
@@ -11,11 +9,9 @@ import {
   EventEmitter,
 } from '@angular/core';
 import * as L from 'leaflet';
-import 'leaflet-routing-machine';
 import 'leaflet.markercluster';
 import { DriverDTO } from 'src/app/models/driver-dto';
-const l = require('leaflet');
-require('leaflet.animatedmarker/src/AnimatedMarker');
+import { PointCreationDTO } from 'src/app/models/point-creation-dto';
 
 @Component({
   selector: 'app-map',
@@ -23,89 +19,96 @@ require('leaflet.animatedmarker/src/AnimatedMarker');
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
-  private map!: L.Map;
   private icon!: L.DivIcon;
-  private route!: L.Routing.Control;
+  private routeLayers: L.LayerGroup[] = [];
 
-  @Input() pickupGeoLocation!: number[];
-  @Input() destinationGeoLocation!: number[];
+  @Input() waypoints: PointCreationDTO[] = [];
   @Input() drivers!: DriverDTO[];
+  @Input() routes: any = [];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
+  @Output() estimatedCostEvent = new EventEmitter<number>();
+  @Output() waypointsEvent = new EventEmitter<PointCreationDTO[]>();
+  @Output() routeIdxEvent = new EventEmitter<number>();
+
+  private routeIdxs = new Map<string, number>();
+
+  options = {
+    layers: [
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 5,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }),
+    ],
+    center: L.latLng(45.25, 19.8345),
+    zoom: 14,
+  }
+
+  mainGroup: L.LayerGroup[] = [];
 
   private initMap(): void {
-    this.map = L.map('map', {
-      center: [45.25, 19.8345],
-      zoom: 14,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      minZoom: 5,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(this.map);
-
     this.icon = L.divIcon({
       className: 'position-relative rotate--marker',
       html: '<div><img style="width: 50px;" src="https://www.pngkit.com/png/full/54-544296_red-top-view-clip-art-at-clker-cartoon.png" /></div>',
     });
   }
 
-  constructor(private elByClassName: ElementRef) {}
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    const startPoint = changes['pickupGeoLocation'];
-    const endPoint = changes['destinationGeoLocation'];
     const newDrivers = changes['drivers'];
+    const newRoutes = changes['routes'];
 
-    if (startPoint && endPoint) {
-      const startingPoint: number[] = startPoint.currentValue;
-      const endingPoint: number[] = endPoint.currentValue;
-      if (startingPoint.length !== 0 && endingPoint.length !== 0) {
-        if (this.route) {
-          this.map.removeControl(this.route);
+    if (newRoutes) {
+      const routes: any = newRoutes.currentValue;
+      if (routes.length !== 0) {
+        if (this.routeLayers) {
+          for (let routeLayer of this.routeLayers) {
+            const idx = this.mainGroup.indexOf(routeLayer);
+            this.mainGroup.splice(idx, 1);
+          }
         }
-        this.route = L.Routing.control({
-          plan: L.Routing.plan(
-            [
-              L.latLng(startingPoint[0], startingPoint[1]),
-              L.latLng(endingPoint[0], endingPoint[1]),
-            ],
-            {
-              addWaypoints: false,
-              draggableWaypoints: false,
+        const routeWaypoints = changes['waypoints'].currentValue;
+        let markerLayerGroup: L.LayerGroup = new L.LayerGroup();
+        for (let waypoint of routeWaypoints) {
+          let marker = L.marker(L.latLng(waypoint.latitude, waypoint.longitude));
+          marker.addTo(markerLayerGroup);
+        }
+        this.routeLayers.push(markerLayerGroup);
+        this.mainGroup = [...this.mainGroup, markerLayerGroup];
+
+        setTimeout(() => {
+          this.routeIdxEvent.emit(0);
+          this.estimatedTimeEvent.emit(this.calculateEstimatedTime(routes[0].duration));
+          this.estimatedCostEvent.emit(this.calculateDistance(routes[0].distance));
+        }, 100)
+        
+        for (let i = 0; i < routes.length; i++) {
+          const route = routes[i];
+          let geoLayerGroup: L.LayerGroup = new L.LayerGroup();
+          let color = Math.floor(Math.random() * 16777215).toString(16);
+          this.routeIdxs.set(color, i);
+          for (let leg of route['legs']) {
+            for (let step of leg['steps']) {
+              let routeLayer = L.geoJSON(step.geometry);
+              routeLayer.setStyle({ color: `#${color}` });
+
+              const that = this;
+              routeLayer.on('click', function (e) {
+                let routeColor = e.propagatedFrom.options.color.substring(1);
+                let routeIdx: number = that.routeIdxs.get(routeColor)!;
+                that.routeIdxEvent.emit(routeIdx);
+                that.estimatedTimeEvent.emit(that.calculateEstimatedTime(routes[routeIdx].duration));
+                that.estimatedCostEvent.emit(that.calculateDistance(routes[routeIdx].distance));
+              })
+
+              routeLayer.addTo(geoLayerGroup);
             }
-          ),
-          addWaypoints: false,
-          showAlternatives: true,
-          show: false,
-          altLineOptions: {
-            addWaypoints: false,
-            styles: [
-              {
-                color: 'blue',
-                stroke: true,
-                opacity: 0.6,
-              },
-            ],
-            extendToWaypoints: false,
-            missingRouteTolerance: 5,
-          },
-        }).addTo(this.map);
-
-        const instructions: HTMLElement = (<HTMLElement>(
-          this.elByClassName.nativeElement
-        )).querySelector(
-          '.leaflet-routing-alternatives-container'
-        ) as HTMLElement;
-        instructions.style.display = 'none';
-
-        const that = this;
-
-        this.route.on('routeselected', function (e) {
-          const time = Math.ceil(e.route.summary.totalTime / 60);
-          that.estimatedTimeEvent.emit(time);
-        });
+          }
+          this.routeLayers.push(geoLayerGroup);
+          this.mainGroup = [...this.mainGroup, geoLayerGroup];
+        }
       }
     }
 
@@ -122,16 +125,17 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private addDriversToTheMap() {
-    const latMin: number = 2300;
-    const latMax: number = 3000;
-    const lngMin: number = 7500;
-    const lngMax: number = 9000;
     const markers = L.markerClusterGroup();
     for (const driver of this.drivers) {
-      const lat = 45 + (Math.random() * (latMax - latMin) + latMin) / 10000;
-      const lng = 19 + (Math.random() * (lngMax - lngMin) + lngMin) / 10000;
-      driver.geoLocation = [lat, lng];
-      const marker = L.marker([lat, lng], {
+      let availability: string = '';
+      if (driver.available) {
+        availability =
+          '<div style="font-family: Arial; color:green">Available</div>';
+      } else {
+        availability =
+          '<div style="font-family: Arial; color:red">NOT available</div>';
+      }
+      const marker = L.marker([driver.location.latitude, driver.location.longitude], {
         icon: this.icon,
         riseOnHover: true,
       }).bindTooltip(
@@ -139,9 +143,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           driver.name +
           ' ' +
           driver.surname +
-          '</div><div style="font-family: Arial;">Available: ' +
-          driver.available +
-          '</div></div>',
+          '</div>' +
+          availability +
+          '</div>',
         {
           offset: L.point(15, 0),
           direction: 'top',
@@ -149,7 +153,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       );
       markers.addLayer(marker);
     }
-    this.map.addLayer(markers);
+    this.mainGroup.push(markers);
+  }
+
+  private calculateEstimatedTime(time: number) {
+    return Math.round(time / 60);
+  }
+
+  private calculateDistance(totalDistance: number) {
+    const distance: number = totalDistance / 1000;
+    return Number.parseFloat(distance.toFixed(1));
   }
 
   ngOnInit(): void {}

@@ -1,0 +1,25 @@
+<div class="route-summary card">
+    <div class="route-summary-header">
+        <h2 class="route-summary-title arial_font center_text mt-2 mb-3">Selected route</h2>
+        <app-favorite-route-button (changeFavoriteEvent)="changeFavorite($event)" [isFavorite]="isFavorite" class="route-summary-header-button"></app-favorite-route-button>
+    </div>
+    <table *ngIf="tableData.length > 0" mat-table [dataSource]="tableData" class="mat-elevation-z8">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.routeName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expected time">
+            <th mat-header-cell *matHeaderCellDef> Expected time </th>
+            <td mat-cell *matCellDef="let element"> {{element.expectedTime}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="distance">
+            <th mat-header-cell *matHeaderCellDef> Distance </th>
+            <td mat-cell *matCellDef="let element"> {{element.length}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

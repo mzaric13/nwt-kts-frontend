@@ -9,6 +9,7 @@ export class RouteDetailsComponent implements OnInit {
   constructor() {}
 
   @Input() estimatedTime: number = 0;
+  @Input() estimatedCost: number = 0;
 
   ngOnInit(): void {}
 }

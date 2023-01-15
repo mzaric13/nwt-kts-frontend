@@ -1,6 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import * as locationsJson from '../../../assets/locations.json';
+import Swal from 'sweetalert2';
+import { PassengerDTO } from 'src/app/models/passenger-dto';
 
 @Component({
   selector: 'app-route-form',
@@ -11,6 +14,8 @@ export class RouteFormComponent implements OnInit {
   route = new FormGroup({
     pickup: new FormControl(''),
     destination: new FormControl(''),
+    isChecked: new FormControl(false),
+    extraLocation: new FormControl(''),
   });
 
   public locations: string[] = Object.values(locationsJson);
@@ -19,9 +24,19 @@ export class RouteFormComponent implements OnInit {
 
   public showDropdownDestination: boolean = false;
 
-  @Output() makeRoute = new EventEmitter();
+  public showDropdownExtraDestination: boolean = false;
 
-  constructor() {}
+  public showAdditionalInput: boolean = false;
+
+  public routeLocations: string[] = [];
+
+  @Output() makeRouteEvent = new EventEmitter();
+
+  @Output() customizeRideEvent = new EventEmitter();
+
+  @Input() loggedPassenger!: PassengerDTO;
+
+  constructor() { }
 
   private initGeoCodeSearch() {
     this.locations.splice(this.locations.length - 2, 2);
@@ -32,10 +47,55 @@ export class RouteFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.makeRoute.emit([
+    this.customizeRideEvent.emit();
+  }
+
+  searchRoute() {
+    if (!this.route.controls.pickup.value) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Pickup location needs to have a value!',
+      });
+      return;
+    }
+    if (!this.route.controls.destination.value) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Destination needs to have a value!',
+      });
+      return;
+    }
+    this.makeRouteEvent.emit([
       this.route.controls.pickup.value,
+      ...this.routeLocations,
       this.route.controls.destination.value,
     ]);
+  }
+
+  addExtraLocation() {
+    if (this.route.controls.extraLocation.value) {
+      this.routeLocations.push(this.route.controls.extraLocation.value);
+      this.route.patchValue({ extraLocation: '' });
+    }
+  }
+
+  removeRouteLocation(routeLocation: string) {
+    const idx = this.routeLocations.indexOf(routeLocation);
+    this.routeLocations.splice(idx, 1);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.routeLocations,
+      event.previousIndex,
+      event.currentIndex
+    );
+  }
+
+  showInputForExtraLocations() {
+    this.showAdditionalInput = this.route.controls.isChecked.value!;
   }
 
   openDropdownPickup() {
@@ -54,6 +114,14 @@ export class RouteFormComponent implements OnInit {
     this.showDropdownDestination = false;
   }
 
+  openDropdownExtraDestination() {
+    this.showDropdownExtraDestination = true;
+  }
+
+  closeDropdownExtraDestination() {
+    this.showDropdownExtraDestination = false;
+  }
+
   selectPickupLocation(address: string) {
     this.route.patchValue({ pickup: address });
     this.showDropdownPickup = false;
@@ -70,5 +138,14 @@ export class RouteFormComponent implements OnInit {
 
   getDestination(): string {
     return this.route.controls.destination.value!;
+  }
+
+  selectExtraDestination(address: string) {
+    this.route.patchValue({ extraLocation: address });
+    this.showDropdownExtraDestination = false;
+  }
+
+  getExtraDestination(): string {
+    return this.route.controls.extraLocation.value!;
   }
 }

@@ -1,3 +1,4 @@
+import { PointDTO } from './point-dto';
 import { VehicleDTO } from './vehicle-dto';
 
 export interface DriverDTO {
@@ -12,5 +13,5 @@ export interface DriverDTO {
   profilePicture: string;
   blocked: boolean;
   available: boolean;
-  geoLocation?: number[];
+  location: PointDTO;
 }

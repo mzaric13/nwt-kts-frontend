@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -8,6 +9,16 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatOptionModule } from '@angular/material/core';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import {
   SocialLoginModule,
@@ -51,6 +62,16 @@ import { PaymentCardComponent } from './components/payment-card/payment-card.com
 import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
+import { PageHomePassengerComponent } from './pages/page-home-passenger/page-home-passenger.component';
+import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-passenger.component';
+import { ClickOutsideExtraDestinationDirective } from './directives/click-outside-extra-destination.directive';
+import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-customize-ride.component';
+import { FavoriteRouteButtonComponent } from './components/favorite-route-button/favorite-route-button.component';
+import { RouteSummaryComponent } from './components/route-summary/route-summary.component';
+import { RideOptionsComponent } from './components/ride-options/ride-options.component';
+import { TagFilterPipe } from './pipes/tag-filter.pipe';
+import { ClickOutsideTagDirective } from './directives/click-outside-tag.directive';
+import { TagFilterUsedPipe } from './pipes/tag-filter-used.pipe';
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 
 @NgModule({
@@ -89,6 +110,16 @@ import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-g
     PageForgottenPasswordComponent,
     ActivatedAccountComponent,
     PageResetPasswordComponent,
+    PageHomePassengerComponent,
+    NavbarPassengerComponent,
+    ClickOutsideExtraDestinationDirective,
+    PageCustomizeRideComponent,
+    FavoriteRouteButtonComponent,
+    RouteSummaryComponent,
+    RideOptionsComponent,
+    TagFilterPipe,
+    ClickOutsideTagDirective,
+    TagFilterUsedPipe,
     ModalGiveRatingComponent
   ],
   imports: [
@@ -100,6 +131,17 @@ import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-g
     ReactiveFormsModule,
     FontAwesomeModule,
     SweetAlert2Module.forRoot(),
+    DragDropModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    NgxMaterialTimepickerModule,
+    MatAutocompleteModule,
+    MatOptionModule,
+    LeafletModule,
   ],
   providers: [
     {
