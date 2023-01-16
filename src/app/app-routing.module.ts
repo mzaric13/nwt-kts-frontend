@@ -16,6 +16,7 @@ import { PageHomePassengerComponent } from './pages/page-home-passenger/page-hom
 import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-customize-ride.component';
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
+import { ChartsComponent } from './components/charts/charts.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
@@ -39,7 +40,8 @@ const routes: Routes = [
   { path: 'activated-account/:id', component: ActivatedAccountComponent },
   { path: 'reset-password/:email', component: PageResetPasswordComponent },
   { path: 'customize-ride', component: PageCustomizeRideComponent },
-  {path: 'view-drive-history', component: PageViewDriveHistoryComponent},
+  { path: 'view-drive-history', component: PageViewDriveHistoryComponent},
+  { path: 'app-charts', component: ChartsComponent},
   { path: '**', redirectTo: '', pathMatch: 'full' },
   { path: 'rate', component: ModalGiveRatingComponent },
 ];

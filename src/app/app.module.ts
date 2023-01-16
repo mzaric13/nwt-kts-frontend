@@ -22,6 +22,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import {
   SocialLoginModule,
@@ -81,6 +82,8 @@ import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/p
 import { ModalDetailedHistoryViewComponent } from './components/modal-detailed-history-view/modal-detailed-history-view.component';
 import { ModalMapHistoryViewComponent } from './components/modal-map-history-view/modal-map-history-view.component';
 import { NavbarDriverComponent } from './components/navbar-driver/navbar-driver.component';
+import { ChartsComponent } from './components/charts/charts.component';
+import { PageChartsComponent } from './pages/page-charts/page-charts.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +137,9 @@ import { NavbarDriverComponent } from './components/navbar-driver/navbar-driver.
     PageViewDriveHistoryComponent,
     ModalDetailedHistoryViewComponent,
     ModalMapHistoryViewComponent,
-    NavbarDriverComponent
+    NavbarDriverComponent,
+    ChartsComponent,
+    PageChartsComponent
   ],
   imports: [
     BrowserModule,
@@ -160,6 +165,7 @@ import { NavbarDriverComponent } from './components/navbar-driver/navbar-driver.
     BrowserAnimationsModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    NgxChartsModule
   ],
   providers: [
     {

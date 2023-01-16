@@ -55,6 +55,7 @@ export class ViewHistoryComponent implements OnInit{
   private setDrives(data: RequestPageObject) {
     this.loading = false;
     this.drives = data.drives;
+    console.log(this.drives);
     this.drives.length = data.totalItems;
 
     this.dataSource = new MatTableDataSource<any>(this.drives);
