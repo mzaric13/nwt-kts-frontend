@@ -1,19 +1,15 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { RatingDTO } from "../models/rating-dto";
 import { RequestPage } from "../models/request-page";
 import { RequestPageObject } from "../models/request-page-object";
-import TempDriveDTO from "../models/temp-drive-dto";
 import { TokenService } from "./token.service";
-
-const cabecera = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-};
 
 @Injectable({
     providedIn: 'root',
   })
-  export class DriveService {
+  export class RatingService {
 
     private url = environment.apiUrl;
 
@@ -37,8 +33,14 @@ const cabecera = {
         return this.httpClient.get<RequestPageObject>(this.url + '/drives/get-drives-for-passenger', newHeader);
     }
 
-    public createTempDrive(tempDrive: TempDriveDTO) {
-      return this.httpClient.post<void>(this.url + "/drives/create-temp-drive/", tempDrive, cabecera);
+    public getDriveRatings(id: number) {
+        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
+        return this.httpClient.get<Array<RatingDTO>>(`http://localhost:9000/ratings/get-drive-ratings/${id}`, newHeader);
+    }
+
+    public getDriverAndVehicleAverageRating(id: number) {
+        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
+        return this.httpClient.get<Array<number>>(`http://localhost:9000/ratings/get-driver-and-vehicle-average-rating/${id}`, newHeader);
     }
 
   }

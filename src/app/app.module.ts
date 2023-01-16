@@ -19,6 +19,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
   SocialLoginModule,
@@ -73,6 +77,10 @@ import { TagFilterPipe } from './pipes/tag-filter.pipe';
 import { ClickOutsideTagDirective } from './directives/click-outside-tag.directive';
 import { TagFilterUsedPipe } from './pipes/tag-filter-used.pipe';
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
+import { ViewHistoryComponent } from './components/view-history/view-history.component';
+import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
+import { ModalDetailedHistoryViewComponent } from './components/modal-detailed-history-view/modal-detailed-history-view.component';
+import { ModalMapHistoryViewComponent } from './components/modal-map-history-view/modal-map-history-view.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +128,12 @@ import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-g
     TagFilterPipe,
     ClickOutsideTagDirective,
     TagFilterUsedPipe,
-    ModalGiveRatingComponent
+    ModalGiveRatingComponent,
+    ModalGiveRatingComponent,
+    ViewHistoryComponent,
+    PageViewDriveHistoryComponent,
+    ModalDetailedHistoryViewComponent,
+    ModalMapHistoryViewComponent
   ],
   imports: [
     BrowserModule,
@@ -137,11 +150,15 @@ import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-g
     MatFormFieldModule,
     MatChipsModule,
     BrowserAnimationsModule,
-    MatTableModule,
     NgxMaterialTimepickerModule,
     MatAutocompleteModule,
     MatOptionModule,
     LeafletModule,
+    MatTableModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {

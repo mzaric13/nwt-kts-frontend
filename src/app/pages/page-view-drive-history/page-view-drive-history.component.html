@@ -1,0 +1,14 @@
+<div class="bg-pic">
+    <div>
+        <app-navbar-admin></app-navbar-admin>
+    </div>
+    <div class="info w-50">
+        <app-view-history (showMoreDetailsButtonPressedEvent)="showModal($event)" (showMapButtonPressedEvent)="showMapModal($event)"></app-view-history>
+    </div>
+    <div *ngIf="modalIsOpened">
+        <app-modal-detailed-history-view (modalIsClosed)="closeModal()" [drive]="drive"></app-modal-detailed-history-view>
+    </div>
+    <div *ngIf="mapModalIsOpened">
+        <app-modal-map-history-view (modalIsClosed)="closeMapModal()" [drive]="drive"></app-modal-map-history-view>
+    </div>
+</div>
