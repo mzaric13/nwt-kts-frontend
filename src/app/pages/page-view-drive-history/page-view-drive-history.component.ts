@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DriveDTO } from 'src/app/models/drive-dto';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-page-view-drive-history',
@@ -11,10 +12,24 @@ export class PageViewDriveHistoryComponent implements OnInit {
   drive!: DriveDTO;
   modalIsOpened = false;
   mapModalIsOpened = false;
+  loggedPerson!: string;
 
-  constructor() { }
+  constructor(private tokenService: TokenService) { }
 
   ngOnInit(): void {
+    if (this.tokenService.getRole() === "ROLE_ADMIN")
+    {
+      this.loggedPerson = "admin";
+    }
+    else if (this.tokenService.getRole() === "ROLE_PASSENGER")
+    {
+      this.loggedPerson = "passenger";
+    }
+    //driver
+    else
+    {
+      this.loggedPerson = "driver";
+    }
   }
 
   public showModal(drive: DriveDTO) {

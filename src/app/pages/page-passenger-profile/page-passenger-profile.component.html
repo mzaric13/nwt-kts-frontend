@@ -1,7 +1,6 @@
 <div class="bg-pic">
     <div>
-        <!-- TODO: add navbar for logged passenger -->
-        <app-navbar-start-page></app-navbar-start-page>
+        <app-navbar-passenger></app-navbar-passenger>
     </div>
     <div *ngIf="isLoaded" class="info w-50">
         <div app-profile-page-cards [passenger]="loggedPassenger" (modalEvent)="openModal($event)"></div>

@@ -70,3 +70,13 @@
 .modal-dialog {
     top: 5%;
 }
+
+.flex-map {
+    margin-right: 60px;
+    margin-bottom: 10px;
+    height: 25vw;
+}
+
+.card-footer, .card-body {
+    margin-bottom: 0%;
+}

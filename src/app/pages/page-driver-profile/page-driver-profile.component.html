@@ -1,7 +1,6 @@
 <div class="bg-pic">
     <div>
-        <!-- TODO: add navbar for logged driver -->
-        <app-navbar-start-page></app-navbar-start-page>
+        <app-navbar-driver></app-navbar-driver>
     </div>
     <div *ngIf="isLoaded" class="info w-37-5">
         <div app-profile-page-cards [driver]="loggedDriver" (modalEvent)="openModal($event)"></div>

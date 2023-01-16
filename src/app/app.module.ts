@@ -80,6 +80,7 @@ import { ViewHistoryComponent } from './components/view-history/view-history.com
 import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
 import { ModalDetailedHistoryViewComponent } from './components/modal-detailed-history-view/modal-detailed-history-view.component';
 import { ModalMapHistoryViewComponent } from './components/modal-map-history-view/modal-map-history-view.component';
+import { NavbarDriverComponent } from './components/navbar-driver/navbar-driver.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { ModalMapHistoryViewComponent } from './components/modal-map-history-vie
     ViewHistoryComponent,
     PageViewDriveHistoryComponent,
     ModalDetailedHistoryViewComponent,
-    ModalMapHistoryViewComponent
+    ModalMapHistoryViewComponent,
+    NavbarDriverComponent
   ],
   imports: [
     BrowserModule,

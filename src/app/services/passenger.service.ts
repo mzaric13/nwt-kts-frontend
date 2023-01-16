@@ -9,6 +9,7 @@ import { TokenService } from './token.service';
 import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dto';
 import { Observable } from 'rxjs';
 import { RouteDTO } from '../models/route-dto';
+import { RatingDTO } from '../models/rating-dto';
 
 const cabecera = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -27,21 +28,21 @@ export class PassengerService {
 
   public registerPassenger(passengerCreationDTO: PassengerCreationDTO) {
     if (passengerCreationDTO.password != passengerCreationDTO.passwordConfirm) {
-      Swal.fire({
+       Swal.fire({
         position: 'center',
         icon: 'error',
         title: "Passwords don't match!",
         showConfirmButton: false,
         timer: 3000,
       });
-      throw new Error("Passwords don't match!");
+        throw new Error("Passwords don't match!");
     } else {
       return this.httpClient.post<PassengerDTO>(
         this.url + '/passengers/register',
         passengerCreationDTO,
         cabecera
       );
-    }
+    }   
   }
 
   public activateAccount(id: number) {
@@ -147,4 +148,9 @@ export class PassengerService {
       newHeader
     );
   }
+
+  public createRating(ratingDTO: RatingDTO) {
+    return this.httpClient.post<RatingDTO>(this.url + '/passengers/create-rating', ratingDTO, cabecera);
+  }
 }
+

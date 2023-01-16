@@ -45,7 +45,7 @@
 }
 
 .modal-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
@@ -68,5 +68,9 @@
 }
 
 .modal-dialog {
-    top: 5%;
+    top: 2%;
+}
+
+.card-footer, .card-body {
+    padding-bottom: 0px;
 }

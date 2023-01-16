@@ -1,6 +1,12 @@
 <div class="bg-pic">
-    <div>
+    <div *ngIf="loggedPerson === 'admin'">
         <app-navbar-admin></app-navbar-admin>
+    </div>
+    <div *ngIf="loggedPerson === 'passenger'">
+        <app-navbar-passenger></app-navbar-passenger>
+    </div>
+    <div *ngIf="loggedPerson === 'driver'">
+        <app-navbar-driver></app-navbar-driver>
     </div>
     <div class="info w-50">
         <app-view-history (showMoreDetailsButtonPressedEvent)="showModal($event)" (showMapButtonPressedEvent)="showMapModal($event)"></app-view-history>
