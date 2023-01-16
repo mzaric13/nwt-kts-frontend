@@ -21,7 +21,6 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
