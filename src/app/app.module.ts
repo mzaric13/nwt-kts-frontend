@@ -23,6 +23,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+
 
 import {
   SocialLoginModule,
@@ -165,7 +168,9 @@ import { PageChartsComponent } from './pages/page-charts/page-charts.component';
     BrowserAnimationsModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     {

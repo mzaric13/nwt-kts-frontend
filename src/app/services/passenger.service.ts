@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { RouteDTO } from '../models/route-dto';
 import { RatingDTO } from '../models/rating-dto';
 import { ChartCreationDTO } from '../models/chart-creation-dto';
+import { DatesChartDTO } from '../models/dates-chart-dto';
 
 const cabecera = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -154,7 +155,7 @@ export class PassengerService {
     return this.httpClient.post<RatingDTO>(this.url + '/passengers/create-rating', ratingDTO, cabecera);
   }
 
-  public createPassengerChart(startDate: Date, endDate: Date) {
+  public createPassengerChart(datesChartDTO: DatesChartDTO) {
     let newHeader = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -162,7 +163,7 @@ export class PassengerService {
       }),
     };
 
-    return this.httpClient.get<ChartCreationDTO>(`${this.url}/passengers/create-passenger-chart/${startDate}/${endDate}`, newHeader);
+    return this.httpClient.post<ChartCreationDTO>(this.url + '/passengers/create-passenger-chart', datesChartDTO, newHeader);
   }
 }
 

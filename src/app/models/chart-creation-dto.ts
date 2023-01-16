@@ -1,5 +1,7 @@
+import { ChartObjectCreationDTO } from "./chart-object-creation-dto";
+
 export interface ChartCreationDTO {
-    drivesPerDay: Map<string, number>,
-    drivenKilometersPerDay: Map<string, number>,
-    moneySpentOrEarnedPerDay: Map<string, number>
+    drivesPerDay: ChartObjectCreationDTO,
+    drivenKilometersPerDay: ChartObjectCreationDTO,
+    moneySpentOrEarnedPerDay: ChartObjectCreationDTO
 }
