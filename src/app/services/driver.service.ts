@@ -120,4 +120,15 @@ export class DriverService {
 
     return this.httpClient.post<ChartCreationDTO>(this.url + '/drivers/create-driver-chart', datesChartDTO, newHeader);
   }
+
+  public changeStatus() {
+    let newHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+
+    return this.httpClient.get<DriverDTO>(this.url + '/drivers/change-status', newHeader);
+  }
 }

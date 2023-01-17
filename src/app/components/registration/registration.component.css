@@ -59,8 +59,8 @@ input, label {
     width: 32%;
 }
 
-.select_element {
-    width:100%;
+.mat-form-field {
+    width: 100%;
 }
 
 .error {

@@ -13,3 +13,8 @@
 .mr-20 {
     margin-right: 10%;
 }
+
+.status-size {
+    width: 2vw;
+    cursor: pointer;
+}
