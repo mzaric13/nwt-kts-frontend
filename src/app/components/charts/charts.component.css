@@ -1,5 +1,5 @@
 .w-90 {
-    width: 90%;
+    width: 80vw;
 }
 
 .center {
@@ -11,13 +11,13 @@
 }
 
 .date-width {
-    width:25vw;
+    width:30vw;
 }
 
 .datepicker-width {
-    width: 13vw;
+    width: 17vw;
 }
 
-.card-height {
-    height: 200%;
+.margin-left {
+    margin-left: 1.8vw;
 }

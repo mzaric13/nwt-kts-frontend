@@ -9,6 +9,8 @@ import { PasswordChangeCreationDTO } from '../models/password-change-creation-dt
 import { ProfilePictureCreationDTO } from '../models/profile-picture-creation-dto';
 import { UpdatedUserDataCreationDTO } from '../models/updated-user-data-creation-dto';
 import { DriverDataAnsweredDTO } from '../models/driver-data-answered-dto';
+import { DatesChartDTO } from '../models/dates-chart-dto';
+import { ChartCreationDTO } from '../models/chart-creation-dto';
 
 const cabecera = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -106,5 +108,16 @@ export class DriverService {
   public isUnansweredDriverDataPresent(email: string) {
     let url = `${this.url}/drivers/is-unanswered-driver-data-present/${email}`;
     return this.httpClient.get<DriverDataAnsweredDTO>(url);
+  }
+
+  public createDriverChart(datesChartDTO: DatesChartDTO) {
+    let newHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+
+    return this.httpClient.post<ChartCreationDTO>(this.url + '/drivers/create-driver-chart', datesChartDTO, newHeader);
   }
 }

@@ -17,19 +17,7 @@ export class PageViewDriveHistoryComponent implements OnInit {
   constructor(private tokenService: TokenService) { }
 
   ngOnInit(): void {
-    if (this.tokenService.getRole() === "ROLE_ADMIN")
-    {
-      this.loggedPerson = "admin";
-    }
-    else if (this.tokenService.getRole() === "ROLE_PASSENGER")
-    {
-      this.loggedPerson = "passenger";
-    }
-    //driver
-    else
-    {
-      this.loggedPerson = "driver";
-    }
+    this.getLoggedPerson();
   }
 
   public showModal(drive: DriveDTO) {
@@ -48,5 +36,21 @@ export class PageViewDriveHistoryComponent implements OnInit {
 
   public closeMapModal() {
     this.mapModalIsOpened = false;
+  }
+
+  private getLoggedPerson() {
+    if (this.tokenService.getRole() === "ROLE_ADMIN")
+    {
+      this.loggedPerson = "admin";
+    }
+    else if (this.tokenService.getRole() === "ROLE_PASSENGER")
+    {
+      this.loggedPerson = "passenger";
+    }
+    //driver
+    else
+    {
+      this.loggedPerson = "driver";
+    }
   }
 }

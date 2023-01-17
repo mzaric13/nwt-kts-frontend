@@ -8,6 +8,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { TokenService } from 'src/app/services/token.service';
 import { RequestPageObject } from 'src/app/models/request-page-object';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-history',
@@ -18,12 +20,13 @@ import { RequestPageObject } from 'src/app/models/request-page-object';
 export class ViewHistoryComponent implements OnInit{
 
   drives: DriveDTO[] = [];
+  loggedPerson!: string;
   loading: boolean = true;
   totalElements: number | undefined;
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['id', 'route', 'price', 'startDate', 'endDate', 'participants', 'map'];
 
-  constructor(private driveService: DriveService, private tokenService: TokenService) { }
+  constructor(private driveService: DriveService, private tokenService: TokenService, private router: Router) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -32,16 +35,21 @@ export class ViewHistoryComponent implements OnInit{
   @Output() showMapButtonPressedEvent = new EventEmitter<DriveDTO>();
 
   ngOnInit(): void {
+    this.getLoggedPerson();
     const request: RequestPage = {
       //izmeniti size
       page: 0,
       size: 2
     }
-    if (this.tokenService.getRole() === "ROLE_ADMIN")
+    this.getDrivesByLoggedPerson(request);
+  }
+
+  private getDrivesByLoggedPerson(request: RequestPage) {
+    if (this.loggedPerson === "admin")
     {
       this.getDrives(request);
     }
-    else if (this.tokenService.getRole() === "ROLE_DRIVER")
+    else if (this.loggedPerson === "driver")
     {
       this.getDriverDrives(request);
     }
@@ -52,10 +60,25 @@ export class ViewHistoryComponent implements OnInit{
     }
   }
 
+  private getLoggedPerson() {
+    if (this.tokenService.getRole() === "ROLE_ADMIN")
+    {
+      this.loggedPerson = "admin";
+    }
+    else if (this.tokenService.getRole() === "ROLE_DRIVER")
+    {
+      this.loggedPerson = "driver";
+    }
+    //passenger
+    else
+    {
+      this.loggedPerson = "passenger";
+    }
+  }
+
   private setDrives(data: RequestPageObject) {
     this.loading = false;
     this.drives = data.drives;
-    console.log(this.drives);
     this.drives.length = data.totalItems;
 
     this.dataSource = new MatTableDataSource<any>(this.drives);
@@ -65,18 +88,21 @@ export class ViewHistoryComponent implements OnInit{
 
   private getDrives(request: RequestPage) {
     this.driveService.getDrives(request).subscribe(data => {
+      this.checkDrivesLength(data);
       this.setDrives(data);
     });
   }
 
   private getDriverDrives(request: RequestPage) {
     this.driveService.getDrivesForDriver(request).subscribe(data => {
+      this.checkDrivesLength(data);
       this.setDrives(data);
     });
   }
 
   private getPassengerDrives(request: RequestPage) {
     this.driveService.getDrivesForPassenger(request).subscribe(data => {
+      this.checkDrivesLength(data);
       this.setDrives(data);
     });
   }
@@ -109,6 +135,37 @@ export class ViewHistoryComponent implements OnInit{
     this.driveService.getDrivesForDriver(request).subscribe(data => {
       this.setNextDrives(data, request);
     });
+  }
+
+  private checkDrivesLength(data: RequestPageObject) {
+    if (data.drives.length === 0) {
+      Swal.fire({
+        icon: 'info',
+        position: 'center',
+        title: 'You have not attended any drives yet.',
+        showConfirmButton: false,
+        timer: 3000
+      });
+      this.reloadPage();
+    }
+  }
+
+  private reloadPage() {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.navigateToUser();
+  }
+
+  private navigateToUser() {
+    if (this.loggedPerson === "admin") {
+      this.router.navigate(['/admin-profile']);
+    }
+    else if (this.loggedPerson === "driver") {
+      this.router.navigate(['/driver-profile']);
+    }
+    else {
+      this.router.navigate(['/passenger-profile']);
+    }
   }
 
 

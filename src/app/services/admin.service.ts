@@ -11,6 +11,8 @@ import { DriverDataDTO } from '../models/driver-data-dto';
 import { DriverDTO } from '../models/driver-dto';
 import { PassengerDTO } from '../models/passenger-dto';
 import { UserIdDTO } from '../models/user-id-dto';
+import { DatesChartDTO } from '../models/dates-chart-dto';
+import { ChartCreationDTO } from '../models/chart-creation-dto';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -75,5 +77,16 @@ export class AdminService {
 
   public changeBlockedStatusDriver(userIdDTO : UserIdDTO) {
     return this.httpClient.put<DriverDTO>(this.url + '/administrators/change-block-status-driver', userIdDTO, cabecera);
+  }
+
+  public createAdminChart(datesChartDTO: DatesChartDTO) {
+    let newHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+
+    return this.httpClient.post<ChartCreationDTO>(this.url + '/administrators/create-admin-chart', datesChartDTO, newHeader);
   }
 }

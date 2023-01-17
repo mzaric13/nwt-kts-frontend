@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {
   faUser,
   faRoute,
-  faArrowRightFromBracket
+  faArrowRightFromBracket,
+  faChartSimple
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -14,6 +15,7 @@ export class NavbarDriverComponent implements OnInit {
   faUser = faUser;
   faRoute = faRoute;
   faLogout = faArrowRightFromBracket;
+  faChartSimple = faChartSimple;
   constructor() { }
 
   ngOnInit(): void {

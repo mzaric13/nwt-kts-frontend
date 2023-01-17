@@ -5,7 +5,8 @@ import {
   faUserLock,
   faIdCard,
   faUserPlus,
-  faArrowRightFromBracket
+  faArrowRightFromBracket,
+  faChartSimple
 } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-navbar-admin',
@@ -19,6 +20,7 @@ export class NavbarAdminComponent implements OnInit {
   faIdCard = faIdCard;
   faUserPlus = faUserPlus;
   faLogout = faArrowRightFromBracket;
+  faChartSimple = faChartSimple;
   constructor() { }
 
   ngOnInit(): void {
