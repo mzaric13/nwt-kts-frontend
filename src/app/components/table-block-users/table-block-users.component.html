@@ -1,30 +1,54 @@
-
-<table class="table table-light table-hover text-center">
-    <thead>
-        <th></th>
-        <th class="arial_font">USERS</th>
-        <th></th>
-    </thead>
-    <!-- uredi tabelu -->
-    <thead>
-        <tr>
-            <th scope="col" class="arial_font">Full name</th>
-            <th scope="col" class="arial_font">Role</th>
-            <th scope="col" class="arial_font">Change Blocked Status</th>
-        </tr>
-    </thead>
-    <tbody *ngFor="let passenger of passengers">
-        <tr>
-            <th scope="row" >{{passenger.name}} {{passenger.surname}}</th>
-            <td class="arial_font">Passenger</td>
-            <button class="btn btn-dark arial_font" (click)="showPassengerInfoModal(passenger)">Change Blocked Status</button>
-        </tr>
-    </tbody>
-    <tbody *ngFor="let driver of drivers">
-        <tr>
-            <th scope="row" >{{driver.name}} {{driver.surname}}</th>
-            <td class="arial_font">Driver</td>
-            <button class="btn btn-dark arial_font" (click)="showDriverInfoModal(driver)">Change Blocked Status</button>
-        </tr>
-    </tbody>    
-</table>
+<div>
+    <mat-paginator
+    #paginatorPassenger="matPaginator"
+    showFirstLastButtons
+    [pageSizeOptions]="[1, 2]"
+    (page)="nextPagePassengers($event)"
+    aria-label="Select page of passengers" class="bg_gray">
+    </mat-paginator>
+    <table mat-table [dataSource]="dataSourcePassengers" class="arial_font bg_gray">
+        <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef>Full name</th>
+            <td mat-cell *matCellDef="let element">{{element.name}} {{element.surname}}</td>
+        </ng-container>
+        <ng-container matColumnDef="rolePassenger">
+            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <td mat-cell *matCellDef="let element">Passenger</td>
+        </ng-container>
+        <ng-container matColumnDef="blockedStatus">
+          <th mat-header-cell *matHeaderCellDef>Change blocked status`</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="showPassengerInfoModal(element)">Blocked status</button>
+          </td>
+      </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsPassengers"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsPassengers;"></tr>
+    </table>
+</div>
+<div>
+    <mat-paginator
+    #paginatorDriver="matPaginator"
+    showFirstLastButtons
+    [pageSizeOptions]="[1, 2]"
+    (page)="nextPageDrivers($event)"
+    aria-label="Select page of drivers" class="bg_gray">
+    </mat-paginator>
+    <table mat-table [dataSource]="dataSourceDrivers" class="arial_font bg_gray">
+        <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef>Full name</th>
+            <td mat-cell *matCellDef="let element">{{element.name}} {{element.surname}}</td>
+        </ng-container>
+        <ng-container matColumnDef="roleDriver">
+            <th mat-header-cell *matHeaderCellDef>Role</th>
+            <td mat-cell *matCellDef="let element">Driver</td>
+        </ng-container>
+        <ng-container matColumnDef="blockedStatus">
+          <th mat-header-cell *matHeaderCellDef>Change blocked status</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="showDriverInfoModal(element)">Blocked status</button>
+          </td>
+      </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsDrivers"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsDrivers;"></tr>
+    </table>
+</div>

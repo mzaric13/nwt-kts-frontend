@@ -67,12 +67,16 @@ export class AdminService {
     return this.httpClient.get<RequestPageObject>(this.url + '/administrators/get-unanswered-driver-data', newHeader);
   }
 
-  public getAllDrivers() {
-    return this.httpClient.get<DriverDTO[]>(this.url + '/administrators/get-all-drivers', cabecera);
+  public getAllDrivers(request:RequestPage) {
+    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
+    params: new HttpParams().set('page', request.page).set('size', request.size)};
+    return this.httpClient.get<RequestPageObject>(this.url + '/administrators/get-all-drivers', newHeader);
   }
 
-  public getAllPassengers() {
-    return this.httpClient.get<PassengerDTO[]>(this.url + '/administrators/get-all-passengers', cabecera);
+  public getAllPassengers(request:RequestPage) {
+    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
+    params: new HttpParams().set('page', request.page).set('size', request.size)};
+    return this.httpClient.get<RequestPageObject>(this.url + '/administrators/get-all-passengers', newHeader);
   }
 
   public changeBlockedStatusPassenger(userIdDTO : UserIdDTO) {
