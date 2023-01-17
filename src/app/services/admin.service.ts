@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PasswordChangeCreationDTO } from '../models/password-change-creation-dto';
@@ -13,6 +13,8 @@ import { PassengerDTO } from '../models/passenger-dto';
 import { UserIdDTO } from '../models/user-id-dto';
 import { DatesChartDTO } from '../models/dates-chart-dto';
 import { ChartCreationDTO } from '../models/chart-creation-dto';
+import { RequestPageObject } from '../models/request-page-object';
+import { RequestPage } from '../models/request-page';
 
 
 const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
@@ -59,8 +61,10 @@ export class AdminService {
     return this.httpClient.put<DriverDataDTO>(this.url + '/administrators/answer-driver-data-change', answeredDriverDataCreationDTO, cabecera);
   }
 
-  public getUnansweredDriverDataRequests() {
-    return this.httpClient.get<DriverDataDTO[]>(this.url + '/administrators/get-unanswered-driver-data', cabecera);
+  public getUnansweredDriverDataRequests(request:RequestPage) {
+    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
+    params: new HttpParams().set('page', request.page).set('size', request.size)};
+    return this.httpClient.get<RequestPageObject>(this.url + '/administrators/get-unanswered-driver-data', newHeader);
   }
 
   public getAllDrivers() {

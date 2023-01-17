@@ -1,6 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DriverDataDTO } from 'src/app/models/driver-data-dto';
+import { RequestPage } from 'src/app/models/request-page';
+import { RequestPageObject } from 'src/app/models/request-page-object';
 import { AdminService } from 'src/app/services/admin.service';
 import Swal from 'sweetalert2';
 
@@ -11,35 +16,90 @@ import Swal from 'sweetalert2';
 })
 export class TableDriverDataChangesComponent implements OnInit {
 
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   @Output() showModalButtonPressedEvent = new EventEmitter<DriverDataDTO>();
 
-  unansweredRequests! : DriverDataDTO[]
+  unansweredDriverData : DriverDataDTO[] = [];
+  loading: boolean = true;
+  totalElements: number | undefined;
+  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = ['id', 'fullName', 'dateOfRequest', 'details'];
 
   constructor(private adminService: AdminService, private router: Router) {
     
    }
 
   ngOnInit(): void {
-    this.adminService.getUnansweredDriverDataRequests().subscribe(data => {
-      this.unansweredRequests = data;
-      if (this.unansweredRequests.length < 1){
-        Swal.fire({
-          icon: 'info',
-          position: 'center',
-          title: 'There are currently no active driver data change requests.',
-          showConfirmButton: false,
-          timer: 3000
-        })
-        this.reloadPage();
-      }
-    })
+    const request: RequestPage = {
+      page: 0,
+      size: 2
+    }
+    this.getDriverData(request);
   }
 
-  showModal(request : DriverDataDTO){
+  private getDriverData(request: RequestPage) {
+    this.adminService.getUnansweredDriverDataRequests(request).subscribe(data => {
+      this.checkDriverDataLength(data);
+      this.setDriverData(data);
+    });
+  }
+
+  private checkDriverDataLength(data: RequestPageObject) {
+    if (data.driverData.length === 0) {
+      Swal.fire({
+        icon: 'info',
+        position: 'center',
+        title: 'There are currently no active driver data change requests.',
+        showConfirmButton: false,
+        timer: 3000
+      })
+      this.reloadPage();
+    }
+  }
+
+  private setDriverData(data: RequestPageObject) {
+    this.loading = false;
+    this.unansweredDriverData = data.driverData;
+    this.unansweredDriverData.length = data.totalItems;
+
+    this.dataSource = new MatTableDataSource<any>(this.unansweredDriverData);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  private setNextDriverData(data: RequestPageObject, request: RequestPage) {
+    this.loading = false;
+    this.unansweredDriverData.length = request.page * request.size;
+    this.unansweredDriverData.push(...data.driverData);
+    this.unansweredDriverData.length = data.totalItems;
+
+    this.dataSource = new MatTableDataSource<any>(this.unansweredDriverData);
+    this.dataSource._updateChangeSubscription();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  private getNextDriverData(request: RequestPage) {
+    this.adminService.getUnansweredDriverDataRequests(request).subscribe(data => {
+      this.setNextDriverData(data, request);
+    });
+  }
+
+  public nextPage(event: PageEvent) {
+    const request: RequestPage = {
+      page: event.pageIndex,
+      size: event.pageSize
+    }
+    this.getNextDriverData(request);
+  }
+
+  public showModal(request : DriverDataDTO){
     this.showModalButtonPressedEvent.emit(request);
   }
 
-  reloadPage() {
+  private reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate(['/admin-profile'])
