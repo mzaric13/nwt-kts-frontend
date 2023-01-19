@@ -22,6 +22,14 @@ export class ChartsComponent implements OnInit {
   drivesPerDay: ChartObjectCreationDTO[] = [];
   drivenKilometersPerDay: ChartObjectCreationDTO[] = [];
   spentOrEarnedMoneyPerDay: ChartObjectCreationDTO[] = [];
+
+  drivesPerDaySum: number = 0;
+  drivenKilometersPerDaySum: number = 0;
+  spentOrEarnedMoneyPerDaySum: number = 0;
+  drivesPerDayAvg: number = 0;
+  drivenKilometersPerDayAvg: number = 0;
+  spentOrEarnedMoneyPerDayAvg: number = 0;
+
   legend: boolean = true;
   showLabels: boolean = true;
   animations: boolean = true;
@@ -123,6 +131,34 @@ export class ChartsComponent implements OnInit {
       this.drivenKilometersPerDay.push(data.drivenKilometersPerDay);
       this.spentOrEarnedMoneyPerDay.push(data.moneySpentOrEarnedPerDay)
       this.graphsAreLoaded = true;
+      this.calculateSumAvg(data.drivesPerDay, "drivesPerDay");
+      this.calculateSumAvg(data.drivenKilometersPerDay, "drivenKilometersPerDay");
+      this.calculateSumAvg(data.moneySpentOrEarnedPerDay, "moneySpentOrEarnedPerDay");
+    }
+  }
+
+  private calculateSumAvg(chartObjectCreationDTO: ChartObjectCreationDTO, graph: string) {
+    let sum = 0;
+    let avg = 0;
+    for (let element of chartObjectCreationDTO.series) {
+      sum += element.value;
+    }
+    avg = sum / chartObjectCreationDTO.series.length;
+    this.setSumAvg(sum, avg, graph);
+  }
+
+  private setSumAvg(sum: number, avg: number, graph: string) {
+    if (graph === "drivesPerDay") {
+      this.drivesPerDaySum = sum;
+      this.drivesPerDayAvg = avg;
+    }
+    else if (graph === "drivenKilometersPerDay") {
+      this.drivenKilometersPerDaySum = sum;
+      this.drivenKilometersPerDayAvg = avg;
+    }
+    else {
+      this.spentOrEarnedMoneyPerDaySum = sum;
+      this.spentOrEarnedMoneyPerDayAvg = avg;
     }
   }
 

@@ -15,9 +15,6 @@ import { DriverService } from 'src/app/services/driver.service';
 })
 export class NavbarDriverComponent implements OnInit {
 
-  //@Output() statusChangePressed = new EventEmitter();
-  //@Input() driver!: DriverDTO;
-
   available = "../../../assets/available.png";
   faUser = faUser;
   faRoute = faRoute;
@@ -27,18 +24,9 @@ export class NavbarDriverComponent implements OnInit {
   constructor(private driverService: DriverService) { }
 
   ngOnInit(): void {
-    /*
-    if (this.driver.available) {
-      this.available = "../../../assets/available.png";
-    }
-    else {
-      this.available = "../../../assets/notAvailable.png";
-    }
-    */
   }
 
   public changeStatus() {
-    //this.statusChangePressed.emit();
     this.driverService.changeStatus().subscribe(data => {
       if (data.available) {
         this.available = "../../../assets/available.png";
