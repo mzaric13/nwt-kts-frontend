@@ -18,7 +18,7 @@
                                 <p class="card-text">Email: {{drive.driver.email}}</p>
                             </div>
                             <div class="card-footer">
-                                <p class="text-muted">Driver rating: {{driverRating}}, Vehicle rating: {{vehicleRating}}</p>
+                                <p class="text-muted">Driver rating: {{driverRating | number : '1.2-2'}}, Vehicle rating: {{vehicleRating | number : '1.2-2'}}</p>
                             </div>
                         </div>
                         <img class="card-img-top pic_size" src='../../../assets/{{drive.driver.profilePicture}}'>

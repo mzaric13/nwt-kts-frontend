@@ -24,28 +24,20 @@ export class ModalDetailedHistoryViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.displayStyle = "block";
-    /* vrv ne treba
-    if (this.tokenService.getRole() === "ROLE_ADMIN")
-    {
-      this.loggedPerson = "admin";
-    }
-    else if (this.tokenService.getRole() === "ROLE_PASSENGER")
-    {
-      this.loggedPerson = "passenger";
-    }
-    //driver
-    else
-    {
-      this.loggedPerson = "driver";
-    }
-    */
     this.ratingService.getDriveRatings(this.drive.id).subscribe(data => {
+      let isFound = false;
       for (let passenger of this.drive.passengers) {
+        isFound = false;
         for (let rating of data) {
           if (rating.passengerId === passenger.id) {
+            isFound = true;
             this.vehicleRatings.push(rating.vehicleRating);
             this.driverRatings.push(rating.driverRating);
           }
+        }
+        if (!isFound) {
+          this.vehicleRatings.push(0);
+          this.driverRatings.push(0);
         }
       }
     })

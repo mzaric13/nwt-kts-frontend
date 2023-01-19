@@ -57,3 +57,7 @@ input:focus {
 .animate__animated.animate__fadeInDown {
     --animate-duration: 0.5s;
 }
+
+.error {
+    color:red;
+}

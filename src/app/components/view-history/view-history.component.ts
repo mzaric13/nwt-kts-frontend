@@ -10,6 +10,8 @@ import { TokenService } from 'src/app/services/token.service';
 import { RequestPageObject } from 'src/app/models/request-page-object';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { RatingService } from 'src/app/services/rating.service';
+import { PassengerRatingDTO } from 'src/app/models/passenger-rating-dto';
 
 @Component({
   selector: 'app-view-history',
@@ -19,20 +21,23 @@ import { Router } from '@angular/router';
 
 export class ViewHistoryComponent implements OnInit{
 
+  passengerCanRateDrive = new Array<PassengerRatingDTO>();
   drives: DriveDTO[] = [];
   loggedPerson!: string;
   loading: boolean = true;
   totalElements: number | undefined;
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['id', 'route', 'price', 'startDate', 'endDate', 'participants', 'map'];
+  displayedColumns: string[] = ['id', 'route', 'price', 'startDate', 'endDate', 'participants', 'map', 'rating'];
+  displayedColumnsNoRating: string[] = ['id', 'route', 'price', 'startDate', 'endDate', 'participants', 'map'];
 
-  constructor(private driveService: DriveService, private tokenService: TokenService, private router: Router) { }
+  constructor(private driveService: DriveService, private tokenService: TokenService, private ratingService: RatingService, private router: Router) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @Output() showMoreDetailsButtonPressedEvent = new EventEmitter<DriveDTO>();
   @Output() showMapButtonPressedEvent = new EventEmitter<DriveDTO>();
+  @Output() showRatingModalPressedEvent = new EventEmitter<DriveDTO>();
 
   ngOnInit(): void {
     this.getLoggedPerson();
@@ -41,7 +46,16 @@ export class ViewHistoryComponent implements OnInit{
       page: 0,
       size: 2
     }
+    if (this.loggedPerson === "passenger") {
+      this.getEligibleRatings();
+    }
     this.getDrivesByLoggedPerson(request);
+  }
+
+  private getEligibleRatings() {
+    this.ratingService.findPassengersEligibleRatings().subscribe(data => {
+      this.passengerCanRateDrive = data;
+    });
   }
 
   private getDrivesByLoggedPerson(request: RequestPage) {
@@ -194,6 +208,19 @@ export class ViewHistoryComponent implements OnInit{
 
   public showMap(drive: DriveDTO) {
     this.showMapButtonPressedEvent.emit(drive);
+  }
+
+  public giveRating(drive: DriveDTO) {
+    this.showRatingModalPressedEvent.emit(drive);
+  }
+
+  public passengerCanRate(drive: DriveDTO) {
+    for (let p of this.passengerCanRateDrive) {
+      if (p.driveId === drive.id) {
+        return p.canRate;
+      }
+    }
+    return false;
   }
 
 }

@@ -152,7 +152,13 @@ export class PassengerService {
   }
 
   public createRating(ratingDTO: RatingDTO) {
-    return this.httpClient.post<RatingDTO>(this.url + '/passengers/create-rating', ratingDTO, cabecera);
+    let newHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    return this.httpClient.post<RatingDTO>(this.url + '/passengers/create-rating', ratingDTO, newHeader);
   }
 
   public createPassengerChart(datesChartDTO: DatesChartDTO) {

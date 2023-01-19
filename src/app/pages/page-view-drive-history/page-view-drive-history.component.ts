@@ -12,6 +12,7 @@ export class PageViewDriveHistoryComponent implements OnInit {
   drive!: DriveDTO;
   modalIsOpened = false;
   mapModalIsOpened = false;
+  ratingModalIsOpened = false;
   loggedPerson!: string;
 
   constructor(private tokenService: TokenService) { }
@@ -36,6 +37,15 @@ export class PageViewDriveHistoryComponent implements OnInit {
 
   public closeMapModal() {
     this.mapModalIsOpened = false;
+  }
+
+  public showRatingModal(drive: DriveDTO) {
+    this.drive = drive;
+    this.ratingModalIsOpened = true;
+  }
+
+  public closeRatingModal() {
+    this.ratingModalIsOpened = false;
   }
 
   private getLoggedPerson() {
