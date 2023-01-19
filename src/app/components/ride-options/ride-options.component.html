@@ -1,5 +1,19 @@
 <form #rideForm (ngSubmit)="onSubmit()" [formGroup]="ride" class="mt-2">
     <div class="form-group ride-customization-field card p-3">
+        <mat-label class="arial_text form-label">Vehicle type</mat-label>
+        <mat-form-field appearance="fill">
+            <mat-label class="arial_text">Choose vehicle type...</mat-label>
+            <mat-select [formControl]="ride.controls.vehicleType" required>
+                <mat-option>--</mat-option>
+                <mat-option class="arial_text" *ngFor="let vehicleType of vehicleTypes" [value]="vehicleType">
+                {{vehicleType.name}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="ride.controls.vehicleType.hasError('required')">
+                Please choose a vehicle type</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="form-group ride-customization-field card p-3">
         <mat-label class="arial_text form-label">Additional passengers</mat-label>
         <mat-form-field class="example-chip-list" appearance="fill">
             <mat-chip-list #peopleChipList aria-label="People selection">
@@ -39,11 +53,11 @@
                     autocomplete="off">
             </mat-chip-list>
             <div appClickOutsideTag (clickOutside)="closeDropdownTag()" class="tag-container-dropdown bg_gray">
-                    <div *ngIf="showDropdownTag">
+                    <ng-container *ngIf="showDropdownTag">
                         <div (click)="selectTag(tag)" class="tag arial_font" *ngFor="let tag of tags | tagFilter: getTag() | tagFilterUsed : getSelectedTags()">
                             {{tag.name}}
                         </div>
-                    </div>
+                    </ng-container>
                 </div>
         </mat-form-field>
     </div>
@@ -58,6 +72,6 @@
         </div>
     </div>
     <div class="form-group form-group-button">
-        <button class="btn btn-dark arial_font" type="submit">Create ride</button>
+        <button [disabled]="ride.invalid" class="btn btn-dark arial_font" type="submit">Create ride</button>
     </div>
 </form>

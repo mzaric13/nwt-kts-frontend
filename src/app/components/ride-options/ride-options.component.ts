@@ -1,9 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TagDTO } from 'src/app/models/tag-dto';
-import CreateRide from 'src/app/models/create-ride';
+import { TypeDTO } from 'src/app/models/type-dto';
 
 @Component({
   selector: 'app-ride-options',
@@ -12,12 +12,14 @@ import CreateRide from 'src/app/models/create-ride';
 })
 export class RideOptionsComponent implements OnInit {
   ride = new FormGroup({
+    vehicleType: new FormControl<TypeDTO | null>(null, Validators.required),
     isChecked: new FormControl(false),
     tagControl: new FormControl(),
     time: new FormControl(""),
   });
 
   @Input() tags: TagDTO[] = [];
+  @Input() vehicleTypes: TypeDTO[] = [];
 
   people: string[] = [];
   selectedTags: TagDTO[] = [];
@@ -48,7 +50,8 @@ export class RideOptionsComponent implements OnInit {
     this.createRideEvent.emit({
       passengers: this.people,
       tags: this.selectedTags,
-      time
+      time,
+      typeDTO: this.ride.controls.vehicleType.value,
     })
   }
 

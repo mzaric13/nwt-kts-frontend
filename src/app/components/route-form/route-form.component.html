@@ -5,11 +5,11 @@
         <input autocomplete="off" formControlName="pickup" id="pickup" class="bg_gray borderless_input input_size" type="text" 
         placeholder="Enter pickup location" required (click)="openDropdownPickup()">
         <div appClickOutsidePickup (clickOutside)="closeDropdownPickup()" class="geoCode-container-dropdown bg_gray">
-            <div *ngIf="showDropdownPickup">
+            <ng-container *ngIf="showDropdownPickup">
                 <div (click)="selectPickupLocation(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getPickupLocation()">
                     {{address}}
                 </div>
-            </div>
+            </ng-container>
         </div>
     </div>
     <div class="form-group">
@@ -17,11 +17,11 @@
         <input autocomplete="off" formControlName="destination" id="destination" class="bg_gray borderless_input input_size" type="text" 
         placeholder="Enter destination" required (click)="openDropdownDestination()">
         <div appClickOutsideDestination (clickOutside)="closeDropdownDestination()" class="geoCode-container-dropdown bg_gray">
-            <div *ngIf="showDropdownDestination">
+            <ng-container *ngIf="showDropdownDestination">
                 <div (click)="selectDestination(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getDestination()">
                     {{address}}
                 </div>
-            </div>
+            </ng-container>
         </div>
     </div>
     <div *ngIf="loggedPassenger" class="form-group">
@@ -39,11 +39,11 @@
         <input autocomplete="off" formControlName="extraLocation" id="extraLocation" class="bg_gray borderless_input input_size" type="text" 
         placeholder="Enter destination" (click)="openDropdownExtraDestination()">
         <div appClickOutsideExtraDestination (clickOutside)="closeDropdownExtraDestination()" class="geoCode-container-dropdown bg_gray">
-            <div *ngIf="showDropdownExtraDestination">
+            <ng-container *ngIf="showDropdownExtraDestination">
                 <div (click)="selectExtraDestination(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getExtraDestination()">
                     {{address}}
                 </div>
-            </div>
+            </ng-container>
         </div>
         <button type="button" (click)="addExtraLocation()" class="btn btn-dark arial_font">Add extra location</button>
     </div>
