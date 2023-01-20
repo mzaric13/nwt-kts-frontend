@@ -4,6 +4,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TagDTO } from 'src/app/models/tag-dto';
 import { TypeDTO } from 'src/app/models/type-dto';
+import { RouteDTO } from 'src/app/models/route-dto';
 
 @Component({
   selector: 'app-ride-options',
@@ -18,6 +19,7 @@ export class RideOptionsComponent implements OnInit {
     time: new FormControl(""),
   });
 
+  @Input() route!: RouteDTO;
   @Input() tags: TagDTO[] = [];
   @Input() vehicleTypes: TypeDTO[] = [];
 

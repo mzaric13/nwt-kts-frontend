@@ -12,33 +12,70 @@ const cabecera = {
 
 @Injectable({
     providedIn: 'root',
-  })
-  export class DriveService {
+})
+export class DriveService {
 
-    private url = environment.apiUrl;
+  private url = environment.apiUrl;
 
-    constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
+  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
-    public getDrives(request:RequestPage) {
-        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
-            params: new HttpParams().set('page', request.page).set('size', request.size)};
-        return this.httpClient.get<RequestPageObject>(this.url + '/drives/get-drives', newHeader);
-    }
-
-    public getDrivesForDriver(request:RequestPage) {
-        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
-            params: new HttpParams().set('page', request.page).set('size', request.size)};
-        return this.httpClient.get<RequestPageObject>(this.url + '/drives/get-drives-for-driver', newHeader);
-    }
-
-    public getDrivesForPassenger(request:RequestPage) {
-        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
-            params: new HttpParams().set('page', request.page).set('size', request.size)};
-        return this.httpClient.get<RequestPageObject>(this.url + '/drives/get-drives-for-passenger', newHeader);
-    }
-
-    public createTempDrive(tempDrive: TempDriveDTO) {
-      return this.httpClient.post<void>(this.url + "/drives/create-temp-drive/", tempDrive, cabecera);
-    }
-
+  public getDrives(request:RequestPage) {
+      let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
+          params: new HttpParams().set('page', request.page).set('size', request.size)};
+      return this.httpClient.get<RequestPageObject>(this.url + '/drives/get-drives', newHeader);
   }
+
+  public getDrivesForDriver(request:RequestPage) {
+      let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
+          params: new HttpParams().set('page', request.page).set('size', request.size)};
+      return this.httpClient.get<RequestPageObject>(this.url + '/drives/get-drives-for-driver', newHeader);
+  }
+
+  public getDrivesForPassenger(request:RequestPage) {
+      let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
+          params: new HttpParams().set('page', request.page).set('size', request.size)};
+      return this.httpClient.get<RequestPageObject>(this.url + '/drives/get-drives-for-passenger', newHeader);
+  }
+
+  public createTempDrive(tempDrive: TempDriveDTO) {
+    return this.httpClient.post<number>(this.url + "/drives/create-temp-drive/", tempDrive, cabecera);
+  }
+  
+  public sendConfirmationEmails(tempDriveId: number) {
+    let newHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    return this.httpClient.get<void>(this.url + "/drives/send-confirmation-email/" + tempDriveId, newHeader);
+  }
+
+  public acceptDriveConsent(tempDriveId: number) {
+    let params = new HttpParams();
+    params = params.append('tempDriveId', tempDriveId);
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+      params
+    };
+    return this.httpClient.put<void>(this.url + "/drives/accept-drive-consent", {}, options)
+  }
+
+  public rejectDriveConsent(tempDriveId: number, passengerId: number) {
+    let params = new HttpParams();
+    params = params.append('tempDriveId', tempDriveId);
+    params = params.append('passengerId', passengerId);
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+      params
+    };
+    return this.httpClient.put<void>(this.url + "/drives/reject-drive-consent", {}, options)
+  }
+
+}

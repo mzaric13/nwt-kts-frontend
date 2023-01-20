@@ -17,6 +17,8 @@ import { PageCustomizeRideComponent } from './pages/page-customize-ride/page-cus
 import { ModalGiveRatingComponent } from './components/modal-give-rating/modal-give-rating.component';
 import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
 import { PageChartsComponent } from './pages/page-charts/page-charts.component';
+import { PageDriveAcceptedComponent } from './pages/page-drive-accepted/page-drive-accepted.component';
+import { PageDriveRejectedComponent } from './pages/page-drive-rejected/page-drive-rejected.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
@@ -41,9 +43,11 @@ const routes: Routes = [
   { path: 'reset-password/:email', component: PageResetPasswordComponent },
   { path: 'customize-ride', component: PageCustomizeRideComponent },
   { path: 'view-drive-history', component: PageViewDriveHistoryComponent},
-  { path: 'show-charts', component: PageChartsComponent},
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: 'show-charts', component: PageChartsComponent },
   { path: 'rate', component: ModalGiveRatingComponent },
+  { path: 'drive-accepted', component: PageDriveAcceptedComponent },
+  { path: 'drive-rejected', component: PageDriveRejectedComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({
