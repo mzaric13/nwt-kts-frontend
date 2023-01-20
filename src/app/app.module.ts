@@ -88,6 +88,8 @@ import { ModalMapHistoryViewComponent } from './components/modal-map-history-vie
 import { NavbarDriverComponent } from './components/navbar-driver/navbar-driver.component';
 import { ChartsComponent } from './components/charts/charts.component';
 import { PageChartsComponent } from './pages/page-charts/page-charts.component';
+import { PageDriveAcceptedComponent } from './pages/page-drive-accepted/page-drive-accepted.component';
+import { PageDriveRejectedComponent } from './pages/page-drive-rejected/page-drive-rejected.component';
 
 @NgModule({
   declarations: [
@@ -143,7 +145,9 @@ import { PageChartsComponent } from './pages/page-charts/page-charts.component';
     ModalMapHistoryViewComponent,
     NavbarDriverComponent,
     ChartsComponent,
-    PageChartsComponent
+    PageChartsComponent,
+    PageDriveAcceptedComponent,
+    PageDriveRejectedComponent,
   ],
   imports: [
     BrowserModule,

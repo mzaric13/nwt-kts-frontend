@@ -95,13 +95,18 @@ export class PageCustomizeRideComponent implements OnInit {
     }
 
     this.driveService.createTempDrive(tempDrive).subscribe({
-      next: () => {
+      next: (tempDriveId: number) => {
         Swal.fire({
           icon: 'success',
           title: 'Success!',
-          text: 'Ride successfully ordered!',
+          text: 'You and other passengers will receive an email where you will give your consent for the ride!' +
+           ' Thank you for using our services!',
         });
-        this.router.navigate(['/home-passenger']);
+        this.driveService.sendConfirmationEmails(tempDriveId).subscribe({
+          next: () => {
+            this.router.navigate(['/home-passenger'], { replaceUrl: true});
+          }
+        });
       },
       error: (err) => {
         createRide.passengers.splice(createRide.passengers.length - 1, 1);
