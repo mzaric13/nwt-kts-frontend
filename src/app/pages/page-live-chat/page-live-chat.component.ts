@@ -10,6 +10,7 @@ import { MessageDTO } from 'src/app/models/message-dto';
 import { Observable, of } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-page-live-chat',
@@ -22,6 +23,7 @@ export class PageLiveChatComponent implements OnInit {
     private readonly passengerService: PassengerService,
     private readonly adminService: AdminService,
     private readonly chatService: ChatService,
+    private readonly activatedRoute: ActivatedRoute,
   ) { }
 
   loggedPassenger!: PassengerDTO;
@@ -33,19 +35,25 @@ export class PageLiveChatComponent implements OnInit {
   messages?: Observable<MessageDTO[]>;
 
   url = environment.apiUrl;
+  receiver: string = "";
 
   ngOnInit(): void {
     this.passengerService.getLoggedPassenger().subscribe({
       next: (passenger) => {
         this.loggedPassenger = passenger;
+        this.chatName = this.loggedPassenger.email + '&' + 'admin';
+        this.receiver = 'Admin'
+        this.connectToChat();
+      },
+      error: () => {
         this.adminService.getLoggedAdministrator().subscribe({
           next: (admin) => {
             this.loggedAdmin = admin;
-            console.log(this.loggedPassenger);
-            if (this.loggedPassenger) {
-              this.chatName = this.loggedPassenger.email + '&' + 'admin';
-            }
-            this.connectToChat();
+            this.activatedRoute.params.subscribe(s => {
+              this.receiver = s["name"]
+              this.chatName = s["name"] + '&' + 'admin';
+              this.connectToChat();
+            })
           }
         });
       }
@@ -72,12 +80,13 @@ export class PageLiveChatComponent implements OnInit {
   }
 
   sendMsg() {
+    let sender: string = this.receiver == 'Admin' ? this.loggedPassenger.email : 'admin';
     if (this.newMessage.value !== '') {
       this.stompClient!.send(
         '/app/chat/' + this.chatName,
         {},
         JSON.stringify({
-          sender: this.loggedPassenger.email,
+          sender,
           message: this.newMessage.value,
         })
       );
