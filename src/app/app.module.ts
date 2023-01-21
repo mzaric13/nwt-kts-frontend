@@ -90,6 +90,7 @@ import { ChartsComponent } from './components/charts/charts.component';
 import { PageChartsComponent } from './pages/page-charts/page-charts.component';
 import { PageDriveAcceptedComponent } from './pages/page-drive-accepted/page-drive-accepted.component';
 import { PageDriveRejectedComponent } from './pages/page-drive-rejected/page-drive-rejected.component';
+import { PageLiveChatComponent } from './pages/page-live-chat/page-live-chat.component';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { PageDriveRejectedComponent } from './pages/page-drive-rejected/page-dri
     PageChartsComponent,
     PageDriveAcceptedComponent,
     PageDriveRejectedComponent,
+    PageLiveChatComponent,
   ],
   imports: [
     BrowserModule,
