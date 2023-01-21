@@ -171,5 +171,9 @@ export class PassengerService {
 
     return this.httpClient.post<ChartCreationDTO>(this.url + '/passengers/create-passenger-chart', datesChartDTO, newHeader);
   }
+
+  public getAllActivatedPassengers() {
+    return this.httpClient.get<PassengerDTO[]>(this.url + '/passengers/activated-passengers', cabecera);
+  }
 }
 

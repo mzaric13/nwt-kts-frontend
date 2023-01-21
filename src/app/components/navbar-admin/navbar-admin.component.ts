@@ -6,8 +6,9 @@ import {
   faIdCard,
   faUserPlus,
   faArrowRightFromBracket,
-  faChartSimple
+  faChartSimple,
 } from '@fortawesome/free-solid-svg-icons';
+import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-navbar-admin',
   templateUrl: './navbar-admin.component.html',
@@ -21,6 +22,7 @@ export class NavbarAdminComponent implements OnInit {
   faUserPlus = faUserPlus;
   faLogout = faArrowRightFromBracket;
   faChartSimple = faChartSimple;
+  faChat = faFacebookMessenger;
   constructor() { }
 
   ngOnInit(): void {
