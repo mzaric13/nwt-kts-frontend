@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { DriverService } from 'src/app/services/driver.service';
+import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-navbar-driver',
@@ -20,6 +21,7 @@ export class NavbarDriverComponent implements OnInit {
   faRoute = faRoute;
   faLogout = faArrowRightFromBracket;
   faChartSimple = faChartSimple;
+  faChat = faFacebookMessenger;
 
   constructor(private driverService: DriverService) { }
 

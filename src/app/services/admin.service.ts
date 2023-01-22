@@ -79,6 +79,12 @@ export class AdminService {
     return this.httpClient.get<RequestPageObject>(this.url + '/administrators/get-all-passengers', newHeader);
   }
 
+  public getAllActivePassengers(request:RequestPage) {
+    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()}),
+    params: new HttpParams().set('page', request.page).set('size', request.size)};
+    return this.httpClient.get<RequestPageObject>(this.url + '/administrators/get-all-active-passengers', newHeader);
+  }
+
   public changeBlockedStatusPassenger(userIdDTO : UserIdDTO) {
     return this.httpClient.put<PassengerDTO>(this.url + '/administrators/change-block-status-passenger', userIdDTO, cabecera);
   }

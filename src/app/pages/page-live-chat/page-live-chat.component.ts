@@ -11,6 +11,8 @@ import { Observable, of } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
+import { DriverDTO } from 'src/app/models/driver-dto';
+import { DriverService } from 'src/app/services/driver.service';
 
 @Component({
   selector: 'app-page-live-chat',
@@ -24,10 +26,12 @@ export class PageLiveChatComponent implements OnInit {
     private readonly adminService: AdminService,
     private readonly chatService: ChatService,
     private readonly activatedRoute: ActivatedRoute,
+    private readonly driverService: DriverService,
   ) { }
 
   loggedPassenger!: PassengerDTO;
   loggedAdmin!: AdminDTO;
+  loggedDriver!: DriverDTO;
   chatName: string = '';
   socket?: WebSocket;
   stompClient?: Stomp.Client;
@@ -46,16 +50,26 @@ export class PageLiveChatComponent implements OnInit {
         this.connectToChat();
       },
       error: () => {
-        this.adminService.getLoggedAdministrator().subscribe({
-          next: (admin) => {
-            this.loggedAdmin = admin;
-            this.activatedRoute.params.subscribe(s => {
-              this.receiver = s["name"]
-              this.chatName = s["name"] + '&' + 'admin';
-              this.connectToChat();
-            })
+        this.driverService.getLoggedDriver().subscribe({
+          next: (driver) => {
+            this.loggedDriver = driver;
+            this.chatName = this.loggedDriver.email + '&' + 'admin';
+            this.receiver = 'Admin'
+            this.connectToChat();
+          },
+          error: () => {
+            this.adminService.getLoggedAdministrator().subscribe({
+              next: (admin) => {
+                this.loggedAdmin = admin;
+                this.activatedRoute.params.subscribe(s => {
+                  this.receiver = s["name"]
+                  this.chatName = s["name"] + '&' + 'admin';
+                  this.connectToChat();
+                })
+              }
+            });
           }
-        });
+        })
       }
     });
   }
@@ -80,7 +94,12 @@ export class PageLiveChatComponent implements OnInit {
   }
 
   sendMsg() {
-    let sender: string = this.receiver == 'Admin' ? this.loggedPassenger.email : 'admin';
+    let sender: string = '';
+    if (this.receiver == 'Admin') {
+      sender = this.loggedPassenger ? this.loggedPassenger.email : this.loggedDriver.email;
+    } else {
+      sender = 'admin';
+    }
     if (this.newMessage.value !== '') {
       this.stompClient!.send(
         '/app/chat/' + this.chatName,
