@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
 import { render } from 'creditcardpayments/creditCardPayments';
 import { PassengerService } from 'src/app/services/passenger.service';
 import Swal from 'sweetalert2';
@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
   templateUrl: './payment-card.component.html',
   styleUrls: ['./payment-card.component.css']
 })
-export class PaymentCardComponent implements OnInit {
+export class PaymentCardComponent implements OnInit, AfterContentInit {
 
   @Input() title! : string;
 
@@ -23,7 +23,7 @@ export class PaymentCardComponent implements OnInit {
   }
 
   ngAfterContentInit() {
-    render(
+    setTimeout(() => {render(
       {
           id: "#payments" + this.price.split('.')[0],
           currency: "USD",
@@ -48,7 +48,8 @@ export class PaymentCardComponent implements OnInit {
             });
           }
         }
-      );
+      );}, 1);
+    
   }
 
 }

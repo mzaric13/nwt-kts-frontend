@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
     private authService: SocialAuthService,
     private oauthService: OauthService,
     private tokenService: TokenService,
-    private _ngZone: NgZone,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -60,11 +60,12 @@ export class LoginComponent implements OnInit {
         // @ts-ignore
         document.getElementById('googleButtonDiv'),
         {
-          theme: 'outline',
+          theme: 'filled_blue',
           size: 'large',
-          width: '100%',
+          width: '100',
           text: 'signin_with',
           shape: 'rectangular',
+          locale: 'en-us'
         }
       );
       // @ts-ignore
@@ -77,10 +78,10 @@ export class LoginComponent implements OnInit {
 
   async handleCredentialResponse(response: CredentialResponse) {
     await this.oauthService.google(response.credential).subscribe(
-      (res: JwtToken) => {
+      async (res: JwtToken) => {
         let decodedToken: DecodedToken = jwtDecode(res.accessToken);
         this.tokenService.setToken(res.accessToken, decodedToken.role);
-        this.redirect();
+        await this.redirect();
       },
       (error: any) => {
         console.log(error);
@@ -141,11 +142,17 @@ export class LoginComponent implements OnInit {
   redirect(): void {
     let role = this.tokenService.getRole();
     if (role === 'ROLE_PASSENGER') {
-      this.router.navigate(['/home-passenger']);
+      this.zone.run(() => {
+        this.router.navigate(['/home-passenger']);
+      });
     } else if (role === 'ROLE_ADMIN') {
-      this.router.navigate(['/admin-profile']);
+      this.zone.run(() => {
+        this.router.navigate(['/admin-profile']);
+      });
     } else if (role === 'ROLE_DRIVER') {
-      this.router.navigate(['/driver-profile']);
+      this.zone.run(() => {
+        this.router.navigate(['/driver-profile']);
+      });
     }
   }
 }
