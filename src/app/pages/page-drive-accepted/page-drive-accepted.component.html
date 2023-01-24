@@ -1,6 +1,6 @@
 <div class="bg-pic">
     <app-navbar-passenger></app-navbar-passenger>
-    <div class="info">
+    <div *ngIf="okStatus" class="info">
         <mat-icon [ngStyle]="{'color': 'green'}">check_circle</mat-icon>
         <h4 class="arial_text">Thank you for giving consent for the drive. We hope you will like it and have a good time</h4>
     </div>
