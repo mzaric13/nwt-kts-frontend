@@ -1,5 +1,5 @@
 export interface PointDTO {
-  id: number;
+  id?: number;
   latitude: number;
   longitude: number;
 }

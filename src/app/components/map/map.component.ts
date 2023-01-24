@@ -12,6 +12,8 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { PointCreationDTO } from 'src/app/models/point-creation-dto';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-map',
@@ -23,7 +25,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   private routeLayers: L.LayerGroup[] = [];
 
   @Input() waypoints: PointCreationDTO[] = [];
-  @Input() drivers!: DriverDTO[];
+  drivers: any = {};
   @Input() routes: any = [];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
   @Output() estimatedCostEvent = new EventEmitter<number>();
@@ -31,6 +33,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Output() routeIdxEvent = new EventEmitter<number>();
 
   private routeIdxs = new Map<string, number>();
+  markerGroup: L.MarkerClusterGroup = L.markerClusterGroup();
+
+  socket!: WebSocket;
+  stompClient!: Stomp.Client;
 
   options = {
     layers: [
@@ -57,7 +63,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    const newDrivers = changes['drivers'];
     const newRoutes = changes['routes'];
     const newWaypoints = changes['waypoints'];
     
@@ -119,22 +124,36 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }
       }
     }
-
-    if (newDrivers) {
-      if (
-        newDrivers.previousValue !== undefined &&
-        newDrivers.previousValue.length === 0
-      ) {
-        setTimeout(() => {
-          this.addDriversToTheMap();
-        }, 1000);
-      }
-    }
   }
 
-  private addDriversToTheMap() {
-    const markers = L.markerClusterGroup();
-    for (const driver of this.drivers) {
+  private calculateEstimatedTime(time: number) {
+    return Math.round(time / 60);
+  }
+
+  private calculateDistance(totalDistance: number) {
+    const distance: number = totalDistance / 1000;
+    return Number.parseFloat(distance.toFixed(1));
+  }
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.initializeWebSocketConnection();
+    this.initMap();
+  }
+
+  initializeWebSocketConnection() {
+    let ws = new SockJS('http://localhost:9000/map');
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, function () {
+      that.openGlobalSocket();
+    });
+  }
+
+  openGlobalSocket() {
+    this.stompClient.subscribe('/simulation/set-vehicle-position', (message: { body: string }) => {
+      let driver: DriverDTO = JSON.parse(message.body);
       let availability: string = '';
       if (driver.available) {
         availability =
@@ -159,23 +178,16 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           direction: 'top',
         }
       );
-      markers.addLayer(marker);
-    }
-    this.mainGroup.push(markers);
-  }
+      this.markerGroup.addLayer(marker);
+      this.mainGroup.push(this.markerGroup);
+      this.drivers[driver.id] = marker;
+    });
 
-  private calculateEstimatedTime(time: number) {
-    return Math.round(time / 60);
-  }
-
-  private calculateDistance(totalDistance: number) {
-    const distance: number = totalDistance / 1000;
-    return Number.parseFloat(distance.toFixed(1));
-  }
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
-    this.initMap();
+    this.stompClient.subscribe('/simulation/update-vehicle-position', (message: { body: string }) => {
+      let driver: DriverDTO = JSON.parse(message.body);
+      let existingDriver = this.drivers[driver.id];
+      existingDriver.setLatLng([driver.location.longitude, driver.location.latitude]);
+      existingDriver.update()
+    });
   }
 }
