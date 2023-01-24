@@ -19,18 +19,7 @@ import { PointCreationDTO } from 'src/app/models/point-creation-dto';
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
-  //ovo je visak ako se koristi kod ispod
   private icon!: L.DivIcon;
-
-  /*private icon = L.icon({
-    iconUrl: '../../../assets/marker-icon-2x.png',
-    shadowUrl: '../../../assets/marker-shadow.png',
-    iconSize:     [38, 95], // size of the icon
-    shadowSize:   [50, 64], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-  });*/
   private routeLayers: L.LayerGroup[] = [];
 
   @Input() waypoints: PointCreationDTO[] = [];
@@ -59,7 +48,6 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   mainGroup: L.LayerGroup[] = [];
 
   private initMap(): void {
-    //ovo je visak ako se koristi custom ikonica
     this.icon = L.divIcon({
       className: 'position-relative rotate--marker',
       html: '<div><img style="width: 50px;" src="https://www.pngkit.com/png/full/54-544296_red-top-view-clip-art-at-clker-cartoon.png" /></div>',
@@ -91,7 +79,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         const routeWaypoints = changes['waypoints'].currentValue;
         let markerLayerGroup: L.LayerGroup = new L.LayerGroup();
         for (let waypoint of routeWaypoints) {
-          let marker = L.marker(L.latLng(waypoint.latitude, waypoint.longitude)/*,{icon: this.icon}*/);
+          let marker = L.marker(L.latLng(waypoint.latitude, waypoint.longitude));
           marker.addTo(markerLayerGroup);
         }
         this.routeLayers.push(markerLayerGroup);
