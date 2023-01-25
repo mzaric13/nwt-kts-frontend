@@ -14,6 +14,7 @@ export class PageRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.tokenService.getRole();
+    console.log(this.role);
   }
 
 }

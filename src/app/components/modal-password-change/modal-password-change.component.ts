@@ -51,7 +51,6 @@ export class ModalPasswordChangeComponent implements OnInit {
     }
     if (this.getRole() === "ROLE_PASSENGER"){
       this.passengerService.updatePassword(passwordChangeCreationDTO).subscribe(data => {
-        this.closeModal();
         Swal.fire({
           icon: 'success',
           position: 'center',
@@ -67,11 +66,11 @@ export class ModalPasswordChangeComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000
         })
+        this.closeModal();
       })
     }
     else if (this.getRole() === "ROLE_ADMIN") {
       this.adminService.updatePassword(passwordChangeCreationDTO).subscribe(data => {
-        this.closeModal();
         Swal.fire({
           icon: 'success',
           position: 'center',
@@ -79,6 +78,7 @@ export class ModalPasswordChangeComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000
         })
+        this.closeModal();
       }, error => {
         Swal.fire({
           icon: 'error',
@@ -91,7 +91,6 @@ export class ModalPasswordChangeComponent implements OnInit {
     }
     else if (this.getRole() === "ROLE_DRIVER") {
       this.driverService.updatePassword(passwordChangeCreationDTO).subscribe(data => {
-        this.closeModal();
         Swal.fire({
           icon: 'success',
           position: 'center',
@@ -99,6 +98,7 @@ export class ModalPasswordChangeComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000
         })
+        this.closeModal();
       }, error => {
         Swal.fire({
           icon: 'error',
@@ -107,7 +107,8 @@ export class ModalPasswordChangeComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000
         })
-      })
+      }
+      )
     }
 
   }

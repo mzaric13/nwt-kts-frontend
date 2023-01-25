@@ -60,4 +60,8 @@ export class PageDriverProfileComponent implements OnInit {
     }
   }
 
+  changeDriver(driverDTO: DriverDTO) {
+    this.loggedDriver = driverDTO;
+  }
+
 }

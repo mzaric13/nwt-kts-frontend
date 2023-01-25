@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { DriveDTO } from 'src/app/models/drive-dto';
 import { RequestPage } from 'src/app/models/request-page';
@@ -21,7 +21,7 @@ import { PassengerRatingDTO } from 'src/app/models/passenger-rating-dto';
 
 export class ViewHistoryComponent implements OnInit{
 
-  passengerCanRateDrive = new Array<PassengerRatingDTO>();
+  //passengerCanRateDrive = new Array<PassengerRatingDTO>();
   drives: DriveDTO[] = [];
   loggedPerson!: string;
   loading: boolean = true;
@@ -34,6 +34,8 @@ export class ViewHistoryComponent implements OnInit{
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @Input() passengerCanRateDrive = new Array<PassengerRatingDTO>();
 
   @Output() showMoreDetailsButtonPressedEvent = new EventEmitter<DriveDTO>();
   @Output() showMapButtonPressedEvent = new EventEmitter<DriveDTO>();
@@ -160,15 +162,10 @@ export class ViewHistoryComponent implements OnInit{
         showConfirmButton: false,
         timer: 3000
       });
-      this.reloadPage();
+      this.navigateToUser();
     }
   }
 
-  private reloadPage() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.navigateToUser();
-  }
 
   private navigateToUser() {
     if (this.loggedPerson === "admin") {

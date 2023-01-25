@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DriveDTO } from 'src/app/models/drive-dto';
+import { PassengerRatingDTO } from 'src/app/models/passenger-rating-dto';
+import { RatingDTO } from 'src/app/models/rating-dto';
+import { RatingService } from 'src/app/services/rating.service';
 import { TokenService } from 'src/app/services/token.service';
 
 @Component({
@@ -14,8 +17,9 @@ export class PageViewDriveHistoryComponent implements OnInit {
   mapModalIsOpened = false;
   ratingModalIsOpened = false;
   loggedPerson!: string;
+  passengerCanRateDrive = new Array<PassengerRatingDTO>();
 
-  constructor(private tokenService: TokenService) { }
+  constructor(private tokenService: TokenService, private ratingService: RatingService) { }
 
   ngOnInit(): void {
     this.getLoggedPerson();
@@ -46,6 +50,12 @@ export class PageViewDriveHistoryComponent implements OnInit {
 
   public closeRatingModal() {
     this.ratingModalIsOpened = false;
+  }
+
+  public updateTable(ratingDTO: RatingDTO) {
+    this.ratingService.findPassengersEligibleRatings().subscribe(data => {
+      this.passengerCanRateDrive = data;
+    });
   }
 
   private getLoggedPerson() {
