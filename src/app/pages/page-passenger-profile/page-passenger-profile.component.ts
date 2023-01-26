@@ -60,6 +60,10 @@ export class PagePassengerProfileComponent implements OnInit  {
     }
   }
 
+  changePassenger(passengerDTO: PassengerDTO) {
+    this.loggedPassenger = passengerDTO;
+  } 
+
   
 
 }

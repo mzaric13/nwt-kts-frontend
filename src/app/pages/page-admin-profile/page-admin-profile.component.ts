@@ -60,4 +60,8 @@ export class PageAdminProfileComponent implements OnInit {
     }
   }
 
+  changeAdmin(adminDTO: AdminDTO) {
+    this.loggedAdmin = adminDTO;
+  }
+
 }

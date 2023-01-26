@@ -19,6 +19,7 @@ import { faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import jwtDecode from 'jwt-decode';
 import { DecodedToken } from '../../models/decoded-token';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -131,11 +132,23 @@ export class LoginComponent implements OnInit {
             this.redirect();
           },
           (err) => {
-            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              position: 'center',
+              title: "User with given credentials doesn't exist!",
+              showConfirmButton: false,
+              timer: 3000
+            })
           }
         );
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        icon: 'error',
+        position: 'center',
+        title: e as string,
+        showConfirmButton: false,
+        timer: 3000
+      })
     }
   }
 

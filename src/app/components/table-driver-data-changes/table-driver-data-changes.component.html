@@ -8,20 +8,34 @@
   <table mat-table [dataSource]="dataSource" matSort class="arial_font bg_gray">
       <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element !== undefined">
+              {{element.id}}
+            </ng-container>
+          </td>
       </ng-container>
       <ng-container matColumnDef="fullName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Full name</th>
-          <td mat-cell *matCellDef="let element">{{element.name}} {{element.surname}}</td>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element !== undefined">
+              {{element.name}} {{element.surname}}
+            </ng-container>
+          </td>
       </ng-container>
       <ng-container matColumnDef="dateOfRequest">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Date of request</th>
-          <td mat-cell *matCellDef="let element">{{element.dateOfRequest | date:'medium'}}</td>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="element !== undefined">
+              {{element.dateOfRequest | date:'medium'}}
+            </ng-container>
+          </td>
       </ng-container>
       <ng-container matColumnDef="details">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>View driver data</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-button (click)="showModal(element)">Driver data</button>
+          <ng-container *ngIf="element !== undefined">
+            <button mat-button (click)="showModal(element)">Driver data</button>
+          </ng-container>
         </td>
     </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

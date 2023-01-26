@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,6 +21,10 @@ export class TableBlockUsersComponent implements OnInit {
   @ViewChild('paginatorPassenger') paginatorPassenger!: MatPaginator;
 
   @ViewChild('paginatorDriver') paginatorDriver!: MatPaginator;
+  
+  @Input() passengerChanged!: PassengerDTO;
+
+  @Input() driverChanged! : DriverDTO;
 
   @Output() showPassengerInfoButtonPressedEvent = new EventEmitter<PassengerDTO>();
 
@@ -49,6 +53,19 @@ export class TableBlockUsersComponent implements OnInit {
     }
     this.getPassengers(request);
     this.getDrivers(request);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const request: RequestPage = {
+      page: 0,
+      size: 2
+    }
+    if (changes['passengerChanged'] !== undefined) {
+      this.getPassengers(request);
+    }
+    else {
+      this.getDrivers(request);
+    }
   }
 
   private getPassengers(request: RequestPage) {

@@ -24,6 +24,8 @@ export class ModalGiveRatingComponent implements OnInit {
 
   @Output() modalIsClosed = new EventEmitter();
 
+  @Output() ratingHasBeenGiven = new EventEmitter();
+
   ratingForm = this.formBuilder.group({
     driverRating: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
     vehicleRating: ['', [Validators.required,Validators.min(1), Validators.max(5)]],
@@ -36,12 +38,6 @@ export class ModalGiveRatingComponent implements OnInit {
 
   closeModal(){
     this.modalIsClosed.emit();
-  }
-
-  reloadPage() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/view-drive-history']);
   }
 
   giveRating(){
@@ -62,7 +58,8 @@ export class ModalGiveRatingComponent implements OnInit {
         showConfirmButton: false,
         timer: 3000
       })
-      this.reloadPage();
+      this.ratingHasBeenGiven.emit(data);
+      this.closeModal();
    })
    
   }

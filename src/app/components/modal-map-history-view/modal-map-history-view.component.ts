@@ -50,6 +50,7 @@ export class ModalMapHistoryViewComponent implements OnInit {
   }
 
   public selectRouteAgain(route: RouteDTO) {
+    this.closeModal();
     this.router.navigate(['/customize-ride'], { state: { data: route } });
   }
 

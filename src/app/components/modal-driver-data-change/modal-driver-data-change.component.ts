@@ -15,6 +15,8 @@ export class ModalDriverDataChangeComponent implements OnInit {
   @Input() driverData!: DriverDataDTO;
 
   @Output() modalIsClosed = new EventEmitter();
+
+  @Output() driverDataAnswered = new EventEmitter<DriverDataDTO>();
   
   displayStyle = "none";
 
@@ -40,13 +42,15 @@ export class ModalDriverDataChangeComponent implements OnInit {
         showConfirmButton: false,
         timer: 3000
       })
-      this.reloadPage()
+      this.driverDataAnswered.emit(data);
+      this.closeModal();
     })
   }
 
   closeModal(){
     this.modalIsClosed.emit();
   }
+  
 
   reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;

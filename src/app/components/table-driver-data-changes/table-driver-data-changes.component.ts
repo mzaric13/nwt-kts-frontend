@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,6 +19,8 @@ export class TableDriverDataChangesComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  @Input() answeredDriverDataDTO!: DriverDataDTO;
+
   @Output() showModalButtonPressedEvent = new EventEmitter<DriverDataDTO>();
 
   unansweredDriverData : DriverDataDTO[] = [];
@@ -32,6 +34,14 @@ export class TableDriverDataChangesComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    const request: RequestPage = {
+      page: 0,
+      size: 2
+    }
+    this.getDriverData(request);
+  }
+
+  ngOnChanges() {
     const request: RequestPage = {
       page: 0,
       size: 2
@@ -55,7 +65,7 @@ export class TableDriverDataChangesComponent implements OnInit {
         showConfirmButton: false,
         timer: 3000
       })
-      this.reloadPage();
+      this.navigate();
     }
   }
 
@@ -99,9 +109,7 @@ export class TableDriverDataChangesComponent implements OnInit {
     this.showModalButtonPressedEvent.emit(request);
   }
 
-  private reloadPage() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
+  private navigate() {
     this.router.navigate(['/admin-profile'])
   }
 }

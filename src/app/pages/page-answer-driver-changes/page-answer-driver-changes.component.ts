@@ -12,6 +12,7 @@ export class PageAnswerDriverChangesComponent implements OnInit {
 
   modalIsOpened = false;
   driverDataDTO! : DriverDataDTO;
+  answeredDriverDataDTO!: DriverDataDTO;
 
   ngOnInit(): void {
   }
@@ -24,4 +25,8 @@ export class PageAnswerDriverChangesComponent implements OnInit {
   closeModal(){
     this.modalIsOpened = false;
   } 
+
+  driverDataAnswered(driverDataDTO: DriverDataDTO) {
+    this.answeredDriverDataDTO = driverDataDTO;
+  }
 }

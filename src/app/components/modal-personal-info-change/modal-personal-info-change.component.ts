@@ -118,7 +118,8 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
         showConfirmButton: false,
         timer: 3000
       })
-      this.reloadPage();
+      this.passengerChange.emit(data);
+      this.closeModal();
     },
     error => {
       Swal.fire({
@@ -141,7 +142,8 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
           showConfirmButton: false,
           timer: 3000
         })
-        this.reloadPage();
+        this.adminChange.emit(data);
+        this.closeModal();
       },
       error => {
         Swal.fire({
@@ -170,6 +172,7 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
         showConfirmButton: false,
         timer: 3000
       })
+      this.closeModal();
     },
     error => {
       Swal.fire({
@@ -192,17 +195,6 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
     }
     else if (this.getRole() === "ROLE_DRIVER") {
       this.driverForForm = JSON.parse(JSON.stringify(this.driver));
-    }
-  }
-
-  reloadPage() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    if (this.getRole() === "ROLE_PASSENGER") {
-      this.router.navigate(['/passenger-profile']);      
-    }
-    else if (this.getRole() === "ROLE_ADMIN") {
-      this.router.navigate(['/admin-profile']);
     }
   }
 

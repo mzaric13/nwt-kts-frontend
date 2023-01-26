@@ -17,6 +17,8 @@ export class ModalChangeBlockedStatusComponent implements OnInit {
   @Input() driver!: DriverDTO | null;
 
   @Output() modalIsClosed = new EventEmitter();
+  @Output() passengerBlockedStatusChanged = new EventEmitter<PassengerDTO>();
+  @Output() driverBlockedStatusChanged = new EventEmitter<DriverDTO>();
 
   displayStyle = "none";
   reason! : string;
@@ -62,7 +64,8 @@ export class ModalChangeBlockedStatusComponent implements OnInit {
           timer: 3000
         })
       }
-      this.reloadPage();
+      this.passengerBlockedStatusChanged.emit(data);
+      this.closeModal();
     })
   }
 
@@ -98,14 +101,9 @@ export class ModalChangeBlockedStatusComponent implements OnInit {
           timer: 3000
         })
       }
-      this.reloadPage();
+      this.driverBlockedStatusChanged.emit(data);
+      this.closeModal();
     })
-  }
-
-  reloadPage() {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/change-blocked-status']);
   }
 
   closeModal() {
