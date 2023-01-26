@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { DriveDTO } from "../models/drive-dto";
 import { RequestPage } from "../models/request-page";
 import { RequestPageObject } from "../models/request-page-object";
 import TempDriveDTO from "../models/temp-drive-dto";
@@ -38,7 +39,13 @@ export class DriveService {
   }
 
   public createTempDrive(tempDrive: TempDriveDTO) {
-    return this.httpClient.post<number>(this.url + "/drives/create-temp-drive/", tempDrive, cabecera);
+    let newHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    return this.httpClient.post<number>(this.url + "/drives/create-temp-drive/", tempDrive, newHeader);
   }
   
   public sendConfirmationEmails(tempDriveId: number) {
@@ -76,6 +83,36 @@ export class DriveService {
       params
     };
     return this.httpClient.put<void>(this.url + "/drives/reject-drive-consent", {}, options)
+  }
+
+  public getDrive(driveId: number) {
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    return this.httpClient.get<DriveDTO>(this.url + "/drives/" + driveId, options);
+  }
+
+  reportInconsistency(drive: DriveDTO) {
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    return this.httpClient.put<void>(this.url + "/drives/report-inconsistency", drive, options);
+  }
+
+  endDrive(drive: DriveDTO) {
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    return this.httpClient.put<void>(this.url + "/drives/end-drive", drive, options);
   }
 
 }
