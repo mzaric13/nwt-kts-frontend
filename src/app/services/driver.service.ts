@@ -32,7 +32,7 @@ export class DriverService {
   }
 
   public registerDriver(driverCreationDTO: DriverCreationDTO) {
-    if (driverCreationDTO.password != driverCreationDTO.passwordConfirmation) {
+    if (driverCreationDTO.password !== driverCreationDTO.passwordConfirmation) {
       Swal.fire({
         position: 'center',
         icon: 'error',

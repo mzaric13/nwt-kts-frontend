@@ -16,9 +16,6 @@ import { ChartCreationDTO } from '../models/chart-creation-dto';
 import { RequestPageObject } from '../models/request-page-object';
 import { RequestPage } from '../models/request-page';
 
-
-const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,15 +23,17 @@ export class AdminService {
     
   private url = environment.apiUrl;
 
+  newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
+
   constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
   public getLoggedAdministrator() {
-    let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
-    return this.httpClient.get<AdminDTO>(this.url + '/administrators/get-logged', newHeader);
+
+    return this.httpClient.get<AdminDTO>(this.url + '/administrators/get-logged', this.newHeader);
   }
 
   public updatePersonalInfoAdmin(adminDTO: AdminDTO) {
-    return this.httpClient.put<AdminDTO>(this.url + '/administrators/update-personal-info', adminDTO, cabecera);
+    return this.httpClient.put<AdminDTO>(this.url + '/administrators/update-personal-info', adminDTO, this.newHeader);
   }
 
   public updatePassword(passwordChangeCreationDTO : PasswordChangeCreationDTO) {
@@ -49,16 +48,16 @@ export class AdminService {
       throw new Error("Passwords don't match!");
     }
     else {
-      return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-password', passwordChangeCreationDTO, cabecera);
+      return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-password', passwordChangeCreationDTO, this.newHeader);
     }
   }
 
   public changeProfilePicture(profilePictureCreationDTO: ProfilePictureCreationDTO) {
-    return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-profile-picture', profilePictureCreationDTO, cabecera);
+    return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-profile-picture', profilePictureCreationDTO, this.newHeader);
   }
 
   public answerDataChangeRequest(answeredDriverDataCreationDTO : AnsweredDriverDataCreationDTO){
-    return this.httpClient.put<DriverDataDTO>(this.url + '/administrators/answer-driver-data-change', answeredDriverDataCreationDTO, cabecera);
+    return this.httpClient.put<DriverDataDTO>(this.url + '/administrators/answer-driver-data-change', answeredDriverDataCreationDTO, this.newHeader);
   }
 
   public getUnansweredDriverDataRequests(request:RequestPage) {
@@ -86,21 +85,14 @@ export class AdminService {
   }
 
   public changeBlockedStatusPassenger(userIdDTO : UserIdDTO) {
-    return this.httpClient.put<PassengerDTO>(this.url + '/administrators/change-block-status-passenger', userIdDTO, cabecera);
+    return this.httpClient.put<PassengerDTO>(this.url + '/administrators/change-block-status-passenger', userIdDTO, this.newHeader);
   }
 
   public changeBlockedStatusDriver(userIdDTO : UserIdDTO) {
-    return this.httpClient.put<DriverDTO>(this.url + '/administrators/change-block-status-driver', userIdDTO, cabecera);
+    return this.httpClient.put<DriverDTO>(this.url + '/administrators/change-block-status-driver', userIdDTO, this.newHeader);
   }
 
   public createAdminChart(datesChartDTO: DatesChartDTO) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-
-    return this.httpClient.post<ChartCreationDTO>(this.url + '/administrators/create-admin-chart', datesChartDTO, newHeader);
+    return this.httpClient.post<ChartCreationDTO>(this.url + '/administrators/create-admin-chart', datesChartDTO, this.newHeader);
   }
 }
