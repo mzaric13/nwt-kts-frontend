@@ -4,8 +4,6 @@ import { environment } from 'src/environments/environment';
 import { TypeDTO } from '../models/type-dto';
 import { TokenService } from './token.service';
 
-const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/json'})};
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,5 +17,4 @@ export class VehicleService {
     let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
     return this.httpClient.get<TypeDTO[]>(this.url + '/vehicles/get-all-vehicle-types', newHeader);
   }
-
 }

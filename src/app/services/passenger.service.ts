@@ -29,7 +29,7 @@ export class PassengerService {
   ) {}
 
   public registerPassenger(passengerCreationDTO: PassengerCreationDTO) {
-    if (passengerCreationDTO.password != passengerCreationDTO.passwordConfirm) {
+    if (passengerCreationDTO.password !== passengerCreationDTO.passwordConfirm) {
        Swal.fire({
         position: 'center',
         icon: 'error',
