@@ -25,7 +25,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   private routeLayers: L.LayerGroup[] = [];
 
   @Input() waypoints: PointCreationDTO[] = [];
-  drivers: any = {};
+  @Input() drivers!: DriverDTO[];
   @Input() routes: any = [];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
   @Output() estimatedCostEvent = new EventEmitter<number>();
@@ -34,6 +34,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   private routeIdxs = new Map<string, number>();
   markerGroup: L.MarkerClusterGroup = L.markerClusterGroup();
+  driverMarkers: any = {};
 
   socket!: WebSocket;
   stompClient!: Stomp.Client;
@@ -65,6 +66,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const newRoutes = changes['routes'];
     const newWaypoints = changes['waypoints'];
+    const newDrivers = changes['drivers'];
     
     if (newRoutes || newWaypoints) {
       let routes: any;
@@ -124,6 +126,41 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }
       }
     }
+
+    if (newDrivers) {
+      let drivers: DriverDTO[] = newDrivers.currentValue;
+      if (newDrivers) {
+        for (let driver of drivers) {
+          let availability: string = '';
+          if (driver.available) {
+            availability =
+              '<div style="font-family: Arial; color:green">Available</div>';
+          } else {
+            availability =
+              '<div style="font-family: Arial; color:red">NOT available</div>';
+          }
+          const marker = L.marker([driver.location.latitude, driver.location.longitude], {
+            icon: this.icon,
+            riseOnHover: true,
+          }).bindTooltip(
+            '<div><div style="font-family: Arial;">' +
+              driver.name +
+              ' ' +
+              driver.surname +
+              '</div>' +
+              availability +
+              '</div>',
+            {
+              offset: L.point(15, 0),
+              direction: 'top',
+            }
+          );
+          this.markerGroup.addLayer(marker);
+          this.mainGroup.push(this.markerGroup);
+          this.driverMarkers[driver.id] = marker;
+        }
+      }
+    }
   }
 
   private calculateEstimatedTime(time: number) {
@@ -152,41 +189,10 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   openGlobalSocket() {
-    this.stompClient.subscribe('/secured/simulation/set-vehicle-position', (message: { body: string }) => {
-      let driver: DriverDTO = JSON.parse(message.body);
-      let availability: string = '';
-      if (driver.available) {
-        availability =
-          '<div style="font-family: Arial; color:green">Available</div>';
-      } else {
-        availability =
-          '<div style="font-family: Arial; color:red">NOT available</div>';
-      }
-      const marker = L.marker([driver.location.latitude, driver.location.longitude], {
-        icon: this.icon,
-        riseOnHover: true,
-      }).bindTooltip(
-        '<div><div style="font-family: Arial;">' +
-          driver.name +
-          ' ' +
-          driver.surname +
-          '</div>' +
-          availability +
-          '</div>',
-        {
-          offset: L.point(15, 0),
-          direction: 'top',
-        }
-      );
-      this.markerGroup.addLayer(marker);
-      this.mainGroup.push(this.markerGroup);
-      this.drivers[driver.id] = marker;
-    });
-
     this.stompClient.subscribe('/secured/simulation/update-vehicle-position', (message: { body: string }) => {
       let driver: DriverDTO = JSON.parse(message.body);
-      let existingDriver = this.drivers[driver.id];
-      existingDriver.setLatLng([driver.location.longitude, driver.location.latitude]);
+      let existingDriver = this.driverMarkers[driver.id];
+      existingDriver.setLatLng([driver.location.latitude, driver.location.longitude]);
       existingDriver.update()
     });
   }

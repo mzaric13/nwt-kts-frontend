@@ -7,7 +7,7 @@
         </div>
         <div class="flex-map">
             <app-map 
-                [routes]="routes" [waypoints]="routeWaypoints"
+                [drivers]="drivers" [routes]="routes" [waypoints]="routeWaypoints"
                 (estimatedTimeEvent)="getEstimatedTime($event)"
                 (estimatedCostEvent)="getEstimatedCost($event)"
                 (waypointsEvent)="getWaypoints($event)"
