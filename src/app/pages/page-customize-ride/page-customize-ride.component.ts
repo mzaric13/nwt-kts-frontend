@@ -61,7 +61,6 @@ export class PageCustomizeRideComponent implements OnInit {
       this.passengerService.addFavoriteRoute(this.routeDTO).subscribe({
         next: (favoriteRoute: RouteDTO) => {
           this.routeDTO = favoriteRoute;
-          console.log(this.routeDTO);
           Swal.fire({
             icon: 'success',
             title: 'Success!',

@@ -11,7 +11,7 @@ export interface DriveDTO {
     endDate: Date,
     price: number,
     length: number,
-    inconsistentDriveReasoning: string,
+    inconsistentDriveReasoning: string[],
     tags: TagDTO[];
     status: Status,
     driver: DriverDTO,

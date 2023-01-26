@@ -1,0 +1,50 @@
+.inconsistency-form {
+    margin-top: 1%;
+    margin-left: 1%;
+    border: 2px solid black;
+    position: absolute;
+}
+
+.arial_font {
+    font-family: Arial;
+}
+
+.bg_gray {
+    background: rgb(238, 237, 237);
+}
+
+.bg_black {
+    background-color: black;
+}
+
+::placeholder {
+    font-family: Arial;
+}
+
+.borderless_input {
+    border: none;
+    outline: none;
+}
+
+.input_size {
+    padding: 12px;
+    line-height: 2px;
+    width: 100%;
+}
+
+.center_text {
+    text-align: center;
+}
+
+input:focus {
+    border: 2px solid black;
+}
+
+.form-group {
+    padding-inline: 10px;
+}
+
+.form-group > button {
+    width: 100%;
+    height: 100%;
+}
