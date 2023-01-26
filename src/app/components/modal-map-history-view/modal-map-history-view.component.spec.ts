@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalMapHistoryViewComponent } from './modal-map-history-view.component';
@@ -8,7 +9,7 @@ describe('ModalMapHistoryViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalMapHistoryViewComponent ]
+      declarations: [ ModalMapHistoryViewComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TableDriverDataChangesComponent } from './table-driver-data-changes.component';
@@ -8,7 +9,7 @@ describe('TableDriverDataChangesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TableDriverDataChangesComponent ]
+      declarations: [ TableDriverDataChangesComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

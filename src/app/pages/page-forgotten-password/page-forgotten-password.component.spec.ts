@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PageForgottenPasswordComponent } from './page-forgotten-password.component';
 
@@ -8,7 +10,7 @@ describe('PageForgottenPasswordComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageForgottenPasswordComponent ]
+      declarations: [ PageForgottenPasswordComponent ], imports: [ HttpClientModule, FormsModule, ReactiveFormsModule ]
     })
     .compileComponents();
 

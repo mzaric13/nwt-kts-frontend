@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageHomePassengerComponent } from './page-home-passenger.component';
@@ -8,7 +9,7 @@ describe('PageHomePassengerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageHomePassengerComponent ]
+      declarations: [ PageHomePassengerComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

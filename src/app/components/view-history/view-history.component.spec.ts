@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewHistoryComponent } from './view-history.component';
@@ -8,7 +9,7 @@ describe('ViewHistoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewHistoryComponent ]
+      declarations: [ ViewHistoryComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

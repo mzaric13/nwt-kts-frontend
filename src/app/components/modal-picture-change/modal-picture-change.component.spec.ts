@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalPictureChangeComponent } from './modal-picture-change.component';
@@ -8,7 +9,7 @@ describe('ModalPictureChangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalPictureChangeComponent ]
+      declarations: [ ModalPictureChangeComponent ],imports: [ HttpClientModule ]
     })
     .compileComponents();
 

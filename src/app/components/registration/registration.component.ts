@@ -9,6 +9,8 @@ import { VehicleService } from '../../services/vehicle.service';
 import Swal from 'sweetalert2';
 import { TokenService } from 'src/app/services/token.service';
 import { VehicleCreationDTO } from 'src/app/models/vehicle-creation-dto';
+import { PassengerDTO } from 'src/app/models/passenger-dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -18,7 +20,8 @@ import { VehicleCreationDTO } from 'src/app/models/vehicle-creation-dto';
 export class RegistrationComponent implements OnInit {
 
   types: TypeDTO[] = [];
-  tokenService: TokenService = new TokenService;
+
+  role: string | null | undefined;
 
   registrationForm = this.formBuilder.group({
     userGroup: this.formBuilder.group({
@@ -42,12 +45,15 @@ export class RegistrationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private passengerService: PassengerService,
     private vehicleService: VehicleService,
-    private driverService: DriverService
+    private driverService: DriverService,
+    private tokenService: TokenService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
     //ucitati tipove vozila sa backa ako je admin taj koji je ulogovan (dodati uslov za admina)
-    if (this.tokenService.getRole() === "ROLE_ADMIN"){
+    this.role = this.tokenService.getRole();
+    if (this.role === "ROLE_ADMIN"){
       this.vehicleService.getVehicleTypes().subscribe((t) => {
         this.types = t;
       })
@@ -56,7 +62,7 @@ export class RegistrationComponent implements OnInit {
 
   register(): void {
     //if role == admin onda vozaca, else putnika registrujemo
-    if (this.tokenService.getRole() === "ROLE_ADMIN") {
+    if (this.role === "ROLE_ADMIN") {
 
       let vehicleCreationDTO : VehicleCreationDTO = {
         registrationNumber : this.registrationForm.controls['vehicleGroup'].value.registrationNumber as string,
@@ -117,36 +123,27 @@ export class RegistrationComponent implements OnInit {
         password : this.registrationForm.controls['userGroup'].value.password as string,
         passwordConfirm : this.registrationForm.controls['userGroup'].value.confirmPassword as string,
       }
-      this.passengerService.registerPassenger(passengerCreationDTO).subscribe(
-        passengerDTO => {
+      this.passengerService.registerPassenger(passengerCreationDTO).subscribe({ 
+        next: (passengerDTO: PassengerDTO) => {
           Swal.fire({
             icon: 'success',
             position: 'center',
             title: 'Please check your email to confirm registration ' + passengerDTO.name + ' ' + passengerDTO.surname + '.',
             showConfirmButton: false,
             timer: 3000
-          })
+          });
+          this.router.navigate(['/']);
         },
-        error => {
-          if (error.status === 409) {
-            Swal.fire({
-              icon: 'error',
-              position: 'center',
-              title: 'Email is already taken!',
-              showConfirmButton: false,
-              timer: 3000,
-            })
-          } else {
-            Swal.fire({
-              icon: 'error',
-              position: 'center',
-              title: 'An unknown error happened.',
-              showConfirmButton: false,
-              timer: 3000
-            })
-          }
+        error : (error) => {
+          Swal.fire({
+            icon: 'error',
+            position: 'center',
+            title: error.error.apierror.message,
+            showConfirmButton: false,
+            timer: 3000,
+          }) 
         }
-      )
+      })
     }
   }
 }

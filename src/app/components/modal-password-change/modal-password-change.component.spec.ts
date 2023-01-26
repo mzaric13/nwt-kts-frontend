@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalPasswordChangeComponent } from './modal-password-change.component';
@@ -8,7 +9,7 @@ describe('ModalPasswordChangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalPasswordChangeComponent ]
+      declarations: [ ModalPasswordChangeComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

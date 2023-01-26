@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalGiveRatingComponent } from './modal-give-rating.component';
@@ -8,7 +9,7 @@ describe('ModalGiveRatingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalGiveRatingComponent ]
+      declarations: [ ModalGiveRatingComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavbarDriverComponent } from './navbar-driver.component';
@@ -8,7 +9,7 @@ describe('NavbarDriverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavbarDriverComponent ]
+      declarations: [ NavbarDriverComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

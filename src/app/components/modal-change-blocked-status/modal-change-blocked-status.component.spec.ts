@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalChangeBlockedStatusComponent } from './modal-change-blocked-status.component';
@@ -8,7 +9,7 @@ describe('ModalChangeBlockedStatusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalChangeBlockedStatusComponent ]
+      declarations: [ ModalChangeBlockedStatusComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

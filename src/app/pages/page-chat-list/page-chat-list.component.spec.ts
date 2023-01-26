@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { PageChatListComponent } from './page-chat-list.component';
 
@@ -8,7 +10,11 @@ describe('PageChatListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageChatListComponent ]
+      declarations: [ PageChatListComponent ],
+      imports: [
+        HttpClientModule,
+        MatMenuModule
+      ]
     })
     .compileComponents();
 

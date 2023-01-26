@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageHomeUnregisteredComponent } from './page-home-unregistered.component';
@@ -8,7 +9,7 @@ describe('PageHomeUnregisteredComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageHomeUnregisteredComponent ]
+      declarations: [ PageHomeUnregisteredComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

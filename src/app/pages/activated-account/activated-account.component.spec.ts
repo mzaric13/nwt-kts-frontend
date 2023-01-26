@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ActivatedAccountComponent } from './activated-account.component';
 
@@ -8,7 +10,8 @@ describe('ActivatedAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ActivatedAccountComponent ]
+      declarations: [ ActivatedAccountComponent ],
+      imports: [ RouterTestingModule, HttpClientModule ]
     })
     .compileComponents();
 

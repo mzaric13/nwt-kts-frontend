@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PaymentCardComponent } from './payment-card.component';
@@ -8,7 +9,7 @@ describe('PaymentCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaymentCardComponent ]
+      declarations: [ PaymentCardComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

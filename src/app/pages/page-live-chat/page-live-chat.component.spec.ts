@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageLiveChatComponent } from './page-live-chat.component';
@@ -8,7 +9,7 @@ describe('PageLiveChatComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageLiveChatComponent ]
+      declarations: [ PageLiveChatComponent ], imports: [ HttpClientModule ]
     })
     .compileComponents();
 

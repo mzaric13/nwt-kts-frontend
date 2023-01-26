@@ -7,8 +7,8 @@ export interface PassengerDTO {
   surname: string;
   city: string;
   phoneNumber: string;
-  password: string;
-  passwordConfirm: string;
+  password?: string;
+  passwordConfirm?: string;
   profilePicture: string;
   activated: boolean;
   blocked: boolean;

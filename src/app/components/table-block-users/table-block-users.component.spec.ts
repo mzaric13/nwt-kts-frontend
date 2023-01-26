@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { TableBlockUsersComponent } from './table-block-users.component';
 
@@ -8,7 +10,7 @@ describe('TableBlockUsersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TableBlockUsersComponent ]
+      declarations: [ TableBlockUsersComponent ], imports: [ HttpClientModule, MatMenuModule ]
     })
     .compileComponents();
 
