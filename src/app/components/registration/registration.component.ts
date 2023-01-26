@@ -32,7 +32,10 @@ export class RegistrationComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.pattern("^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{2}[-\\s.]?[0-9]{5,7}$")]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]]
-    }),
+    })
+  });
+
+  vehicleForm = this.formBuilder.group({
     vehicleGroup: this.formBuilder.group({
       registrationNumber: ['', [Validators.required, Validators.pattern("([A-Za-z])([A-Za-z])([0-9][0-9][0-9])([A-Za-z])([A-Za-z])")]],
       vehicleName: ['', [Validators.required]],
@@ -51,7 +54,6 @@ export class RegistrationComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    //ucitati tipove vozila sa backa ako je admin taj koji je ulogovan (dodati uslov za admina)
     this.role = this.tokenService.getRole();
     if (this.role === "ROLE_ADMIN"){
       this.vehicleService.getVehicleTypes().subscribe((t) => {
@@ -61,26 +63,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   register(): void {
-    //if role == admin onda vozaca, else putnika registrujemo
     if (this.role === "ROLE_ADMIN") {
-
-      let vehicleCreationDTO : VehicleCreationDTO = {
-        registrationNumber : this.registrationForm.controls['vehicleGroup'].value.registrationNumber as string,
-        name : this.registrationForm.controls['vehicleGroup'].value.vehicleName as string,
-        type : this.registrationForm.controls['vehicleGroup'].value.type as string
-      }
-
-      let driverCreationDTO : DriverCreationDTO = {
-        email : this.registrationForm.controls['userGroup'].value.email as string,
-        name : this.registrationForm.controls['userGroup'].value.name as string,
-        surname : this.registrationForm.controls['userGroup'].value.surname as string,
-        city : this.registrationForm.controls['userGroup'].value.city as string,
-        phoneNumber :  this.registrationForm.controls['userGroup'].value.phoneNumber as string,
-        password : this.registrationForm.controls['userGroup'].value.password as string,
-        passwordConfirmation : this.registrationForm.controls['userGroup'].value.confirmPassword as string,
-        vehicleCreationDTO : vehicleCreationDTO
-
-      }
+      let vehicleCreationDTO = this.createVehicle();
+      let driverCreationDTO = this.createDriver(vehicleCreationDTO);
 
       this.driverService.registerDriver(driverCreationDTO).subscribe(
         driverDTO => {
@@ -91,38 +76,21 @@ export class RegistrationComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
+          this.router.navigate(['/admin-profile']);
         },
         error => {
-          if (error.status === 409) {
-            Swal.fire({
-              icon: 'error',
-              position: 'center',
-              title: 'Email or registration number is already taken!',
-              showConfirmButton: false,
-              timer: 3000
-            })
-          } else {
-            Swal.fire({
-              icon: 'error',
-              position: 'center',
-              title: 'An unknown error happened.',
-              showConfirmButton: false,
-              timer: 3000
-            })
-          }
+          Swal.fire({
+            icon: 'error',
+            position: 'center',
+            title: error.error.apierror.message,
+            showConfirmButton: false,
+            timer: 3000
+          })
         }
       )
     }
     else {
-      let passengerCreationDTO : PassengerCreationDTO = {
-        email : this.registrationForm.controls['userGroup'].value.email as string,
-        name : this.registrationForm.controls['userGroup'].value.name as string,
-        surname : this.registrationForm.controls['userGroup'].value.surname as string,
-        city : this.registrationForm.controls['userGroup'].value.city as string,
-        phoneNumber :  this.registrationForm.controls['userGroup'].value.phoneNumber as string,
-        password : this.registrationForm.controls['userGroup'].value.password as string,
-        passwordConfirm : this.registrationForm.controls['userGroup'].value.confirmPassword as string,
-      }
+      let passengerCreationDTO = this.createPassenger();
       this.passengerService.registerPassenger(passengerCreationDTO).subscribe({ 
         next: (passengerDTO: PassengerDTO) => {
           Swal.fire({
@@ -145,5 +113,41 @@ export class RegistrationComponent implements OnInit {
         }
       })
     }
+  }
+
+  private createPassenger() {
+    let passengerCreationDTO : PassengerCreationDTO = {
+      email : this.registrationForm.controls['userGroup'].value.email as string,
+      name : this.registrationForm.controls['userGroup'].value.name as string,
+      surname : this.registrationForm.controls['userGroup'].value.surname as string,
+      city : this.registrationForm.controls['userGroup'].value.city as string,
+      phoneNumber :  this.registrationForm.controls['userGroup'].value.phoneNumber as string,
+      password : this.registrationForm.controls['userGroup'].value.password as string,
+      passwordConfirm : this.registrationForm.controls['userGroup'].value.confirmPassword as string,
+    }
+    return passengerCreationDTO;
+  }
+
+  private createDriver(vehicleCreationDTO: VehicleCreationDTO) {
+    let driverCreationDTO : DriverCreationDTO = {
+      email : this.registrationForm.controls['userGroup'].value.email as string,
+      name : this.registrationForm.controls['userGroup'].value.name as string,
+      surname : this.registrationForm.controls['userGroup'].value.surname as string,
+      city : this.registrationForm.controls['userGroup'].value.city as string,
+      phoneNumber :  this.registrationForm.controls['userGroup'].value.phoneNumber as string,
+      password : this.registrationForm.controls['userGroup'].value.password as string,
+      passwordConfirmation : this.registrationForm.controls['userGroup'].value.confirmPassword as string,
+      vehicleCreationDTO : vehicleCreationDTO
+    }
+    return driverCreationDTO;
+  }
+
+  private createVehicle() {
+    let vehicleCreationDTO : VehicleCreationDTO = {
+      registrationNumber : this.vehicleForm.controls['vehicleGroup'].value.registrationNumber as string,
+      name : this.vehicleForm.controls['vehicleGroup'].value.vehicleName as string,
+      type : this.vehicleForm.controls['vehicleGroup'].value.type as string
+    }
+    return vehicleCreationDTO;
   }
 }
