@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { DriverService } from 'src/app/services/driver.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-page-live-chat',
@@ -27,6 +28,7 @@ export class PageLiveChatComponent implements OnInit {
     private readonly chatService: ChatService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly driverService: DriverService,
+    private readonly tokenService: TokenService,
   ) { }
 
   loggedPassenger!: PassengerDTO;
@@ -77,16 +79,14 @@ export class PageLiveChatComponent implements OnInit {
   connectToChat() {
     this.loadChat();
     console.log('connecting to chat...');
-    this.socket = new SockJS(this.url + '/chat');
+    this.socket = new SockJS(this.url + '/secured/chat');
     this.stompClient = Stomp.over(this.socket);
 
     this.stompClient.connect({}, (frame) => {
-      //func = what to do when connection is established
       console.log('connected to: ' + frame);
       this.stompClient!.subscribe(
-        '/topic/messages/' + this.chatName,
+        '/secured/topic/messages/' + this.chatName,
         (response) => {
-          //func = what to do when client receives data (messages)
           this.loadChat();
         }
       );
@@ -102,7 +102,7 @@ export class PageLiveChatComponent implements OnInit {
     }
     if (this.newMessage.value !== '') {
       this.stompClient!.send(
-        '/app/chat/' + this.chatName,
+        '/app/secured/chat/' + this.chatName,
         {},
         JSON.stringify({
           sender,
@@ -114,12 +114,6 @@ export class PageLiveChatComponent implements OnInit {
   }
 
   loadChat() {
-    // this.messages = this.http.post<Array<Messaggio>>(this.url+'/getMessages' ,  this.channelName);
-    // this.messages.subscribe(data => {
-    //   let mgs:Array<Messaggio> = data;
-    //   mgs.sort((a, b) => (a.ms_id > b.ms_id) ? 1 : -1)
-    //   this.messages = of(mgs);
-    // })
     this.chatService.getChatMessages(this.chatName).subscribe({
       next: (messages) => {
         this.messages = of(messages);

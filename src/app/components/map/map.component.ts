@@ -143,7 +143,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   initializeWebSocketConnection() {
-    let ws = new SockJS('http://localhost:9000/map');
+    let ws = new SockJS('http://localhost:9000/secured/map');
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function () {
@@ -152,7 +152,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   openGlobalSocket() {
-    this.stompClient.subscribe('/simulation/set-vehicle-position', (message: { body: string }) => {
+    this.stompClient.subscribe('/secured/simulation/set-vehicle-position', (message: { body: string }) => {
       let driver: DriverDTO = JSON.parse(message.body);
       let availability: string = '';
       if (driver.available) {
@@ -183,7 +183,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       this.drivers[driver.id] = marker;
     });
 
-    this.stompClient.subscribe('/simulation/update-vehicle-position', (message: { body: string }) => {
+    this.stompClient.subscribe('/secured/simulation/update-vehicle-position', (message: { body: string }) => {
       let driver: DriverDTO = JSON.parse(message.body);
       let existingDriver = this.drivers[driver.id];
       existingDriver.setLatLng([driver.location.longitude, driver.location.latitude]);
