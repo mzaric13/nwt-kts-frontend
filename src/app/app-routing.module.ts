@@ -21,6 +21,7 @@ import { PageDriveAcceptedComponent } from './pages/page-drive-accepted/page-dri
 import { PageDriveRejectedComponent } from './pages/page-drive-rejected/page-drive-rejected.component';
 import { PageLiveChatComponent } from './pages/page-live-chat/page-live-chat.component';
 import { PageChatListComponent } from './pages/page-chat-list/page-chat-list.component';
+import { PageDriveSimulationComponent } from './pages/page-drive-simulation/page-drive-simulation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-guest', pathMatch: 'full' },
@@ -51,6 +52,7 @@ const routes: Routes = [
   { path: 'drive-rejected', component: PageDriveRejectedComponent },
   { path: 'chat/:name', component: PageLiveChatComponent },
   { path: 'chat-list', component: PageChatListComponent },
+  { path: 'drive-simulation/:id', component: PageDriveSimulationComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

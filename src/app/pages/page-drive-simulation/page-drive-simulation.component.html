@@ -1,0 +1,11 @@
+<div class="simulation-map">
+    <app-map-drive-simulation></app-map-drive-simulation>
+    <app-drive-inconsistency-form *ngIf="loggedPassenger" 
+    (reportInconsistencyEvent)="reportInconsistency($event)"></app-drive-inconsistency-form>
+    <app-drive-end-form *ngIf="loggedDriver"
+    (endDriveEvent)="endDrive()"></app-drive-end-form>
+
+    <div *ngIf="giveRating">
+        <app-modal-give-rating [drive]="drive" (modalIsClosed)="redirectPassenger()"></app-modal-give-rating>
+    </div>
+</div>

@@ -92,6 +92,10 @@ import { PageDriveAcceptedComponent } from './pages/page-drive-accepted/page-dri
 import { PageDriveRejectedComponent } from './pages/page-drive-rejected/page-drive-rejected.component';
 import { PageLiveChatComponent } from './pages/page-live-chat/page-live-chat.component';
 import { PageChatListComponent } from './pages/page-chat-list/page-chat-list.component';
+import { MapDriveSimulationComponent } from './components/map-drive-simulation/map-drive-simulation.component';
+import { PageDriveSimulationComponent } from './pages/page-drive-simulation/page-drive-simulation.component';
+import { DriveInconsistencyFormComponent } from './components/drive-inconsistency-form/drive-inconsistency-form.component';
+import { DriveEndFormComponent } from './components/drive-end-form/drive-end-form.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +156,10 @@ import { PageChatListComponent } from './pages/page-chat-list/page-chat-list.com
     PageDriveRejectedComponent,
     PageLiveChatComponent,
     PageChatListComponent,
+    MapDriveSimulationComponent,
+    PageDriveSimulationComponent,
+    DriveInconsistencyFormComponent,
+    DriveEndFormComponent,
   ],
   imports: [
     BrowserModule,
