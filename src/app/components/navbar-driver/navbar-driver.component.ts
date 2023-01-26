@@ -26,6 +26,16 @@ export class NavbarDriverComponent implements OnInit {
   constructor(private driverService: DriverService) { }
 
   ngOnInit(): void {
+    this.driverService.getLoggedDriver().subscribe({
+      next: (driver: DriverDTO) => {
+        console.log(driver);
+        if (driver.available) {
+          this.available = "../../../assets/available.png";
+        } else {
+          this.available = "../../../assets/notavailable.png";
+        }
+      }
+    })
   }
 
   public changeStatus() {
