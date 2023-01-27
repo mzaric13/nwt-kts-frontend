@@ -157,13 +157,7 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
   }
 
   createUpdatedUserData(){
-    let updatedUserDataCreationDTO : UpdatedUserDataCreationDTO = {
-      name: this.driverForForm.name,
-      city: this.driverForForm.city,
-      surname: this.driverForForm.surname,
-      phoneNumber: this.driverForForm.phoneNumber,
-      email: this.driverForForm.email
-    }
+    let updatedUserDataCreationDTO = this.createDriverData();
     this.driverService.updatePersonalInfoDriver(updatedUserDataCreationDTO).subscribe(data => {
       Swal.fire({
         icon: 'success',
@@ -183,6 +177,17 @@ export class ModalPersonalInfoChangeComponent implements OnInit, AfterContentIni
         timer: 3000
       })
     })
+  }
+
+  createDriverData() {
+    let updatedUserDataCreationDTO : UpdatedUserDataCreationDTO = {
+      name: this.driverForForm.name,
+      city: this.driverForForm.city,
+      surname: this.driverForForm.surname,
+      phoneNumber: this.driverForForm.phoneNumber,
+      email: this.driverForForm.email
+    }
+    return updatedUserDataCreationDTO;
   }
 
   closeModal() {

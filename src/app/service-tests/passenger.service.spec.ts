@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { PassengerService } from "./passenger.service";
+import { PassengerService } from "../services/passenger.service";
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, getTestBed, TestBed, tick } from "@angular/core/testing";
 import { PassengerDTO } from "../models/passenger-dto";

@@ -1,15 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { RequestPage } from 'src/app/models/request-page';
 import { RequestPageObject } from 'src/app/models/request-page-object';
-import { UserIdDTO } from 'src/app/models/user-id-dto';
 import { AdminService } from 'src/app/services/admin.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-table-block-users',

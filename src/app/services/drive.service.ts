@@ -7,16 +7,18 @@ import { RequestPageObject } from "../models/request-page-object";
 import TempDriveDTO from "../models/temp-drive-dto";
 import { TokenService } from "./token.service";
 
-const cabecera = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-};
-
 @Injectable({
     providedIn: 'root',
 })
 export class DriveService {
 
   private url = environment.apiUrl;
+  newHeader = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.tokenService.getToken(),
+    }),
+  };
 
   constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
@@ -39,23 +41,11 @@ export class DriveService {
   }
 
   public createTempDrive(tempDrive: TempDriveDTO) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-    return this.httpClient.post<number>(this.url + "/drives/create-temp-drive/", tempDrive, newHeader);
+    return this.httpClient.post<number>(this.url + "/drives/create-temp-drive/", tempDrive, this.newHeader);
   }
   
   public sendConfirmationEmails(tempDriveId: number) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-    return this.httpClient.get<void>(this.url + "/drives/send-confirmation-email/" + tempDriveId, newHeader);
+    return this.httpClient.get<void>(this.url + "/drives/send-confirmation-email/" + tempDriveId, this.newHeader);
   }
 
   public acceptDriveConsent(tempDriveId: number) {
@@ -86,33 +76,15 @@ export class DriveService {
   }
 
   public getDrive(driveId: number) {
-    let options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-    return this.httpClient.get<DriveDTO>(this.url + "/drives/" + driveId, options);
+    return this.httpClient.get<DriveDTO>(this.url + "/drives/" + driveId, this.newHeader);
   }
 
   reportInconsistency(drive: DriveDTO) {
-    let options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-    return this.httpClient.put<void>(this.url + "/drives/report-inconsistency", drive, options);
+    return this.httpClient.put<void>(this.url + "/drives/report-inconsistency", drive, this.newHeader);
   }
 
   endDrive(drive: DriveDTO) {
-    let options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-    return this.httpClient.put<void>(this.url + "/drives/end-drive", drive, options);
+    return this.httpClient.put<void>(this.url + "/drives/end-drive", drive, this.newHeader);
   }
 
 }

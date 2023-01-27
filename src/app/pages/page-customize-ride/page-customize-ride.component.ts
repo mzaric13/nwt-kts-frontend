@@ -8,7 +8,6 @@ import TempDriveDTO from 'src/app/models/temp-drive-dto';
 import { TypeDTO } from 'src/app/models/type-dto';
 import { DriveService } from 'src/app/services/drive.service';
 import { PassengerService } from 'src/app/services/passenger.service';
-import { RouteService } from 'src/app/services/route.service';
 import { TagService } from 'src/app/services/tag.service';
 import { VehicleService } from 'src/app/services/vehicle.service';
 import Swal from 'sweetalert2';
@@ -23,7 +22,6 @@ export class PageCustomizeRideComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private routeService: RouteService,
     private tagService: TagService,
     private passengerService: PassengerService,
     private driveService: DriveService,

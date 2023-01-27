@@ -22,6 +22,12 @@ const cabecera = {
 })
 export class PassengerService {
   private url = environment.apiUrl;
+  newHeader = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.tokenService.getToken(),
+    }),
+  };
 
   constructor(
     private httpClient: HttpClient,
@@ -55,15 +61,9 @@ export class PassengerService {
   }
 
   public getLoggedPassenger(): Observable<PassengerDTO> {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
     return this.httpClient.get<PassengerDTO>(
       this.url + '/passengers/get-logged',
-      newHeader
+      this.newHeader
     );
   }
 
@@ -71,7 +71,7 @@ export class PassengerService {
     return this.httpClient.put<PassengerDTO>(
       this.url + '/passengers/update-personal-info',
       passengerDTO,
-      cabecera
+      this.newHeader
     );
   }
 
@@ -92,7 +92,7 @@ export class PassengerService {
       return this.httpClient.put<PassengerDTO>(
         this.url + '/passengers/change-password',
         passwordChangeCreationDTO,
-        cabecera
+        this.newHeader
       );
     }
   }
@@ -103,77 +103,44 @@ export class PassengerService {
     return this.httpClient.put<PassengerDTO>(
       this.url + '/passengers/change-profile-picture',
       profilePictureCreationDTO,
-      cabecera
+      this.newHeader
     );
   }
 
   public addTokens(tokensToAdd: number, passengerDTO: PassengerDTO) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
     return this.httpClient.put<PassengerDTO>(
       this.url + '/passengers/add-tokens/' + tokensToAdd,
       passengerDTO,
-      newHeader
+      this.newHeader
     );
   }
 
   public addFavoriteRoute(routeDTO: RouteDTO) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-
     return this.httpClient.put<RouteDTO>(
       this.url + '/passengers/add-favorite-route/',
       routeDTO,
-      newHeader
+      this.newHeader
     );
   }
 
   public removeFavoriteRoute(routeId: number) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-
     return this.httpClient.put<void>(
       this.url + '/passengers/remove-favorite-route/' + routeId + '/',
       {},
-      newHeader
+      this.newHeader
     );
   }
 
   public createRating(ratingDTO: RatingDTO) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-    return this.httpClient.post<RatingDTO>(this.url + '/passengers/create-rating', ratingDTO, newHeader);
+    return this.httpClient.post<RatingDTO>(this.url + '/passengers/create-rating', ratingDTO, this.newHeader);
   }
 
   public createPassengerChart(datesChartDTO: DatesChartDTO) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-
-    return this.httpClient.post<ChartCreationDTO>(this.url + '/passengers/create-passenger-chart', datesChartDTO, newHeader);
+    return this.httpClient.post<ChartCreationDTO>(this.url + '/passengers/create-passenger-chart', datesChartDTO, this.newHeader);
   }
 
   public getAllActivatedPassengers() {
-    return this.httpClient.get<PassengerDTO[]>(this.url + '/passengers/activated-passengers', cabecera);
+    return this.httpClient.get<PassengerDTO[]>(this.url + '/passengers/activated-passengers', this.newHeader);
   }
 }
 
