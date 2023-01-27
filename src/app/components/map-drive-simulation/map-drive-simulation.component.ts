@@ -127,6 +127,25 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.initializeWebSocketConnection();
+  }
+
+  initializeWebSocketConnection() {
+    let ws = new SockJS('http://localhost:9000/secured/map');
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, function () {
+      that.openGlobalSocket();
+    });
+  }
+
+  openGlobalSocket() {
+    this.stompClient.subscribe('/secured/simulation/update-vehicle-position', (message: { body: string }) => {
+      let driver: DriverDTO = JSON.parse(message.body);
+      let existingDriver = this.driverMarkers[driver.id];
+      existingDriver.setLatLng([driver.location.latitude, driver.location.longitude]);
+      existingDriver.update()
+    });
   }
   
 }
