@@ -10,6 +10,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import Swal from 'sweetalert2';
 import { Status } from 'src/app/models/status';
+import { GeocodeService } from 'src/app/services/geocode.service';
 
 @Component({
   selector: 'app-page-drive-simulation',
@@ -23,6 +24,7 @@ export class PageDriveSimulationComponent implements OnInit {
   loggedDriver!: DriverDTO;
 
   drive!: DriveDTO;
+  routes!: any;
 
   socket!: WebSocket;
   stompClient!: Stomp.Client;
@@ -33,6 +35,7 @@ export class PageDriveSimulationComponent implements OnInit {
     private readonly passengerService: PassengerService,
     private readonly driverService: DriverService,
     private readonly driveService: DriveService,
+    private readonly geocodeService: GeocodeService,
     private activatedRoute: ActivatedRoute,
     private route: Router,
   ) { }
@@ -55,6 +58,11 @@ export class PageDriveSimulationComponent implements OnInit {
         this.driveService.getDrive(params['id']).subscribe({
           next: (drive: DriveDTO) => {
             this.drive = drive;
+            this.geocodeService.getRoutes(drive.route.waypoints).subscribe({
+              next: (routes: any) => {
+                this.routes = routes;
+              }
+            });
           }
         });
       }

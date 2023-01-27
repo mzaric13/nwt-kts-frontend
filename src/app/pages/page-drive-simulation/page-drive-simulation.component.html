@@ -1,5 +1,5 @@
 <div class="simulation-map">
-    <app-map-drive-simulation></app-map-drive-simulation>
+    <app-map-drive-simulation [drive]="drive" [routes]="routes"></app-map-drive-simulation>
     <app-drive-inconsistency-form *ngIf="loggedPassenger" 
     (reportInconsistencyEvent)="reportInconsistency($event)"></app-drive-inconsistency-form>
     <app-drive-end-form *ngIf="loggedDriver"
