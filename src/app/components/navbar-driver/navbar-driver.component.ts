@@ -10,6 +10,9 @@ import { DriverService } from 'src/app/services/driver.service';
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 import * as Stomp from 'stompjs'
 import * as SockJS from 'sockjs-client';
+import { DriveDTO } from 'src/app/models/drive-dto';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar-driver',
@@ -28,7 +31,10 @@ export class NavbarDriverComponent implements OnInit {
   socket!: WebSocket;
   stompClient!: Stomp.Client;
 
-  constructor(private driverService: DriverService) { }
+  constructor(
+    private driverService: DriverService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.driverService.getLoggedDriver().subscribe({
@@ -61,6 +67,18 @@ export class NavbarDriverComponent implements OnInit {
       } else {
         this.available = "../../../assets/notavailable.png";
       }
+    });
+
+    this.stompClient.subscribe('/secured/update/newDrive', (message: { body: string }) => {
+      let drive: DriveDTO = JSON.parse(message.body);
+      Swal.fire({
+        icon: 'info',
+        title: 'There is a new drive for you!',
+        text: drive.route.routeName,
+        timer: 2000,
+      }).then(() => {
+        this.router.navigate(['/drive-simulation/' + drive.id]);
+      })
     });
   }
 
