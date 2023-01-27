@@ -36,6 +36,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   markerGroup: L.MarkerClusterGroup = L.markerClusterGroup();
   driverMarkers: any = {};
 
+  private colors = ["000000", "FF0000", "0000FF", "27FF00", "EC00FF", "FF008F", "FF8300", "005863",
+    "FFC300", "C70039"];
+
   socket!: WebSocket;
   stompClient!: Stomp.Client;
 
@@ -83,26 +86,30 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             this.mainGroup.splice(idx, 1);
           }
         }
+        this.routeLayers = [];
         const routeWaypoints = changes['waypoints'].currentValue;
         let markerLayerGroup: L.LayerGroup = new L.LayerGroup();
         for (let waypoint of routeWaypoints) {
           let marker = L.marker(L.latLng(waypoint.latitude, waypoint.longitude));
           marker.addTo(markerLayerGroup);
         }
-        this.routeLayers.push(markerLayerGroup);
-        this.mainGroup = [...this.mainGroup, markerLayerGroup];
+        this.routeLayers = [...this.routeLayers, markerLayerGroup];
 
         setTimeout(() => {
           this.routeIdxEvent.emit(0);
           this.estimatedTimeEvent.emit(this.calculateEstimatedTime(routes[0].duration));
           this.estimatedCostEvent.emit(this.calculateDistance(routes[0].distance));
         }, 100)
+
+        this.routeIdxs.clear();
         
         for (let i = 0; i < routes.length; i++) {
           const route = routes[i];
           let geoLayerGroup: L.LayerGroup = new L.LayerGroup();
-          let color = Math.floor(Math.random() * 16777215).toString(16);
-          console.log(color);
+          let color = '';
+          do {
+            color = this.colors[Math.floor(Math.random() * 10)];
+          } while (this.routeIdxs.get(color) !== undefined);
           this.routeIdxs.set(color, i);
           for (let leg of route['legs']) {
             for (let step of leg['steps']) {
@@ -121,15 +128,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
               routeLayer.addTo(geoLayerGroup);
             }
           }
-          this.routeLayers.push(geoLayerGroup);
-          this.mainGroup = [...this.mainGroup, geoLayerGroup];
+          this.routeLayers = [...this.routeLayers, geoLayerGroup];
         }
+        this.mainGroup = [...this.mainGroup, ...this.routeLayers];
       }
     }
 
     if (newDrivers) {
       let drivers: DriverDTO[] = newDrivers.currentValue;
-      if (newDrivers) {
+      if (drivers) {
         for (let driver of drivers) {
           let availability: string = '';
           if (driver.available) {
@@ -156,7 +163,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
             }
           );
           this.markerGroup.addLayer(marker);
-          this.mainGroup.push(this.markerGroup);
+          this.mainGroup = [...this.mainGroup, this.markerGroup];
           this.driverMarkers[driver.id] = marker;
         }
       }
