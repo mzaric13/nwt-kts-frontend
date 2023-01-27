@@ -5,6 +5,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import * as L from 'leaflet';
 import * as Stomp from 'stompjs';
@@ -24,6 +26,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
 
   @Input() drive!: DriveDTO;
   @Input() routes!: any;
+  @Output() getDurationEvent = new EventEmitter<number>();
 
   private routeIdxs = new Map<string, number>();
   private colors = ["000000", "FF0000", "0000FF", "27FF00", "EC00FF", "FF008F", "FF8300", "005863",
@@ -73,7 +76,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
         this.routeIdxs.clear();
 
         const route = routes.routes[this.drive.route.routeIdx];
-        console.log(route)
+        this.sendRouteDuration(route.duration);
         let geoLayerGroup: L.LayerGroup = new L.LayerGroup();
         let color = this.colors[Math.floor(Math.random() * 10)];
         for (let leg of route['legs']) {
@@ -121,6 +124,10 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
       '</div>' +
       availability +
       '</div>'
+  }
+
+  sendRouteDuration(duration: number) {
+    this.getDurationEvent.emit(Math.round(duration / 60));
   }
 
   ngOnInit(): void {}

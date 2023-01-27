@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DriveDTO } from 'src/app/models/drive-dto';
 import { DriverDTO } from 'src/app/models/driver-dto';
@@ -11,13 +11,14 @@ import * as SockJS from 'sockjs-client';
 import Swal from 'sweetalert2';
 import { Status } from 'src/app/models/status';
 import { GeocodeService } from 'src/app/services/geocode.service';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-page-drive-simulation',
   templateUrl: './page-drive-simulation.component.html',
   styleUrls: ['./page-drive-simulation.component.css']
 })
-export class PageDriveSimulationComponent implements OnInit {
+export class PageDriveSimulationComponent implements OnInit, OnDestroy {
 
   loggedPassenger!: PassengerDTO;
 
@@ -31,6 +32,14 @@ export class PageDriveSimulationComponent implements OnInit {
 
   giveRating: boolean = false;
 
+  estimatedTime: number = 0;
+
+  subscription!: Subscription;
+  source = interval(60000);
+
+  statusIsDrivingToStart: boolean = false;
+  statusIsDriveStarted: boolean = false;
+
   constructor(
     private readonly passengerService: PassengerService,
     private readonly driverService: DriverService,
@@ -39,6 +48,10 @@ export class PageDriveSimulationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private route: Router,
   ) { }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.passengerService.getLoggedPassenger().subscribe({
@@ -58,6 +71,8 @@ export class PageDriveSimulationComponent implements OnInit {
         this.driveService.getDrive(params['id']).subscribe({
           next: (drive: DriveDTO) => {
             this.drive = drive;
+            this.statusIsDrivingToStart = this.drive.status === Status.DRIVING_TO_START;
+            this.statusIsDriveStarted = this.drive.status === Status.STARTED;
             this.geocodeService.getRoutes(drive.route.waypoints).subscribe({
               next: (routes: any) => {
                 this.routes = routes;
@@ -81,12 +96,20 @@ export class PageDriveSimulationComponent implements OnInit {
   }
 
   openGlobalSocket() {
+    this.stompClient.subscribe('/secured/update/driveStatus', (message: { body: string }) => {
+      this.drive = JSON.parse(message.body);
+      this.statusIsDrivingToStart = this.drive.status === Status.DRIVING_TO_START;
+      this.statusIsDriveStarted = this.drive.status === Status.STARTED;
+    });
+
     this.stompClient.subscribe('/secured/update/drive-inconsistency', (message: { body: string }) => {
       this.drive = JSON.parse(message.body);
     });
 
     this.stompClient.subscribe('/secured/update/end-drive', (message: { body: string }) => {
       this.drive = JSON.parse(message.body);
+      this.statusIsDrivingToStart = this.drive.status === Status.DRIVING_TO_START;
+      this.statusIsDriveStarted = this.drive.status === Status.STARTED;
       this.giveRating = true;
     })
   }
@@ -115,6 +138,16 @@ export class PageDriveSimulationComponent implements OnInit {
 
   redirectPassenger() {
     this.route.navigate(['/home-passenger'], {replaceUrl: true});
+  }
+
+  getRouteDuration(duration: number) {
+    this.estimatedTime = duration;
+    const source = interval(60000);
+    this.subscription = source.subscribe(val => this.changeDuration());
+  }
+
+  changeDuration() {
+    this.estimatedTime--;
   }
 
 }

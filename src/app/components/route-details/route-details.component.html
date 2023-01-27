@@ -1,10 +1,10 @@
 <div class="route-detail card">
     <h2 class="arial_font center_text mt-2 mb-3"><b>Details</b></h2>
-    <div class="detail">
+    <div *ngIf="estimatedTime" class="detail">
         <label class="arial_font">Estimated time:</label>
         <h5 class="arial_font">{{estimatedTime}} minutes</h5>
     </div>
-    <div class="detail">
+    <div *ngIf="estimatedCost" class="detail">
         <label class="arial_font">Cost:</label>
         <h5 class="arial_font">{{estimatedCost}}din</h5>
     </div>
