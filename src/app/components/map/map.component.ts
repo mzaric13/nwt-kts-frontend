@@ -138,25 +138,11 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       let drivers: DriverDTO[] = newDrivers.currentValue;
       if (drivers) {
         for (let driver of drivers) {
-          let availability: string = '';
-          if (driver.available) {
-            availability =
-              '<div style="font-family: Arial; color:green">Available</div>';
-          } else {
-            availability =
-              '<div style="font-family: Arial; color:red">NOT available</div>';
-          }
           const marker = L.marker([driver.location.latitude, driver.location.longitude], {
             icon: this.icon,
             riseOnHover: true,
           }).bindTooltip(
-            '<div><div style="font-family: Arial;">' +
-              driver.name +
-              ' ' +
-              driver.surname +
-              '</div>' +
-              availability +
-              '</div>',
+            this.buildTooltipContent(driver),
             {
               offset: L.point(15, 0),
               direction: 'top',
@@ -202,5 +188,29 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       existingDriver.setLatLng([driver.location.latitude, driver.location.longitude]);
       existingDriver.update()
     });
+
+    this.stompClient.subscribe('/secured/update/driverStatus', (message: { body: string }) => {
+      let driver: DriverDTO = JSON.parse(message.body);
+      let existingDriver = this.driverMarkers[driver.id];
+      existingDriver.setTooltipContent(this.buildTooltipContent(driver));
+    });
+  }
+
+  private buildTooltipContent(driver: DriverDTO) {
+    let availability: string = '';
+    if (driver.available) {
+      availability =
+        '<div style="font-family: Arial; color:green">Available</div>';
+    } else {
+      availability =
+        '<div style="font-family: Arial; color:red">NOT available</div>';
+    }
+    return '<div><div style="font-family: Arial;">' +
+      driver.name +
+      ' ' +
+      driver.surname +
+      '</div>' +
+      availability +
+      '</div>'
   }
 }
