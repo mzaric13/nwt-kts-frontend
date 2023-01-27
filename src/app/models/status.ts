@@ -3,5 +3,7 @@ export enum Status {
     AGREED_TO_PAY,
     PAID,
     FINISHED,
-    PENDING
+    PENDING,
+    DRIVING_TO_START,
+    CANCELLED
 }
