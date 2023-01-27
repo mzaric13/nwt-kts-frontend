@@ -96,6 +96,7 @@ import { MapDriveSimulationComponent } from './components/map-drive-simulation/m
 import { PageDriveSimulationComponent } from './pages/page-drive-simulation/page-drive-simulation.component';
 import { DriveInconsistencyFormComponent } from './components/drive-inconsistency-form/drive-inconsistency-form.component';
 import { DriveEndFormComponent } from './components/drive-end-form/drive-end-form.component';
+import { DriveStartCancelFormComponent } from './components/drive-start-cancel-form/drive-start-cancel-form.component';
 
 @NgModule({
   declarations: [
@@ -160,6 +161,7 @@ import { DriveEndFormComponent } from './components/drive-end-form/drive-end-for
     PageDriveSimulationComponent,
     DriveInconsistencyFormComponent,
     DriveEndFormComponent,
+    DriveStartCancelFormComponent,
   ],
   imports: [
     BrowserModule,

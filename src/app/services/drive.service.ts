@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { DeclineDriveDTO } from "../models/decline-drive-dto";
 import { DriveDTO } from "../models/drive-dto";
 import { RequestPage } from "../models/request-page";
 import { RequestPageObject } from "../models/request-page-object";
@@ -85,6 +86,14 @@ export class DriveService {
 
   endDrive(drive: DriveDTO) {
     return this.httpClient.put<void>(this.url + "/drives/end-drive", drive, this.newHeader);
+  }
+
+  startDrive(drive: DriveDTO) {
+    return this.httpClient.put<DriveDTO>(this.url + "/drives/start-drive", drive, this.newHeader);
+  }
+
+  declineDrive(declineDriveDTO: DeclineDriveDTO) {
+    return this.httpClient.put<DriveDTO>(this.url + "/drives/decline-drive", declineDriveDTO, this.newHeader);
   }
 
 }

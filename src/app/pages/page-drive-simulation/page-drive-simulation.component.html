@@ -8,6 +8,9 @@
     <app-drive-end-form *ngIf="loggedDriver && statusIsDriveStarted"
     (endDriveEvent)="endDrive()"></app-drive-end-form>
 
+    <app-drive-start-cancel-form *ngIf="loggedDriver && statusIsDrivingToStart"
+    (startDriveEvent)="startDrive()" (cancelDriveEvent)="cancelDrive($event)"></app-drive-start-cancel-form> 
+
     <app-route-details class="details ml-5" *ngIf="estimatedTime" style="position:absolute" 
     [estimatedTime]="estimatedTime"></app-route-details>
 

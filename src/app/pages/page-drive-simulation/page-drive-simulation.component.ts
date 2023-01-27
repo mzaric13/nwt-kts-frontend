@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { Status } from 'src/app/models/status';
 import { GeocodeService } from 'src/app/services/geocode.service';
 import { interval, Subscription } from 'rxjs';
+import { DeclineDriveDTO } from 'src/app/models/decline-drive-dto';
 
 @Component({
   selector: 'app-page-drive-simulation',
@@ -71,8 +72,9 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
         this.driveService.getDrive(params['id']).subscribe({
           next: (drive: DriveDTO) => {
             this.drive = drive;
-            this.statusIsDrivingToStart = this.drive.status === Status.DRIVING_TO_START;
-            this.statusIsDriveStarted = this.drive.status === Status.STARTED;
+            this.updateStatuses();
+            console.log(drive.status);
+            console.log(this.statusIsDrivingToStart);
             this.geocodeService.getRoutes(drive.route.waypoints).subscribe({
               next: (routes: any) => {
                 this.routes = routes;
@@ -98,8 +100,22 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
   openGlobalSocket() {
     this.stompClient.subscribe('/secured/update/driveStatus', (message: { body: string }) => {
       this.drive = JSON.parse(message.body);
-      this.statusIsDrivingToStart = this.drive.status === Status.DRIVING_TO_START;
-      this.statusIsDriveStarted = this.drive.status === Status.STARTED;
+      this.updateStatuses();
+      if (this.drive.status.toString() === Status[Status.CANCELLED]) {
+        if (this.loggedPassenger) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Drive cancelled!',
+            text: 'We are sorry to inform you, but your driver has cancelled!',
+            timer: 3000,
+          })
+            .then(() => {
+              this.route.navigate(['/home-passenger'], { replaceUrl: true });
+          });
+        } else {
+          this.route.navigate(['/driver-profile'], { replaceUrl: true });
+        }
+      }
     });
 
     this.stompClient.subscribe('/secured/update/drive-inconsistency', (message: { body: string }) => {
@@ -108,8 +124,7 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
 
     this.stompClient.subscribe('/secured/update/end-drive', (message: { body: string }) => {
       this.drive = JSON.parse(message.body);
-      this.statusIsDrivingToStart = this.drive.status === Status.DRIVING_TO_START;
-      this.statusIsDriveStarted = this.drive.status === Status.STARTED;
+      this.updateStatuses();
       this.giveRating = true;
     })
   }
@@ -148,6 +163,29 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
 
   changeDuration() {
     this.estimatedTime--;
+  }
+
+  startDrive() {
+    this.driveService.startDrive(this.drive).subscribe({
+      next: () => {
+      }
+    })
+  }
+
+  cancelDrive(cancelReason: string) {
+    const declineDriveDTO: DeclineDriveDTO = {
+      driveDTO: this.drive,
+      reasonForDeclining: cancelReason,
+    }
+    this.driveService.declineDrive(declineDriveDTO).subscribe({
+      next: () => {
+      }
+    })
+  }
+
+  updateStatuses() {
+    this.statusIsDrivingToStart = this.drive.status.toString() === Status[Status.DRIVING_TO_START];
+    this.statusIsDriveStarted = this.drive.status.toString() === Status[Status.STARTED];
   }
 
 }
