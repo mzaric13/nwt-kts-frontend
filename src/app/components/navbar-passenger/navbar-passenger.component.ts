@@ -4,7 +4,8 @@ import {
   faBell,
   faArrowRightFromBracket,
   faRoute,
-  faChartSimple
+  faChartSimple,
+  faHome
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 
@@ -20,6 +21,7 @@ export class NavbarPassengerComponent implements OnInit {
   faLogout = faArrowRightFromBracket;
   faRoute = faRoute;
   faChartSimple = faChartSimple;
+  faHome = faHome;
   constructor() {}
 
   ngOnInit(): void {}

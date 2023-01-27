@@ -24,29 +24,28 @@ export class ProfilePageCardComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.type === 'info') {
-      this.imgSrc = '../../../assets/information_icon.png';
-      this.title = 'View and edit personal information';
-      this.description = 'Press here to view and edit your personal information: name, surname, city and phone number.';
-      this.buttonText = 'View and edit info';
+      this.setValues('../../../assets/information_icon.png', 'View and edit personal information',
+       'Press here to view and edit your personal information: name, surname, city and phone number.','View and edit info');
     }
     else if (this.type === 'profile-picture') {
-      this.imgSrc = '../../../assets/profile_picture_icon.png';
-      this.title = 'Change your profile picture';
-      this.description = 'Press here to change your profile picture which will be seen by drivers.';
-      this.buttonText = 'Change picture';
+      this.setValues('../../../assets/profile_picture_icon.png', 'Change your profile picture',
+      'Press here to change your profile picture which will be seen by drivers.', 'Change picture');
     }
     else if (this.type === 'password') {
-      this.imgSrc = '../../../assets/padlock.png';
-      this.title = 'Change your password';
-      this.description = 'Press here to change your password. You will be asked to confirm your new password by retyping it.';
-      this.buttonText = 'Change password';
+      this.setValues('../../../assets/padlock.png', 'Change your password', 
+      'Press here to change your password. You will be asked to confirm your new password by retyping it.', 'Change password');
     }
     else if (this.type === 'tokens') {
-      this.imgSrc = '../../../assets/money.png';
-      this.title = 'Buy more TaxiTokens';
-      this.description = 'Press here to select the amount of TaxiTokens you want to buy. TaxiTokens are used as a currency for taking ubers.';
-      this.buttonText = 'Buy TaxiTokens';
+      this.setValues('../../../assets/money.png', 'Buy more TaxiTokens',
+      'Press here to select the amount of TaxiTokens you want to buy. TaxiTokens are used as a currency for taking ubers.', 'Buy TaxiTokens');
     }
+  }
+
+  setValues(imgSrc: string, title: string, description: string, buttonText: string) {
+    this.imgSrc = imgSrc;
+    this.title = title;
+    this.description = description;
+    this.buttonText = buttonText;
   }
 
   buttonClicked() {

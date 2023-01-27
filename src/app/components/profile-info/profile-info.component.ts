@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-profile-info',

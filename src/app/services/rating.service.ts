@@ -3,8 +3,6 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { PassengerRatingDTO } from "../models/passenger-rating-dto";
 import { RatingDTO } from "../models/rating-dto";
-import { RequestPage } from "../models/request-page";
-import { RequestPageObject } from "../models/request-page-object";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -13,32 +11,24 @@ import { TokenService } from "./token.service";
   export class RatingService {
 
     private url = environment.apiUrl;
+    newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
 
     constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
     public getDriveRatings(id: number) {
-        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
-        return this.httpClient.get<Array<RatingDTO>>(`http://localhost:9000/ratings/get-drive-ratings/${id}`, newHeader);
+        return this.httpClient.get<Array<RatingDTO>>(`http://localhost:9000/ratings/get-drive-ratings/${id}`, this.newHeader);
     }
 
     public getDriverAndVehicleAverageRating(id: number) {
-        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
-        return this.httpClient.get<Array<number>>(`http://localhost:9000/ratings/get-driver-and-vehicle-average-rating/${id}`, newHeader);
+        return this.httpClient.get<Array<number>>(`http://localhost:9000/ratings/get-driver-and-vehicle-average-rating/${id}`, this.newHeader);
     }
 
     public findPassengersEligibleRatings() {
-        let newHeader = {headers: new HttpHeaders({'Content-Type' : 'application/json', 'Authorization': 'Bearer ' + this.tokenService.getToken()})};
-        return this.httpClient.get<Array<PassengerRatingDTO>>(`http://localhost:9000/ratings/find-passengers-eligible-ratings`, newHeader);
+        return this.httpClient.get<Array<PassengerRatingDTO>>(`http://localhost:9000/ratings/find-passengers-eligible-ratings`, this.newHeader);
     }
 
     public createRating(ratingDTO: RatingDTO) {
-        let newHeader = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.tokenService.getToken(),
-          }),
-        };
-        return this.httpClient.post<RatingDTO>(this.url + '/ratings/create-rating', ratingDTO, newHeader);
+        return this.httpClient.post<RatingDTO>(this.url + '/ratings/create-rating', ratingDTO, this.newHeader);
       }
 
   }

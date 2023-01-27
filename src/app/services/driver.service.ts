@@ -12,20 +12,23 @@ import { DriverDataAnsweredDTO } from '../models/driver-data-answered-dto';
 import { DatesChartDTO } from '../models/dates-chart-dto';
 import { ChartCreationDTO } from '../models/chart-creation-dto';
 
-const cabecera = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-};
-
 @Injectable({
   providedIn: 'root',
 })
 export class DriverService {
   private url = environment.apiUrl;
+  newHeader = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + this.tokenService.getToken(),
+    })
+  }
 
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService
   ) {}
+  
 
   public getAllDrivers() {
     return this.httpClient.get<DriverDTO[]>(this.url + '/drivers/');
@@ -45,21 +48,15 @@ export class DriverService {
       return this.httpClient.post<DriverDTO>(
         this.url + '/drivers/register',
         driverCreationDTO,
-        cabecera
+        this.newHeader
       );
     }
   }
 
   public getLoggedDriver() {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
     return this.httpClient.get<DriverDTO>(
       this.url + '/drivers/get-logged',
-      newHeader
+      this.newHeader
     );
   }
 
@@ -69,7 +66,7 @@ export class DriverService {
     return this.httpClient.post<DriverDTO>(
       this.url + '/drivers/send-update-request',
       updatedUserDataCreationDTO,
-      cabecera
+      this.newHeader
     );
   }
 
@@ -90,7 +87,7 @@ export class DriverService {
       return this.httpClient.put<DriverDTO>(
         this.url + '/drivers/change-password',
         passwordChangeCreationDTO,
-        cabecera
+        this.newHeader
       );
     }
   }
@@ -101,34 +98,20 @@ export class DriverService {
     return this.httpClient.put<DriverDTO>(
       this.url + '/drivers/change-profile-picture',
       profilePictureCreationDTO,
-      cabecera
+      this.newHeader
     );
   }
 
   public isUnansweredDriverDataPresent(email: string) {
     let url = `${this.url}/drivers/is-unanswered-driver-data-present/${email}`;
-    return this.httpClient.get<DriverDataAnsweredDTO>(url);
+    return this.httpClient.get<DriverDataAnsweredDTO>(url, this.newHeader);
   }
 
   public createDriverChart(datesChartDTO: DatesChartDTO) {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-
-    return this.httpClient.post<ChartCreationDTO>(this.url + '/drivers/create-driver-chart', datesChartDTO, newHeader);
+    return this.httpClient.post<ChartCreationDTO>(this.url + '/drivers/create-driver-chart', datesChartDTO, this.newHeader);
   }
 
   public changeStatus() {
-    let newHeader = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + this.tokenService.getToken(),
-      }),
-    };
-
-    return this.httpClient.get<DriverDTO>(this.url + '/drivers/change-status', newHeader);
+    return this.httpClient.get<DriverDTO>(this.url + '/drivers/change-status', this.newHeader);
   }
 }

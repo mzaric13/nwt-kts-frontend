@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DriverDTO } from 'src/app/models/driver-dto';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
-import { RequestPage } from 'src/app/models/request-page';
-import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
   selector: 'app-page-change-blocked-status',
@@ -17,7 +15,7 @@ export class PageChangeBlockedStatusComponent implements OnInit {
   passenger!: PassengerDTO;
   driver!: DriverDTO;
   
-  constructor(private adminService: AdminService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

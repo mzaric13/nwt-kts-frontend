@@ -39,7 +39,7 @@ export class PageResetPasswordComponent implements OnInit {
       Swal.fire({
         icon: 'success',
         position: 'center',
-        title: 'Your password is successfully reseted',
+        title: 'Your password has been successfully reset',
         showConfirmButton: false,
         timer: 1500
       });

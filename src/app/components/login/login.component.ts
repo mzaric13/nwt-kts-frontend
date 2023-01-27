@@ -2,7 +2,6 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import {
   SocialUser,
   SocialAuthService,
-  GoogleLoginProvider,
   FacebookLoginProvider,
 } from '@abacritt/angularx-social-login';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
@@ -11,7 +10,6 @@ import { TokenService } from '../../services/token.service';
 import { FormBuilder } from '@angular/forms';
 import {
   FacebookTokenDTO,
-  GoogleTokenDto,
   JwtToken,
   LoginEmailPassword,
 } from '../../models/token-dto';

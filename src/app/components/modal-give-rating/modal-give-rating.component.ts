@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { PassengerDTO } from 'src/app/models/passenger-dto';
 import { RatingDTO } from 'src/app/models/rating-dto';
-import { PassengerService } from 'src/app/services/passenger.service';
-import { NgxStarRatingModule } from 'ngx-star-rating';
 import Swal from 'sweetalert2';
 import { DriveDTO } from 'src/app/models/drive-dto';
 import { FormBuilder, Validators } from '@angular/forms';
