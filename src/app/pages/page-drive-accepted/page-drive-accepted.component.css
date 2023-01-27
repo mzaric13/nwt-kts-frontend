@@ -5,16 +5,17 @@
     position: relative;
     background-size: cover;
     background-repeat: repeat;
+    padding-top: 10%;
 }
 
 .info {
     margin: auto;
-    margin-top: 10%;
     background-color: white;
     width: 50%;
     height: 25%;
     text-align: center;
     padding-inline: 5%;
+    align-self: center;
 }
 
 .arial_text {
