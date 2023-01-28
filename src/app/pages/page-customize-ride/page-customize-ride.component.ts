@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./page-customize-ride.component.css'],
 })
 export class PageCustomizeRideComponent implements OnInit {
-  @Input() loggedPassenger!: PassengerDTO;
+  loggedPassenger!: PassengerDTO;
 
   constructor(
     private route: ActivatedRoute,

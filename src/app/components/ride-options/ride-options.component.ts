@@ -5,6 +5,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TagDTO } from 'src/app/models/tag-dto';
 import { TypeDTO } from 'src/app/models/type-dto';
 import { RouteDTO } from 'src/app/models/route-dto';
+import Swal from 'sweetalert2';
+import { PassengerDTO } from 'src/app/models/passenger-dto';
 
 @Component({
   selector: 'app-ride-options',
@@ -22,6 +24,7 @@ export class RideOptionsComponent implements OnInit {
   @Input() route!: RouteDTO;
   @Input() tags: TagDTO[] = [];
   @Input() vehicleTypes: TypeDTO[] = [];
+  @Input() loggedPassenger!: PassengerDTO;
 
   people: string[] = [];
   selectedTags: TagDTO[] = [];
@@ -36,6 +39,8 @@ export class RideOptionsComponent implements OnInit {
 
   @Output() createRideEvent = new EventEmitter();
 
+  currentTime: Date = new Date();
+
   constructor() {}
 
   ngOnInit(): void { }
@@ -47,6 +52,27 @@ export class RideOptionsComponent implements OnInit {
       const minute = Number.parseInt(this.ride.controls.time.value.split(':')[1]);
       time.setHours(hour);
       time.setMinutes(minute);
+
+      const timeNow = this.currentTime.getHours() * 60 + this.currentTime.getMinutes();
+      const timeForRide = time.getHours() * 60 + time.getMinutes();
+      const timeDifference = timeForRide - timeNow;
+      if (timeDifference < 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Cannot order drive for the past!',
+          timer: 4000,
+        });
+        return;
+      } else if (timeDifference > 300) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Cannot order drive for the time that is more than 5 hours away!',
+          timer: 4000,
+        });
+        return;
+      }
     }
 
     this.createRideEvent.emit({
@@ -87,7 +113,23 @@ export class RideOptionsComponent implements OnInit {
   addPerson(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     if (value) {
-      this.people.push(value);
+      if (this.loggedPassenger.email === value) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Cannot add yourself',
+          text: "You cant add yourself to the list of additional passengers!",
+          timer: 4000,
+        });
+      }
+      else if (this.people.length !== 4) this.people.push(value);
+      else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Too many passengers!',
+          text: "You cant add more than 4 passengers!",
+          timer: 4000,
+        });
+      }
     }
     event.chipInput!.clear();
   }
