@@ -35,6 +35,8 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
 
   estimatedTime: number = 0;
 
+  routeEstimatedTime: number = 0;
+
   subscription!: Subscription;
   source = interval(60000);
 
@@ -75,6 +77,13 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
             this.updateStatuses();
             console.log(drive.status);
             console.log(this.statusIsDrivingToStart);
+            this.geocodeService.getRoutes([this.drive.driver.location, this.drive.route.waypoints[0]]).subscribe({
+              next: (routes: any) => {
+                this.estimatedTime = Math.round(routes.routes[0].duration / 60);
+                const source = interval(28000);
+                this.subscription = source.subscribe(val => this.changeDuration());
+              }
+            });
             this.geocodeService.getRoutes(drive.route.waypoints).subscribe({
               next: (routes: any) => {
                 this.routes = routes;
@@ -101,6 +110,9 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
     this.stompClient.subscribe('/secured/update/driveStatus', (message: { body: string }) => {
       this.drive = JSON.parse(message.body);
       this.updateStatuses();
+      if (this.statusIsDriveStarted) {
+        this.estimatedTime = this.routeEstimatedTime;
+      }
       if (this.drive.status.toString() === Status[Status.CANCELLED]) {
         if (this.loggedPassenger) {
           Swal.fire({
@@ -156,13 +168,11 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
   }
 
   getRouteDuration(duration: number) {
-    this.estimatedTime = duration;
-    const source = interval(60000);
-    this.subscription = source.subscribe(val => this.changeDuration());
+    this.routeEstimatedTime = duration;
   }
 
   changeDuration() {
-    this.estimatedTime--;
+    if (this.estimatedTime > 0) this.estimatedTime--;
   }
 
   startDrive() {
