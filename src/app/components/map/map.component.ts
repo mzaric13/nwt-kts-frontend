@@ -194,6 +194,22 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       let existingDriver = this.driverMarkers[driver.id];
       existingDriver.setTooltipContent(this.buildTooltipContent(driver));
     });
+
+    this.stompClient.subscribe('/secured/update/newDriver', (message: { body: string }) => {
+      let driver: DriverDTO = JSON.parse(message.body);
+      const marker = L.marker([driver.location.latitude, driver.location.longitude], {
+        icon: this.icon,
+        riseOnHover: true,
+      }).bindTooltip(
+        this.buildTooltipContent(driver),
+        {
+          offset: L.point(15, 0),
+          direction: 'top',
+        }
+      );
+      this.markerGroup.addLayer(marker);
+      this.driverMarkers[driver.id] = marker;
+    });
   }
 
   private buildTooltipContent(driver: DriverDTO) {
