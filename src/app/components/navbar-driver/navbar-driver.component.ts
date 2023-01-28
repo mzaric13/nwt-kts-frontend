@@ -31,6 +31,8 @@ export class NavbarDriverComponent implements OnInit {
   socket!: WebSocket;
   stompClient!: Stomp.Client;
 
+  loggedDriver!: DriverDTO;
+
   constructor(
     private driverService: DriverService,
     private router: Router,
@@ -39,6 +41,7 @@ export class NavbarDriverComponent implements OnInit {
   ngOnInit(): void {
     this.driverService.getLoggedDriver().subscribe({
       next: (driver: DriverDTO) => {
+        this.loggedDriver = driver;
         if (driver.available) {
           this.available = "../../../assets/available.png";
         } else {
@@ -71,14 +74,16 @@ export class NavbarDriverComponent implements OnInit {
 
     this.stompClient.subscribe('/secured/update/newDrive', (message: { body: string }) => {
       let drive: DriveDTO = JSON.parse(message.body);
-      Swal.fire({
-        icon: 'info',
-        title: 'There is a new drive for you!',
-        text: drive.route.routeName,
-        timer: 2000,
-      }).then(() => {
-        this.router.navigate(['/drive-simulation/' + drive.id]);
-      })
+      if (drive.driver.id === this.loggedDriver.id) {
+        Swal.fire({
+          icon: 'info',
+          title: 'There is a new drive for you!',
+          text: drive.route.routeName,
+          timer: 2000,
+        }).then(() => {
+          this.router.navigate(['/drive-simulation/' + drive.id]);
+        });
+      }
     });
   }
 

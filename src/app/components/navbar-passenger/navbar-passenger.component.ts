@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   faUser,
   faBell,
@@ -13,6 +13,8 @@ import * as SockJS from 'sockjs-client';
 import { DriveDTO } from 'src/app/models/drive-dto';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { PassengerDTO } from 'src/app/models/passenger-dto';
+import { PassengerService } from 'src/app/services/passenger.service';
 
 
 @Component({
@@ -32,11 +34,19 @@ export class NavbarPassengerComponent implements OnInit {
   socket!: WebSocket;
   stompClient!: Stomp.Client;
 
+  loggedPassenger!: PassengerDTO;
+
   constructor(
     private router: Router,
+    private passengerService: PassengerService,
   ) { }
 
   ngOnInit(): void {
+    this.passengerService.getLoggedPassenger().subscribe({
+      next: (passenger: PassengerDTO) => {
+        this.loggedPassenger = passenger;
+      }
+    })
     this.initializeWebSocketConnection();
   }
   
@@ -52,13 +62,17 @@ export class NavbarPassengerComponent implements OnInit {
   openGlobalSocket() {
     this.stompClient.subscribe('/secured/update/newDrive', (message: { body: string }) => {
       let drive: DriveDTO = JSON.parse(message.body);
-      Swal.fire({
-        icon: 'info',
-        title: 'Your drive is starting soon!',
-        text: drive.route.routeName,
-        timer: 2000,
-      }).then(() => {
-        this.router.navigate(['/drive-simulation/' + drive.id]);
+      drive.passengers.forEach(passenger => {
+        if (passenger.id === this.loggedPassenger.id) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Your drive is starting soon!',
+            text: drive.route.routeName,
+            timer: 2000,
+          }).then(() => {
+            this.router.navigate(['/drive-simulation/' + drive.id]);
+          });
+        }
       })
     });
   }
