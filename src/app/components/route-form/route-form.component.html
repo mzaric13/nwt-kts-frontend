@@ -1,6 +1,6 @@
 <form [formGroup]="route" (ngSubmit)="onSubmit()" class="route-form card">
     <h2 class="arial_font center_text mt-2 mb-3"><b>Request a ride</b></h2>
-    <div class="form-group">
+    <div *ngIf="loggedPassenger" class="form-group">
         <mat-form-field class="form-select" appearance="fill">
             <mat-label class="arial_text">Choose favorite route you want to use...</mat-label>
             <mat-select [formControl]="route.controls.favoriteRoute">

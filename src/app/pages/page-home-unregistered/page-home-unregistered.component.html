@@ -10,7 +10,7 @@
     </div>
     <div class="map">
         <div class="flex-form">
-            <app-route-form [loggedPassenger]="loggedPassenger" (makeRouteEvent)="makeRoute($event)"></app-route-form>
+            <app-route-form (makeRouteEvent)="makeRoute($event)"></app-route-form>
             <app-route-details *ngIf="estimatedTime" [estimatedTime]="estimatedTime" [estimatedCost]="estimatedCost"></app-route-details>
         </div>
         <div class="flex-map">
