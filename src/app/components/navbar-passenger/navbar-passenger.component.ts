@@ -25,7 +25,6 @@ import { PassengerService } from 'src/app/services/passenger.service';
 export class NavbarPassengerComponent implements OnInit {
   faUser = faUser;
   faChat = faFacebookMessenger;
-  faBell = faBell;
   faLogout = faArrowRightFromBracket;
   faRoute = faRoute;
   faChartSimple = faChartSimple;
