@@ -13,4 +13,5 @@ export interface PassengerDTO {
   activated: boolean;
   blocked: boolean;
   favoriteRoutes: RouteDTO[];
+  hasDrive: boolean;
 }

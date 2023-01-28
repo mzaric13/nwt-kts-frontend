@@ -4,6 +4,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import * as locationsJson from '../../../assets/locations.json';
 import Swal from 'sweetalert2';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
+import { RouteDTO } from 'src/app/models/route-dto';
 
 @Component({
   selector: 'app-route-form',
@@ -16,6 +17,7 @@ export class RouteFormComponent implements OnInit {
     destination: new FormControl(''),
     isChecked: new FormControl(false),
     extraLocation: new FormControl(''),
+    favoriteRoute: new FormControl<RouteDTO | null>(null),
   });
 
   public locations: string[] = Object.values(locationsJson);
@@ -30,9 +32,13 @@ export class RouteFormComponent implements OnInit {
 
   public routeLocations: string[] = [];
 
+  searchRouteClicked: boolean = false;
+
+  favoriteRouteChosen: boolean = false;
+
   @Output() makeRouteEvent = new EventEmitter();
 
-  @Output() customizeRideEvent = new EventEmitter();
+  @Output() customizeRideEvent = new EventEmitter<RouteDTO | null>();
 
   @Input() loggedPassenger!: PassengerDTO;
 
@@ -43,11 +49,18 @@ export class RouteFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.get("favoriteRoute")?.valueChanges.subscribe(selectedValue => {
+      if (selectedValue) {
+        this.favoriteRouteChosen = true;
+      } else {
+        this.favoriteRouteChosen = false;
+      }
+    });
     this.initGeoCodeSearch();
   }
 
   onSubmit() {
-    this.customizeRideEvent.emit();
+    this.customizeRideEvent.emit(this.route.controls.favoriteRoute.value);
   }
 
   searchRoute() {
@@ -72,6 +85,7 @@ export class RouteFormComponent implements OnInit {
       ...this.routeLocations,
       this.route.controls.destination.value,
     ]);
+    this.searchRouteClicked = true;
   }
 
   addExtraLocation() {

@@ -137,3 +137,7 @@ input:focus {
 .checkbox-label {
     margin: 0 12px;
 }
+
+.form-select {
+    width: 100%;
+}

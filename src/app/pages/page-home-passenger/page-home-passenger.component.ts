@@ -76,15 +76,20 @@ export class PageHomePassengerComponent implements OnInit {
     })
   }
 
-  customizeRide() {
-    const routeDTO: RouteDTO = {
-      id: 0,
-      routeName: this.routeName,
-      expectedTime: this.estimatedTime,
-      length: this.distance,
-      waypoints: this.routeWaypoints,
-      routeIdx: this.routeIdx,
-    };
+  customizeRide(favoriteRoute: RouteDTO | null) {
+    let routeDTO: RouteDTO;
+    if (favoriteRoute) {
+      routeDTO = favoriteRoute;
+    } else {
+      routeDTO = {
+        id: 0,
+        routeName: this.routeName,
+        expectedTime: this.estimatedTime,
+        length: this.distance,
+        waypoints: this.routeWaypoints,
+        routeIdx: this.routeIdx,
+      };
+    }
     this.router.navigate(['/customize-ride'], { state: { data: routeDTO } });
   }
 
