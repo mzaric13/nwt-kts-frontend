@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of, Subject } from "rxjs";
-import { PassengerCreationDTO } from "../models/passenger-creation-dto";
-import { PassengerDTO } from "../models/passenger-dto";
+import { PassengerCreationDTO } from "../shared/models/passenger-creation-dto";
+import { PassengerDTO } from "../shared/models/passenger-dto";
 
 @Injectable()
 export class PassengerServiceMock {
@@ -19,7 +19,8 @@ export class PassengerServiceMock {
             activated: false,
             profilePicture: '../../assets/default.jpg',
             blocked: false,
-            favoriteRoutes: []
+            favoriteRoutes: [],
+            hasDrive: false,
         };
         
         return of(passengerDTO);

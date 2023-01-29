@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
-import { PassengerService } from "../services/passenger.service";
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, getTestBed, TestBed, tick } from "@angular/core/testing";
-import { PassengerDTO } from "../models/passenger-dto";
 import { environment } from "src/environments/environment";
-import { PassengerCreationDTO } from "../models/passenger-creation-dto";
+import { PassengerCreationDTO } from "../shared/models/passenger-creation-dto";
+import { PassengerDTO } from "../shared/models/passenger-dto";
+import { PassengerService } from "../shared/services/passenger.service";
 
 describe('Passenger service', () => {
 
@@ -50,7 +50,8 @@ describe('Passenger service', () => {
                 phoneNumber: '0634567777',
                 blocked: false,
                 favoriteRoutes: [],
-                profilePicture: '../../assets/default.jpg'
+                profilePicture: '../../assets/default.jpg',
+                hasDrive: false,
             }
         ];
 
@@ -84,7 +85,8 @@ describe('Passenger service', () => {
             city: 'Novi Sad',
             favoriteRoutes: [],
             phoneNumber: '0658987777',
-            profilePicture: '../../assets/default.jpg'
+            profilePicture: '../../assets/default.jpg',
+            hasDrive: false,
         }
 
         passengerService.registerPassenger(passengerCreationDTO).subscribe(res => passengerDTO = res);

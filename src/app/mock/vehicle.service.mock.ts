@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of, Subject } from "rxjs";
-import { TypeDTO } from "../models/type-dto";
+import { TypeDTO } from "../shared/models/type-dto";
 
 @Injectable()
 export class VehicleServiceMock {

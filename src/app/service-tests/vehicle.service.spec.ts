@@ -2,9 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, getTestBed, TestBed, tick } from "@angular/core/testing";
 import { environment } from "src/environments/environment";
-import { DriverService } from "../services/driver.service";
-import { VehicleService } from "../services/vehicle.service";
-import { TypeDTO } from "../models/type-dto";
+import { TypeDTO } from "../shared/models/type-dto";
+import { DriverService } from "../shared/services/driver.service";
+import { VehicleService } from "../shared/services/vehicle.service";
 
 describe('Vehicle service', () => {
 

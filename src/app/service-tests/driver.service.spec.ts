@@ -2,12 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, getTestBed, TestBed, tick } from "@angular/core/testing";
 import { environment } from "src/environments/environment";
-import { DriverService } from "../services/driver.service";
-import { DriverCreationDTO } from "../models/driver-creation-dto";
-import { VehicleCreationDTO } from "../models/vehicle-creation-dto";
-import { VehicleDTO } from "../models/vehicle-dto";
-import { DriverDTO } from "../models/driver-dto";
-import { PointDTO } from "../models/point-dto";
+import { DriverCreationDTO } from "../shared/models/driver-creation-dto";
+import { DriverDTO } from "../shared/models/driver-dto";
+import { PointDTO } from "../shared/models/point-dto";
+import { VehicleCreationDTO } from "../shared/models/vehicle-creation-dto";
+import { VehicleDTO } from "../shared/models/vehicle-dto";
+import { DriverService } from "../shared/services/driver.service";
 
 describe('Driver service', () => {
 

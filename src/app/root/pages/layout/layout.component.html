@@ -1,0 +1,17 @@
+<div class="bg-pic">
+    <div *ngIf="role === ''">
+        <app-navbar-start-page></app-navbar-start-page>
+    </div>
+    <div *ngIf="role === 'ROLE_ADMIN'">
+        <app-navbar-admin></app-navbar-admin>
+    </div>
+    <div *ngIf="role === 'ROLE_DRIVER'">
+        <app-navbar-driver></app-navbar-driver>
+    </div>
+    <div *ngIf="role === 'ROLE_PASSENGER'">
+        <app-navbar-passenger></app-navbar-passenger>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
