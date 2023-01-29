@@ -74,5 +74,14 @@ export class NavbarPassengerComponent implements OnInit {
         }
       })
     });
+
+    this.stompClient.subscribe('/secured/update/updatePassenger', (message: { body: string }) => {
+      Swal.fire({
+        icon: 'info',
+        title: 'Your drive is starting soon!',
+        text: message.body,
+        timer: 4000,
+      });
+    });
   }
 }
