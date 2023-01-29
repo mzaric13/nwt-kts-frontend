@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PassengerService } from 'src/app/services/passenger.service';
 import { PassengerDTO } from 'src/app/models/passenger-dto';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-page-home-passenger',
@@ -33,6 +35,8 @@ export class PageHomePassengerComponent implements OnInit {
   routes: any = [];
 
   loggedPassenger!: PassengerDTO;
+  socket!: WebSocket;
+  stompClient!: Stomp.Client;
 
   ngOnInit(): void {
     try {
@@ -43,10 +47,12 @@ export class PageHomePassengerComponent implements OnInit {
       });
 
       this.passengerService.getLoggedPassenger().subscribe({
-      next: (passenger: PassengerDTO) => {
-        this.loggedPassenger = passenger;
-      },
-    });
+        next: (passenger: PassengerDTO) => {
+          this.loggedPassenger = passenger;
+        },
+      });
+      
+      this.initializeWebSocketConnection();
     } catch (e) {
       console.log(e);
     }
@@ -108,5 +114,23 @@ export class PageHomePassengerComponent implements OnInit {
 
   getRouteIdx(routeIdx: number) {
     this.routeIdx = routeIdx;
+  }
+
+  initializeWebSocketConnection() {
+    let ws = new SockJS('http://localhost:9000/secured/map');
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, function () {
+      that.openGlobalSocket();
+    });
+  }
+
+  openGlobalSocket() {
+    this.stompClient.subscribe('/secured/update/passengerStatus', (message: { body: string }) => {
+      let passenger: PassengerDTO = JSON.parse(message.body);
+      if (passenger.id === this.loggedPassenger.id) {
+        this.loggedPassenger.hasDrive = passenger.hasDrive;
+      }
+    });
   }
 }
