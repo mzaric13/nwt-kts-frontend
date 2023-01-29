@@ -122,10 +122,10 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
             timer: 3000,
           })
             .then(() => {
-              this.route.navigate(['/home-passenger'], { replaceUrl: true });
+              this.route.navigate(['/user/home-passenger'], { replaceUrl: true });
           });
         } else {
-          this.route.navigate(['/driver-profile'], { replaceUrl: true });
+          this.route.navigate(['/user/driver-profile'], { replaceUrl: true });
         }
       }
     });
@@ -158,13 +158,13 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
     this.drive.status = Status.FINISHED;
     this.driveService.endDrive(this.drive).subscribe({
       next: () => {
-        this.route.navigate(['/driver-profile'], {replaceUrl: true});
+        this.route.navigate(['/user/driver-profile'], {replaceUrl: true});
       }
     })
   }
 
   redirectPassenger() {
-    this.route.navigate(['/home-passenger'], {replaceUrl: true});
+    this.route.navigate(['/user/home-passenger'], {replaceUrl: true});
   }
 
   getRouteDuration(duration: number) {

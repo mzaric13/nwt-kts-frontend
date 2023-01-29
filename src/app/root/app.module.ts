@@ -8,22 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatTableModule } from '@angular/material/table';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatOptionModule } from '@angular/material/core';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 
 
 import {
@@ -44,6 +30,7 @@ import { NavbarAdminComponent } from './components/navbar-admin/navbar-admin.com
 import { NavbarDriverComponent } from './components/navbar-driver/navbar-driver.component';
 import { NavbarPassengerComponent } from './components/navbar-passenger/navbar-passenger.component';
 import { UserModule } from '../user/user.module';
+import { PageRegisterPassengerComponent } from './pages/page-register-passenger/page-register-passenger.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +43,8 @@ import { UserModule } from '../user/user.module';
     PageForgottenPasswordComponent,
     PageHomeUnregisteredComponent,
     PageResetPasswordComponent,
-    LayoutComponent
+    LayoutComponent,
+    PageRegisterPassengerComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -71,7 +59,6 @@ import { UserModule } from '../user/user.module';
     SweetAlert2Module.forRoot(),
     DragDropModule,
     NgxMaterialTimepickerModule,
-    LeafletModule,
     NgxChartsModule,
     AuthModule,
     UserModule,

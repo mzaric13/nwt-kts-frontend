@@ -69,7 +69,7 @@ export class NavbarPassengerComponent implements OnInit {
             text: drive.route.routeName,
             timer: 2000,
           }).then(() => {
-            this.router.navigate(['/drive-simulation/' + drive.id]);
+            this.router.navigate(['/user/drive-simulation/' + drive.id]);
           });
         }
       })

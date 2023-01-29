@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PassengerDTO } from 'src/app/shared/models/passenger-dto';
+import { RouteDTO } from 'src/app/shared/models/route-dto';
+import { PassengerService } from 'src/app/shared/services/passenger.service';
+import Swal from 'sweetalert2';
 import { DriveDTO } from '../../../shared/models/drive-dto';
 import { PassengerRatingDTO } from '../../../shared/models/passenger-rating-dto';
 import { RatingDTO } from '../../../shared/models/rating-dto';
@@ -18,8 +22,13 @@ export class PageViewDriveHistoryComponent implements OnInit {
   ratingModalIsOpened = false;
   loggedPerson!: string;
   passengerCanRateDrive = new Array<PassengerRatingDTO>();
+  loggedPassenger!: PassengerDTO;
 
-  constructor(private tokenService: TokenService, private ratingService: RatingService) { }
+  constructor(
+    private tokenService: TokenService,
+    private ratingService: RatingService,
+    private passengerService: PassengerService,
+  ) { }
 
   ngOnInit(): void {
     this.getLoggedPerson();
@@ -66,11 +75,40 @@ export class PageViewDriveHistoryComponent implements OnInit {
     else if (this.tokenService.getRole() === "ROLE_PASSENGER")
     {
       this.loggedPerson = "passenger";
+      this.passengerService.getLoggedPassenger().subscribe({
+        next: (passenger: PassengerDTO) => {
+          this.loggedPassenger = passenger;
+        }
+      });
     }
     //driver
     else
     {
       this.loggedPerson = "driver";
+    }
+  }
+
+  changeFavoriteRoute(isFavorite: boolean) {
+    if (isFavorite) {
+      this.passengerService.addFavoriteRoute(this.drive.route).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Route successfully added to favorites!',
+          });
+        },
+      });
+    } else {
+      this.passengerService.removeFavoriteRoute(this.drive.route.id).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Route successfully removed from favorites!',
+          });
+        },
+      });
     }
   }
 }

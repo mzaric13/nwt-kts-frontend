@@ -43,7 +43,7 @@ export class PageResetPasswordComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       });
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']);
     }, error => {
       Swal.fire({
         icon: 'error',

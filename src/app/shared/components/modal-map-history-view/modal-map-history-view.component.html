@@ -13,6 +13,8 @@
                         <div class="card arial_font">
                             <div class="card-body">
                                 <h5 class="card-title">{{drive.route.routeName}}</h5>
+                                <app-favorite-route-button *ngIf="passenger" style="float: right;" 
+                                (changeFavoriteEvent)="changeFavorite($event)" [isFavorite]="isFavorite"></app-favorite-route-button>
                                 <h6 class="card-subtitle mb-2 text-muted">Additional drive route information</h6>
                                 <p class="card-text">Time: {{drive.route.expectedTime}} min, Length: {{drive.route.length}} km</p>
                             </div>
@@ -21,7 +23,7 @@
                     <div class="flex-map">
                         <app-map [routes]='routes' [waypoints]='waypoints'></app-map>
                     </div>
-                    <button *ngIf="loggedPerson == 'passenger'" data-dismiss="modal" class="btn btn-dark right_button mt-3" (click)="selectRouteAgain(drive.route)">Select this route again</button>
+                    <button *ngIf="loggedPerson === 'passenger'" data-dismiss="modal" class="btn btn-dark right_button mt-3" (click)="selectRouteAgain(drive.route)">Select this route again</button>
                 </div>
             </div>
         </div>

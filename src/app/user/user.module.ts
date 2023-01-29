@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatChipsModule } from "@angular/material/chips";
@@ -26,7 +26,6 @@ import { SharedModule } from "../shared/shared.module";
 import { DriveEndFormComponent } from "./components/drive-end-form/drive-end-form.component";
 import { DriveInconsistencyFormComponent } from "./components/drive-inconsistency-form/drive-inconsistency-form.component";
 import { DriveStartCancelFormComponent } from "./components/drive-start-cancel-form/drive-start-cancel-form.component";
-import { FavoriteRouteButtonComponent } from "./components/favorite-route-button/favorite-route-button.component";
 import { ModalChangeBlockedStatusComponent } from "./components/modal-change-blocked-status/modal-change-blocked-status.component";
 import { ModalDriverDataChangeComponent } from "./components/modal-driver-data-change/modal-driver-data-change.component";
 import { ModalGiveRatingComponent } from "./components/modal-give-rating/modal-give-rating.component";
@@ -41,7 +40,9 @@ import { ClickOutsideTagDirective } from "./directives/click-outside-tag.directi
 import { RouterModule } from "@angular/router";
 import { UserRoutes } from "./user.routes";
 import { CommonModule } from "@angular/common";
-import { PaypalCardComponent } from './components/paypal-card/paypal-card.component';
+import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
+import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
+import { PageRegisterDriverComponent } from './pages/page-register-driver/page-register-driver.component'
 
 @NgModule({
     declarations: [
@@ -58,10 +59,11 @@ import { PaypalCardComponent } from './components/paypal-card/paypal-card.compon
         PageHomePassengerComponent,
         PageLiveChatComponent,
         PagePassengerProfileComponent,
+        PageViewDriveHistoryComponent,
+        PagePurchaseTokensComponent,
         DriveEndFormComponent,
         DriveInconsistencyFormComponent,
         DriveStartCancelFormComponent,
-        FavoriteRouteButtonComponent,
         ModalChangeBlockedStatusComponent,
         ModalDriverDataChangeComponent,
         ModalGiveRatingComponent,
@@ -73,7 +75,7 @@ import { PaypalCardComponent } from './components/paypal-card/paypal-card.compon
         TagFilterPipe,
         TagFilterUsedPipe,
         ClickOutsideTagDirective,
-        PaypalCardComponent,
+        PageRegisterDriverComponent,
     ],
     imports: [
         CommonModule,
@@ -90,9 +92,6 @@ import { PaypalCardComponent } from './components/paypal-card/paypal-card.compon
         MatButtonModule,
         SharedModule,
         RouterModule.forChild(UserRoutes)
-    ],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
     ]
 })
 export class UserModule {};

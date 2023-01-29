@@ -20,7 +20,7 @@ export class NavbarStartPageComponent implements OnInit {
   }
 
   goToRegisterPage(): void {
-    const registerPage : string[] = ['/register']
+    const registerPage : string[] = ['/register-passenger']
     this.router.navigate(registerPage);
   }
 }

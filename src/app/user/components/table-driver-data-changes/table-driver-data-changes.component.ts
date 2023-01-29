@@ -110,6 +110,6 @@ export class TableDriverDataChangesComponent implements OnInit {
   }
 
   private navigate() {
-    this.router.navigate(['/admin-profile'])
+    this.router.navigate(['/user/admin-profile'])
   }
 }

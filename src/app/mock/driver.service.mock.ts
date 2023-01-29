@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable, of, Subject } from "rxjs";
-import { DriverCreationDTO } from "../models/driver-creation-dto";
-import { DriverDTO } from "../models/driver-dto";
-import { PointDTO } from "../models/point-dto";
-import { VehicleDTO } from "../models/vehicle-dto";
+import { DriverCreationDTO } from "../shared/models/driver-creation-dto";
+import { DriverDTO } from "../shared/models/driver-dto";
+import { PointDTO } from "../shared/models/point-dto";
+import { VehicleDTO } from "../shared/models/vehicle-dto";
 
 @Injectable()
 export class DriverServiceMock {

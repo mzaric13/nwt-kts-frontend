@@ -169,13 +169,13 @@ export class ViewHistoryComponent implements OnInit{
 
   private navigateToUser() {
     if (this.loggedPerson === "admin") {
-      this.router.navigate(['/admin-profile']);
+      this.router.navigate(['/user/admin-profile']);
     }
     else if (this.loggedPerson === "driver") {
-      this.router.navigate(['/driver-profile']);
+      this.router.navigate(['/user/driver-profile']);
     }
     else {
-      this.router.navigate(['/passenger-profile']);
+      this.router.navigate(['/user/passenger-profile']);
     }
   }
 

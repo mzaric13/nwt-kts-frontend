@@ -4,6 +4,7 @@ import { ActivatedAccountComponent } from './pages/activated-account/activated-a
 import { LayoutComponent } from './pages/layout/layout.component';
 import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
 import { PageHomeUnregisteredComponent } from './pages/page-home-unregistered/page-home-unregistered.component';
+import { PageRegisterPassengerComponent } from './pages/page-register-passenger/page-register-passenger.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'forgotten-password', component: PageForgottenPasswordComponent },
       { path: 'activated-account/:id', component: ActivatedAccountComponent },
       { path: 'reset-password/:email', component: PageResetPasswordComponent },
+      { path: 'register-passenger', component: PageRegisterPassengerComponent },
     ]
   },
   { 

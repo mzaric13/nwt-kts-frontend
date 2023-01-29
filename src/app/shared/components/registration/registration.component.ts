@@ -76,7 +76,7 @@ export class RegistrationComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
-          this.router.navigate(['/admin-profile']);
+          this.router.navigate(['/user/admin-profile']);
         },
         error => {
           Swal.fire({

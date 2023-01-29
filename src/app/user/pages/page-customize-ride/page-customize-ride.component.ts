@@ -106,7 +106,7 @@ export class PageCustomizeRideComponent implements OnInit {
             timer: 4000,
           })
             .then(() => {
-            this.router.navigate(['/home-passenger'], { replaceUrl: true});
+            this.router.navigate(['/user/home-passenger'], { replaceUrl: true});
           });
         } else {
           Swal.fire({
@@ -118,7 +118,7 @@ export class PageCustomizeRideComponent implements OnInit {
           });
           this.driveService.sendConfirmationEmails(tempDriveId).subscribe({
             next: () => {
-              this.router.navigate(['/home-passenger'], { replaceUrl: true});
+              this.router.navigate(['/user/home-passenger'], { replaceUrl: true});
             }
           });
         }

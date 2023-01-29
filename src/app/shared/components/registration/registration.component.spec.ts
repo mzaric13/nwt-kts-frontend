@@ -5,13 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { BehaviorSubject, of } from 'rxjs';
 import { PassengerServiceMock } from 'src/app/mock/passenger.service.mock';
-import { PassengerCreationDTO } from 'src/app/models/passenger-creation-dto';
-import { PassengerDTO } from 'src/app/models/passenger-dto';
-import { DriverService } from 'src/app/services/driver.service';
-import { PassengerService } from 'src/app/services/passenger.service';
-import { UserService } from 'src/app/services/users.service';
-import { VehicleService } from 'src/app/services/vehicle.service';
-import { TokenService } from 'src/app/services/token.service';
 
 import { RegistrationComponent } from './registration.component';
 import { Router } from '@angular/router';
@@ -21,6 +14,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DriverService } from '../../services/driver.service';
+import { PassengerService } from '../../services/passenger.service';
+import { TokenService } from '../../services/token.service';
+import { VehicleService } from '../../services/vehicle.service';
 
 describe('RegistrationComponent', () => {
 
@@ -562,7 +559,7 @@ describe('RegistrationComponent', () => {
 
       component.ngOnInit();
       component.register();
-      expect(router.navigate).toHaveBeenCalledWith(['/admin-profile']);
+      expect(router.navigate).toHaveBeenCalledWith(['/user/admin-profile']);
 
       });
   });

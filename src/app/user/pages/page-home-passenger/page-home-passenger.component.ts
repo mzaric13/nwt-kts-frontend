@@ -96,7 +96,7 @@ export class PageHomePassengerComponent implements OnInit {
         routeIdx: this.routeIdx,
       };
     }
-    this.router.navigate(['/customize-ride'], { state: { data: routeDTO } });
+    this.router.navigate(['/user/customize-ride'], { state: { data: routeDTO } });
   }
 
   getEstimatedTime(time: number) {

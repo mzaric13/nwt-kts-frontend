@@ -127,11 +127,11 @@ export class PageChatListComponent implements OnInit {
   }
 
   goToChatPassengers(passengerDTO: PassengerDTO) {
-    this.router.navigate(['/chat/' + passengerDTO.email]);
+    this.router.navigate(['/user/chat/' + passengerDTO.email]);
   }
 
   goToChatDrivers(driverDTO: DriverDTO) {
-    this.router.navigate(['/chat/' + driverDTO.email]);
+    this.router.navigate(['/user/chat/' + driverDTO.email]);
   }
 
 }

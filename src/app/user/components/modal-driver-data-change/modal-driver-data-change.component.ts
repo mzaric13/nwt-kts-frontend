@@ -55,7 +55,7 @@ export class ModalDriverDataChangeComponent implements OnInit {
   reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/answer-driver-data-changes'])
+    this.router.navigate(['/user/answer-driver-data-changes'])
   }
 
 }
