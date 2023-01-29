@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg_black py-3">
+    <a class="navbar-brand arial_font ml-20" routerLink="/home-guest" title="Home page">UBER</a>
+    <div class="collapse navbar-collapse mr-20">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/home-guest" title="Home page">
+                    <fa-icon [icon]="faHouse" size="xl"></fa-icon>
+                </a>
+            </li>
+            <li class="nav-item mr-2">
+                <!-- Ne ucita se google dugme ako se uradi router-link -->
+                <a id="login" class="nav-link arial_font" href="/auth/login" title="Login">
+                    <fa-icon [icon]="faLogin" size="xl"></fa-icon>
+                </a>
+            </li>
+            <li>
+                <button class="btn btn-light btn-md arial_font" (click)="goToRegisterPage()" title="Register"><fa-icon [icon]="faPersonCirclePlus" siez="xl"></fa-icon></button>
+            </li>
+        </ul>
+    </div>
+</nav>

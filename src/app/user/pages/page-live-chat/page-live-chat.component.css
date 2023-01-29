@@ -1,0 +1,44 @@
+.bg-pic {
+    background-image: url('../../../../assets/taxi2.jpg');
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    background-size: cover;
+    background-repeat: repeat;
+}
+
+.chat {
+    margin-top: 1%;
+    margin-inline: 2%;
+}
+
+.form {
+    padding: 1%;
+}
+
+.scrollarea {
+    min-height: 32vh;
+    max-height: 64vh;
+    overflow-y: scroll;
+}
+
+.arial_text {
+    font-family: Arial;
+}
+
+.timestamp {
+    font-style: italic;
+    font-size: 1.4vh;
+}
+
+.input {
+    display: flex;
+}
+
+textarea {
+    resize: none;
+}
+
+.material-icons:hover {
+    cursor: pointer;
+}

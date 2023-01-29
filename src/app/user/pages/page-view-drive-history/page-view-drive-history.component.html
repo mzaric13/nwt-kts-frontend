@@ -1,0 +1,12 @@
+<div class="info w-50">
+    <app-view-history [passengerCanRateDrive]="passengerCanRateDrive" (showMoreDetailsButtonPressedEvent)="showModal($event)" (showMapButtonPressedEvent)="showMapModal($event)" (showRatingModalPressedEvent)="showRatingModal($event)"></app-view-history>
+</div>
+<div *ngIf="modalIsOpened">
+    <app-modal-detailed-history-view (modalIsClosed)="closeModal()" [drive]="drive"></app-modal-detailed-history-view>
+</div>
+<div *ngIf="mapModalIsOpened">
+    <app-modal-map-history-view (modalIsClosed)="closeMapModal()" [drive]="drive"></app-modal-map-history-view>
+</div>
+<div *ngIf="ratingModalIsOpened">
+    <app-modal-give-rating (modalIsClosed)="closeRatingModal()" (ratingHasBeenGiven)="updateTable($event)" [drive]="drive"></app-modal-give-rating>
+</div>

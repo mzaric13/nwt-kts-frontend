@@ -1,0 +1,24 @@
+<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white chat">
+    <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+        <h4 class="arial_text">{{receiver}}</h4>
+    </div>
+    <div class="list-group list-group-flush border-bottom scrollarea">
+        <div class="list-group-item list-group-item-action py-3 lh-tight" *ngFor="let msg of messages | async">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <strong class="arial_text mb-1">{{msg.sender}}</strong>
+            </div>
+            <div class="arial_text col-10 mb-1">{{msg.message}}</div>
+            <div class="timestamp arial_text col-10 mb-1 small">{{msg.timestamp | date:'medium'}}</div>
+        </div>
+    </div>
+    <form class="form" (submit)="sendMsg()">
+        <div class="input">
+            <textarea [formControl]="newMessage" name="" class="arial_text form-control type_msg" placeholder="Write your message...">
+            </textarea>
+            <div class="input-group-append">
+                <span (click)="sendMsg()" class="input-group-text send_btn"><i class="material-icons" style="font-size: 36px">send</i></span
+                >
+            </div>
+        </div>
+    </form>
+  </div>
