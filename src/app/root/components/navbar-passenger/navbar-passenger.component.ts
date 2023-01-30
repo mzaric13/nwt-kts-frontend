@@ -14,6 +14,7 @@ import { DriveDTO } from '../../../shared/models/drive-dto';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PassengerDTO } from '../../../shared/models/passenger-dto';
+import { NotificationDTO } from '../../../shared/models/notification-dto';
 import { PassengerService } from '../../../shared/services/passenger.service';
 
 
@@ -76,12 +77,15 @@ export class NavbarPassengerComponent implements OnInit {
     });
 
     this.stompClient.subscribe('/secured/update/updatePassenger', (message: { body: string }) => {
-      Swal.fire({
-        icon: 'info',
-        title: 'Your drive is starting soon!',
-        text: message.body,
-        timer: 4000,
-      });
+      const notification: NotificationDTO = JSON.parse(message.body);
+      if (this.loggedPassenger.id === notification.passengerId) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Your drive is starting soon!',
+          text: notification.notificationMessage,
+          timer: 4000,
+        });
+      }
     });
   }
 }
