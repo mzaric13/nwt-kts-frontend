@@ -32,8 +32,6 @@ export class RouteFormComponent implements OnInit {
 
   public routeLocations: string[] = [];
 
-  searchRouteClicked: boolean = false;
-
   favoriteRouteChosen: boolean = false;
 
   @Output() makeRouteEvent = new EventEmitter();
@@ -41,6 +39,8 @@ export class RouteFormComponent implements OnInit {
   @Output() customizeRideEvent = new EventEmitter<RouteDTO | null>();
 
   @Input() loggedPassenger!: PassengerDTO;
+
+  @Input() searchRouteClicked: boolean = false;
 
   constructor() { }
 
@@ -85,9 +85,6 @@ export class RouteFormComponent implements OnInit {
       ...this.routeLocations,
       this.route.controls.destination.value,
     ]);
-    setTimeout(() => {
-      this.searchRouteClicked = true;
-    }, 1000);
   }
 
   addExtraLocation() {

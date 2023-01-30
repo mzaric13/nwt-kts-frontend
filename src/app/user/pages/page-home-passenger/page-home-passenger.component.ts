@@ -31,6 +31,7 @@ export class PageHomePassengerComponent implements OnInit {
   distance: number = 0;
   estimatedCost: number = 0;
   routeIdx!: number;
+  searchClicked: boolean = false;
 
   routes: any = [];
 
@@ -78,6 +79,7 @@ export class PageHomePassengerComponent implements OnInit {
       next: (routes: any) => {
         this.routes = routes.routes;
         this.routeWaypoints = waypoints;
+        this.searchClicked = true;
       }
     })
   }
