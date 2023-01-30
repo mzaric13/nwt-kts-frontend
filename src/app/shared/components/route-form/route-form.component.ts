@@ -85,7 +85,9 @@ export class RouteFormComponent implements OnInit {
       ...this.routeLocations,
       this.route.controls.destination.value,
     ]);
-    this.searchRouteClicked = true;
+    setTimeout(() => {
+      this.searchRouteClicked = true;
+    }, 1000);
   }
 
   addExtraLocation() {
