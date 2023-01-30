@@ -3,6 +3,7 @@ import { TagDTO } from "./tag-dto";
 import { TypeDTO } from "./type-dto";
 
 export default interface TempDriveDTO {
+    id?: number;
     startDate: Date;
     price: number;
     length: number;

@@ -42,7 +42,7 @@ export class DriveService {
   }
 
   public createTempDrive(tempDrive: TempDriveDTO) {
-    return this.httpClient.post<number>(this.url + "/drives/create-temp-drive/", tempDrive, this.newHeader);
+    return this.httpClient.post<TempDriveDTO>(this.url + "/drives/create-temp-drive/", tempDrive, this.newHeader);
   }
   
   public sendConfirmationEmails(tempDriveId: number) {
