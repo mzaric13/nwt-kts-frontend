@@ -7,7 +7,7 @@ import {
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { OauthService } from '../../services/oauth.service';
 import { TokenService } from '../../../shared/services/token.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import {
   FacebookTokenDTO,
   JwtToken,
@@ -30,8 +30,8 @@ export class LoginComponent implements OnInit {
   socialUser: SocialUser | undefined;
 
   loginForm = this.formBuilder.group({
-    email: '',
-    password: '',
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
   constructor(

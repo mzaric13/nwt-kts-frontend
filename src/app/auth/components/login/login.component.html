@@ -20,5 +20,5 @@
         </div>
     </section>
 
-    <button id="loginButton" type="submit" class="btn btn-dark arial_font">Login</button>
+    <button [disabled]="loginForm.invalid" id="loginButton" type="submit" class="btn btn-dark arial_font">Login</button>
 </form>
