@@ -126,11 +126,11 @@ export class PageCustomizeRideComponent implements OnInit {
       error: (err) => {
         createRide.passengers.splice(createRide.passengers.length - 1, 1);
         console.log(err);
-        if (err.status === 404) {
+        if (err.status === 500) {
           Swal.fire({
           icon: 'error',
           title: 'Error!',
-          text: err.error.apierror.debugMessage,
+          text: err.error.apierror.message,
         });
         }
       }

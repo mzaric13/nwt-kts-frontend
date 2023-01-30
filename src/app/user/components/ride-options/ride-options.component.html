@@ -3,9 +3,9 @@
         <mat-label class="arial_text form-label">Vehicle type</mat-label>
         <mat-form-field appearance="fill">
             <mat-label class="arial_text">Choose vehicle type...</mat-label>
-            <mat-select [formControl]="ride.controls.vehicleType" required>
+            <mat-select id="selectType" [formControl]="ride.controls.vehicleType" required>
                 <mat-option>--</mat-option>
-                <mat-option class="arial_text" *ngFor="let vehicleType of vehicleTypes" [value]="vehicleType">
+                <mat-option id="vehicle-type-{{vehicleType.id}}" class="arial_text" *ngFor="let vehicleType of vehicleTypes" [value]="vehicleType">
                 {{vehicleType.name}}
                 </mat-option>
             </mat-select>
@@ -23,7 +23,7 @@
                     <mat-icon class="chip-icon">cancel</mat-icon>
                 </button>
                 </mat-chip>
-                <input class="arial_text bg_gray borderless_input input_size" placeholder="Enter email..."
+                <input id="personInput" class="arial_text bg_gray borderless_input input_size" placeholder="Enter email..."
                     [matChipInputFor]="peopleChipList"
                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                     [matChipInputAddOnBlur]="addOnBlur"
@@ -67,11 +67,11 @@
             <label class="checkbox-label" for="additionalDestinations">Order ride for later?</label>
         </div>
         <div *ngIf="showTimeInput" class="24hr-example">
-            <input formControlName="time" class="arial_text bg_gray borderless_input input_size" placeholder="24hr format" aria-label="Enter time..." [ngxTimepicker]="fullTime" [format]="24" readonly>
+            <input id="startTimeInput" formControlName="time" class="arial_text bg_gray borderless_input input_size" placeholder="24hr format" aria-label="Enter time..." [ngxTimepicker]="fullTime" [format]="24" readonly>
             <ngx-material-timepicker #fullTime></ngx-material-timepicker>
         </div>
     </div>
     <div class="form-group form-group-button">
-        <button [disabled]="ride.invalid || !route" class="btn btn-dark arial_font" type="submit">Create ride</button>
+        <button id="createRide" [disabled]="ride.invalid || !route" class="btn btn-dark arial_font" type="submit">Create ride</button>
     </div>
 </form>

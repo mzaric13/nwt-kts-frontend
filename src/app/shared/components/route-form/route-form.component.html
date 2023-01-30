@@ -59,10 +59,10 @@
         <button type="button" (click)="addExtraLocation()" class="btn btn-dark arial_font">Add extra location</button>
     </div>
     <div *ngIf="loggedPassenger" class="form-group form-group-button">
-        <button type="button" (click)="searchRoute()" class="btn btn-dark arial_font">Search routes</button>
-        <button [disabled]="loggedPassenger.hasDrive || (!searchRouteClicked && !favoriteRouteChosen)" type="submit" class="btn btn-dark arial_font">Customize ride order</button>
+        <button type="button" id="searchRoutes" (click)="searchRoute()" class="btn btn-dark arial_font">Search routes</button>
+        <button id="customizeDrive" [disabled]="loggedPassenger.hasDrive || (!searchRouteClicked && !favoriteRouteChosen)" type="submit" class="btn btn-dark arial_font">Customize ride order</button>
     </div>
     <div *ngIf="!loggedPassenger" class="form-group">
-        <button type="button" (click)="searchRoute()" class="btn btn-dark arial_font">Search routes</button>
+        <button type="button" id="searchUnRegisterd" (click)="searchRoute()" class="btn btn-dark arial_font">Search routes</button>
     </div>
 </form>
