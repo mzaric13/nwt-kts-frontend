@@ -66,6 +66,6 @@ export class PageHomeUnregisteredComponent implements OnInit {
   }
 
   getEstimatedCost(distance: number) {
-    this.estimatedCost = 150 + distance * 120;
+    this.estimatedCost = 1.25 + distance * 1;
   }
 }

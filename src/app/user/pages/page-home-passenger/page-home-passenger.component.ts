@@ -105,7 +105,7 @@ export class PageHomePassengerComponent implements OnInit {
 
   getEstimatedCost(distance: number) {
     this.distance = distance;
-    this.estimatedCost = 150 + distance * 120;
+    this.estimatedCost = 1.25 + distance * 1;
   }
 
   getWaypoints(waypoints: PointCreationDTO[]) {

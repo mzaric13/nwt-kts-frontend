@@ -83,7 +83,7 @@ export class PageCustomizeRideComponent implements OnInit {
     createRide.passengers.push(this.loggedPassenger.email);
     const tempDrive: TempDriveDTO = {
       startDate: createRide.time,
-      price: 150 + this.routeDTO.length * 120,
+      price: 1.25 + this.routeDTO.length * 1,
       length: this.routeDTO.length,
       tags: createRide.tags,
       emails: createRide.passengers,
@@ -92,7 +92,7 @@ export class PageCustomizeRideComponent implements OnInit {
     }
 
     this.driveService.createTempDrive(tempDrive).subscribe({
-      next: (tempDriveId: number) => {
+      next: (tempDriveDTO: TempDriveDTO) => {
         const currentDate = new Date();
         const currentTime = currentDate.getTime() / 60000;
         const startTime = tempDrive.startDate.getTime() / 60000;
@@ -116,7 +116,7 @@ export class PageCustomizeRideComponent implements OnInit {
               ' Thank you for using our services!',
             timer: 4000,
           });
-          this.driveService.sendConfirmationEmails(tempDriveId).subscribe({
+          this.driveService.sendConfirmationEmails(tempDriveDTO.id!).subscribe({
             next: () => {
               this.router.navigate(['/user/home-passenger'], { replaceUrl: true});
             }
