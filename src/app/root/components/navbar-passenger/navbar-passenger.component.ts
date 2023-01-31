@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 import { PassengerDTO } from '../../../shared/models/passenger-dto';
 import { NotificationDTO } from '../../../shared/models/notification-dto';
 import { PassengerService } from '../../../shared/services/passenger.service';
+import { OauthService } from 'src/app/auth/services/oauth.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class NavbarPassengerComponent implements OnInit {
   constructor(
     private router: Router,
     private passengerService: PassengerService,
+    private oauthService: OauthService
   ) { }
 
   ngOnInit(): void {
@@ -87,5 +89,13 @@ export class NavbarPassengerComponent implements OnInit {
         });
       }
     });
+  }
+
+  logout() {
+    this.oauthService.logout().subscribe({
+      next: (message: string) => {
+        this.router.navigate(['/']);
+      }
+    })
   }
 }

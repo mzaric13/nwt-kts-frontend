@@ -13,6 +13,7 @@ import * as SockJS from 'sockjs-client';
 import { DriveDTO } from '../../../shared/models/drive-dto';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { OauthService } from 'src/app/auth/services/oauth.service';
 
 @Component({
   selector: 'app-navbar-driver',
@@ -36,6 +37,7 @@ export class NavbarDriverComponent implements OnInit {
   constructor(
     private driverService: DriverService,
     private router: Router,
+    private oauthService: OauthService
   ) { }
 
   ngOnInit(): void {
@@ -94,6 +96,14 @@ export class NavbarDriverComponent implements OnInit {
       }
       else {
         this.available = "../../../../assets/notavailable.png";
+      }
+    })
+  }
+
+  logout() {
+    this.oauthService.logout().subscribe({
+      next: (message: string) => {
+        this.router.navigate(['/']);
       }
     })
   }

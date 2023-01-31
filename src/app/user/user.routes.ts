@@ -1,4 +1,5 @@
 import { Routes } from "@angular/router";
+import { RoleGuard } from "../auth/guards/role/role.guard";
 import { PageAdminProfileComponent } from "./pages/page-admin-profile/page-admin-profile.component";
 import { PageAnswerDriverChangesComponent } from "./pages/page-answer-driver-changes/page-answer-driver-changes.component";
 import { PageChangeBlockedStatusComponent } from "./pages/page-change-blocked-status/page-change-blocked-status.component";
@@ -21,36 +22,51 @@ export const UserRoutes: Routes = [
     path: "passenger-profile",
     pathMatch: "full",
     component: PagePassengerProfileComponent,
-    //canActivate: [LoginGuard],
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER'}
   },
   {
     path: 'admin-profile',
     pathMatch: 'full',
-    component: PageAdminProfileComponent
+    component: PageAdminProfileComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_ADMIN'}
   },
   { 
     path: 'home-passenger', 
-    component: PageHomePassengerComponent 
+    component: PageHomePassengerComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER'} 
   },
   {
     path: 'driver-profile',
-    component: PageDriverProfileComponent
+    component: PageDriverProfileComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_DRIVER'}
   },
   {
     path: 'purchase-tokens',
-    component: PagePurchaseTokensComponent
+    component: PagePurchaseTokensComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER'}
   },
   {
     path: 'customize-ride',
-    component: PageCustomizeRideComponent
+    component: PageCustomizeRideComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER'}
   },
   {
     path: 'view-drive-history',
-    component: PageViewDriveHistoryComponent
+    component: PageViewDriveHistoryComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER|ROLE_DRIVER|ROLE_ADMIN'}
   },
   {
     path: 'show-charts',
     component: PageChartsComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER|ROLE_DRIVER|ROLE_ADMIN'}
   },
   {
     path: 'drive-accepted',
@@ -62,26 +78,38 @@ export const UserRoutes: Routes = [
   },
   {
     path: 'chat/:name',
-    component: PageLiveChatComponent
+    component: PageLiveChatComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER|ROLE_DRIVER|ROLE_ADMIN'}
   },
   {
     path: 'chat-list',
-    component: PageChatListComponent
+    component: PageChatListComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_ADMIN'}
   },
   {
     path: 'drive-simulation/:id',
-    component: PageDriveSimulationComponent
+    component: PageDriveSimulationComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_PASSENGER|ROLE_DRIVER'}
   },
   {
     path: 'answer-driver-data-changes',
-    component: PageAnswerDriverChangesComponent
+    component: PageAnswerDriverChangesComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_ADMIN'}
   },
   {
     path: 'change-blocked-status',
-    component: PageChangeBlockedStatusComponent
+    component: PageChangeBlockedStatusComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_ADMIN'}
   },
   {
     path: 'register-driver',
     component: PageRegisterDriverComponent,
+    canActivate: [RoleGuard],
+    data: {expectedRoles: 'ROLE_ADMIN'}
   },
 ];

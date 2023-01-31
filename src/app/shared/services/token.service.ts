@@ -28,4 +28,9 @@ export class TokenService {
   logOut(): void {
     sessionStorage.clear();
   }
+
+  public isLoggedIn() : boolean {
+    if (this.getToken() !== null) return true;
+    return false;
+  }
 }

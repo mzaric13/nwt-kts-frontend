@@ -9,6 +9,8 @@ import {
   faChartSimple,
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
+import { OauthService } from 'src/app/auth/services/oauth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar-admin',
   templateUrl: './navbar-admin.component.html',
@@ -23,9 +25,17 @@ export class NavbarAdminComponent implements OnInit {
   faLogout = faArrowRightFromBracket;
   faChartSimple = faChartSimple;
   faChat = faFacebookMessenger;
-  constructor() { }
+  constructor(private oauthService: OauthService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    this.oauthService.logout().subscribe({
+      next: (message: string) => {
+        this.router.navigate(['/']);
+      }
+    })
   }
 
 }

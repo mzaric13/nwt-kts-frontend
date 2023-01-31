@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { LoginGuard } from '../auth/guards/login/login.guard';
 import { ActivatedAccountComponent } from './pages/activated-account/activated-account.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { PageForgottenPasswordComponent } from './pages/page-forgotten-password/page-forgotten-password.component';
@@ -13,11 +14,11 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'home-guest', component: PageHomeUnregisteredComponent },
-      { path: 'forgotten-password', component: PageForgottenPasswordComponent },
-      { path: 'activated-account/:id', component: ActivatedAccountComponent },
-      { path: 'reset-password/:email', component: PageResetPasswordComponent },
-      { path: 'register-passenger', component: PageRegisterPassengerComponent },
+      { path: 'home-guest', component: PageHomeUnregisteredComponent, canActivate: [LoginGuard] },
+      { path: 'forgotten-password', component: PageForgottenPasswordComponent, canActivate: [LoginGuard] },
+      { path: 'activated-account/:id', component: ActivatedAccountComponent, canActivate: [LoginGuard] },
+      { path: 'reset-password/:email', component: PageResetPasswordComponent, canActivate: [LoginGuard] },
+      { path: 'register-passenger', component: PageRegisterPassengerComponent, canActivate: [LoginGuard] },
     ]
   },
   { 
