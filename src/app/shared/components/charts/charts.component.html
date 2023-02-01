@@ -15,7 +15,7 @@
         <button class="btn btn-dark font-size margin-left" (click)="showGraphs()">Show charts</button>
     </div>
 </div>
-<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style=" height: 15rem;">
+<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style="height: 15rem;">
     <h4 class="card-title">Sum: {{drivesPerDaySum | number : '1.2-2'}} drives, Average: {{drivesPerDayAvg | number : '1.2-2'}} drives</h4>
     <ngx-charts-line-chart *ngIf="graphsAreLoaded === true"
         [legend]="legend"
@@ -30,7 +30,7 @@
         >
     </ngx-charts-line-chart>
 </div>
-<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style=" height: 15rem;">
+<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style="height: 15rem;">
     <h4 class="card-title">Sum: {{drivenKilometersPerDaySum | number : '1.2-2'}}km, Average: {{drivenKilometersPerDayAvg | number : '1.2-2'}}km</h4>
     <ngx-charts-line-chart *ngIf="graphsAreLoaded === true"
         [legend]="legend"
@@ -45,8 +45,8 @@
     >
     </ngx-charts-line-chart>
 </div>
-<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style=" height: 15rem;">
-    <h4 class="card-title">Sum: {{spentOrEarnedMoneyPerDaySum | number : '1.2-2'}}&euro;, Average: {{spentOrEarnedMoneyPerDayAvg | number : '1.2-2'}}&euro;</h4>
+<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style="height: 15rem;">
+    <h4 class="card-title">Sum: {{spentOrEarnedMoneyPerDaySum | number : '1.2-2'}}tokens, Average: {{spentOrEarnedMoneyPerDayAvg | number : '1.2-2'}}tokens;</h4>
     <ngx-charts-line-chart *ngIf="graphsAreLoaded === true"
         [legend]="legend"
         [showXAxisLabel]="showXAxisLabel"

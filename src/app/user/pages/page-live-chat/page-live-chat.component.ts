@@ -95,7 +95,7 @@ export class PageLiveChatComponent implements OnInit {
 
   sendMsg() {
     let sender: string = '';
-    if (this.receiver == 'Admin') {
+    if (this.receiver === 'Admin') {
       sender = this.loggedPassenger ? this.loggedPassenger.email : this.loggedDriver.email;
     } else {
       sender = 'admin';

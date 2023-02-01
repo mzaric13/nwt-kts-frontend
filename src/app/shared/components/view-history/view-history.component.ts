@@ -26,7 +26,7 @@ export class ViewHistoryComponent implements OnInit{
   loggedPerson!: string;
   loading: boolean = true;
   totalElements: number | undefined;
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<DriveDTO>();
   displayedColumns: string[] = ['id', 'route', 'price', 'startDate', 'endDate', 'participants', 'map', 'rating'];
   displayedColumnsNoRating: string[] = ['id', 'route', 'price', 'startDate', 'endDate', 'participants', 'map'];
 
@@ -97,7 +97,7 @@ export class ViewHistoryComponent implements OnInit{
     this.drives = data.drives;
     this.drives.length = data.totalItems;
 
-    this.dataSource = new MatTableDataSource<any>(this.drives);
+    this.dataSource = new MatTableDataSource<DriveDTO>(this.drives);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -129,7 +129,7 @@ export class ViewHistoryComponent implements OnInit{
     this.drives.push(...data.drives);
     this.drives.length = data.totalItems;
 
-    this.dataSource = new MatTableDataSource<any>(this.drives);
+    this.dataSource = new MatTableDataSource<DriveDTO>(this.drives);
     this.dataSource._updateChangeSubscription();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

@@ -37,7 +37,7 @@ export class AdminService {
   }
 
   public updatePassword(passwordChangeCreationDTO : PasswordChangeCreationDTO) {
-    if (passwordChangeCreationDTO.newPassword != passwordChangeCreationDTO.newPasswordConfirmation) {
+    if (passwordChangeCreationDTO.newPassword !== passwordChangeCreationDTO.newPasswordConfirmation) {
       Swal.fire({
         position: 'center',
         icon: 'error',

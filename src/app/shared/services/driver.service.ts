@@ -72,7 +72,7 @@ export class DriverService {
 
   public updatePassword(passwordChangeCreationDTO: PasswordChangeCreationDTO) {
     if (
-      passwordChangeCreationDTO.newPassword !=
+      passwordChangeCreationDTO.newPassword !==
       passwordChangeCreationDTO.newPasswordConfirmation
     ) {
       Swal.fire({

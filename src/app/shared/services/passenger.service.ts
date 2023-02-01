@@ -77,7 +77,7 @@ export class PassengerService {
 
   public updatePassword(passwordChangeCreationDTO: PasswordChangeCreationDTO) {
     if (
-      passwordChangeCreationDTO.newPassword !=
+      passwordChangeCreationDTO.newPassword !==
       passwordChangeCreationDTO.newPasswordConfirmation
     ) {
       Swal.fire({

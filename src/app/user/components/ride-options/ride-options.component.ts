@@ -103,7 +103,7 @@ export class RideOptionsComponent implements OnInit {
   }
 
   private selectTagByName(tagName: string) {
-    let foundTags = this.tags.filter((tag) => tag.name == tagName);
+    let foundTags = this.tags.filter((tag) => tag.name === tagName);
     if (foundTags.length) {
       this.selectedTags.push(foundTags[0]);
       this.clearInput();

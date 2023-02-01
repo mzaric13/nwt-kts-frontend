@@ -26,7 +26,7 @@ export class TableDriverDataChangesComponent implements OnInit {
   unansweredDriverData : DriverDataDTO[] = [];
   loading: boolean = true;
   totalElements: number | undefined;
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<DriverDataDTO>();
   displayedColumns: string[] = ['id', 'fullName', 'dateOfRequest', 'details'];
 
   constructor(private adminService: AdminService, private router: Router) {
@@ -74,7 +74,7 @@ export class TableDriverDataChangesComponent implements OnInit {
     this.unansweredDriverData = data.driverData;
     this.unansweredDriverData.length = data.totalItems;
 
-    this.dataSource = new MatTableDataSource<any>(this.unansweredDriverData);
+    this.dataSource = new MatTableDataSource<DriverDataDTO>(this.unansweredDriverData);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
@@ -85,7 +85,7 @@ export class TableDriverDataChangesComponent implements OnInit {
     this.unansweredDriverData.push(...data.driverData);
     this.unansweredDriverData.length = data.totalItems;
 
-    this.dataSource = new MatTableDataSource<any>(this.unansweredDriverData);
+    this.dataSource = new MatTableDataSource<DriverDataDTO>(this.unansweredDriverData);
     this.dataSource._updateChangeSubscription();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

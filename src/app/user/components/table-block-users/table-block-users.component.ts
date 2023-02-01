@@ -29,13 +29,13 @@ export class TableBlockUsersComponent implements OnInit {
   passengers : PassengerDTO[] = [];
   loadingPassengers: boolean = true;
   totalElementsPassengers: number | undefined;
-  dataSourcePassengers = new MatTableDataSource<any>();
+  dataSourcePassengers = new MatTableDataSource<PassengerDTO>();
   displayedColumnsPassengers: string[] = ['fullName', 'rolePassenger', 'blockedStatus'];
 
   drivers : DriverDTO[] = [];
   loadingDrivers: boolean = true;
   totalElementsloadingDrivers: number | undefined;
-  dataSourceDrivers = new MatTableDataSource<any>();
+  dataSourceDrivers = new MatTableDataSource<DriverDTO>();
   displayedColumnsDrivers: string[] = ['fullName', 'roleDriver', 'blockedStatus'];
 
   constructor(
@@ -81,7 +81,7 @@ export class TableBlockUsersComponent implements OnInit {
     this.passengers = data.passengers;
     this.passengers.length = data.totalItems;
 
-    this.dataSourcePassengers = new MatTableDataSource<any>(this.passengers);
+    this.dataSourcePassengers = new MatTableDataSource<PassengerDTO>(this.passengers);
     this.dataSourcePassengers.paginator = this.paginatorPassenger;
   }
 
@@ -90,7 +90,7 @@ export class TableBlockUsersComponent implements OnInit {
     this.drivers = data.drivers;
     this.drivers.length = data.totalItems;
 
-    this.dataSourceDrivers = new MatTableDataSource<any>(this.drivers);
+    this.dataSourceDrivers = new MatTableDataSource<DriverDTO>(this.drivers);
     this.dataSourceDrivers.paginator = this.paginatorDriver;
   }
 
@@ -100,7 +100,7 @@ export class TableBlockUsersComponent implements OnInit {
     this.passengers.push(...data.passengers);
     this.passengers.length = data.totalItems;
 
-    this.dataSourcePassengers = new MatTableDataSource<any>(this.passengers);
+    this.dataSourcePassengers = new MatTableDataSource<PassengerDTO>(this.passengers);
     this.dataSourcePassengers._updateChangeSubscription();
     this.dataSourcePassengers.paginator = this.paginatorPassenger;
   }
@@ -111,7 +111,7 @@ export class TableBlockUsersComponent implements OnInit {
     this.drivers.push(...data.drivers);
     this.drivers.length = data.totalItems;
 
-    this.dataSourceDrivers = new MatTableDataSource<any>(this.drivers);
+    this.dataSourceDrivers = new MatTableDataSource<DriverDTO>(this.drivers);
     this.dataSourceDrivers._updateChangeSubscription();
     this.dataSourceDrivers.paginator = this.paginatorDriver;
   }
