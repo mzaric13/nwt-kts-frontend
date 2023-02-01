@@ -118,7 +118,33 @@ export class PageCustomizeRideComponent implements OnInit {
           });
           this.driveService.sendConfirmationEmails(tempDriveDTO.id!).subscribe({
             next: () => {
-              this.router.navigate(['/user/home-passenger'], { replaceUrl: true});
+              this.router.navigate(['/user/home-passenger'], { replaceUrl: true });
+              const text: string = 'You have been added to a drive on the route ' +
+                this.shortenRouteName(this.routeDTO.routeName) + '. The time this drive will start is at ' +
+                tempDrive.startDate + '. Do you consent to this drive?';
+              Swal.fire({
+                icon: 'info',
+                title: 'Drive consent',
+                text,
+                showConfirmButton: true,
+                showDenyButton: true,
+                showCancelButton: false,
+                showCloseButton: false,
+                confirmButtonText: 'Yes',
+                denyButtonText: 'No',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.router.navigate(['/user/drive-accepted'], {
+                    queryParams:
+                      { tempDriveId: tempDriveDTO.id, passengerId: this.loggedPassenger.id }
+                  });
+                } else if (result.isDenied) {
+                  this.router.navigate(['/user/drive-rejected'], {
+                    queryParams:
+                      { tempDriveId: tempDriveDTO.id, passengerId: this.loggedPassenger.id }
+                  });
+                }
+              })
             }
           });
         }
@@ -135,5 +161,13 @@ export class PageCustomizeRideComponent implements OnInit {
         }
       }
     })
+  }
+
+  shortenRouteName(routeName: string) {
+    const waypoints: string[] = [];
+    for (let waypoint of routeName.split('-')) {
+      waypoints.push(waypoint.split(',')[0]);
+    }
+    return waypoints.join('-');
   }
 }

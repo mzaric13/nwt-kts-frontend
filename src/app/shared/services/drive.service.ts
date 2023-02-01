@@ -49,9 +49,10 @@ export class DriveService {
     return this.httpClient.get<void>(this.url + "/drives/send-confirmation-email/" + tempDriveId, this.newHeader);
   }
 
-  public acceptDriveConsent(tempDriveId: number) {
+  public acceptDriveConsent(tempDriveId: number, passengerId: number) {
     let params = new HttpParams();
     params = params.append('tempDriveId', tempDriveId);
+    params = params.append('passengerId', passengerId);
     let options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

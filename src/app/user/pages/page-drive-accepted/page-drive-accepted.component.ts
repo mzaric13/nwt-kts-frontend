@@ -17,7 +17,7 @@ export class PageDriveAcceptedComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.driveService.acceptDriveConsent(params['tempDriveId']).subscribe({
+      this.driveService.acceptDriveConsent(params['tempDriveId'], params['passengerId']).subscribe({
         next: () => {
           this.okStatus = true;
         },
