@@ -13,6 +13,7 @@ import { Status } from '../../../shared/models/status';
 import { GeocodeService } from '../../../shared/services/geocode.service';
 import { interval, Subscription } from 'rxjs';
 import { DeclineDriveDTO } from '../../../shared/models/decline-drive-dto';
+import { PointDTO } from 'src/app/shared/models/point-dto';
 
 @Component({
   selector: 'app-page-drive-simulation',
@@ -42,6 +43,8 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
 
   statusIsDrivingToStart: boolean = false;
   statusIsDriveStarted: boolean = false;
+
+  driverPosition!: PointDTO;
 
   constructor(
     private readonly passengerService: PassengerService,
@@ -138,7 +141,12 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
       this.drive = JSON.parse(message.body);
       this.updateStatuses();
       this.giveRating = true;
-    })
+    });
+
+    this.stompClient.subscribe('/secured/simulation/update-vehicle-position', (message: {body: string}) => {
+      let driver: DriverDTO = JSON.parse(message.body);
+      this.driverPosition = driver.location;
+    });
   }
 
   reportInconsistency(driveInconsistency: string) {

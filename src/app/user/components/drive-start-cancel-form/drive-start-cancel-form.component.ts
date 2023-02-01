@@ -1,5 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PointCreationDTO } from 'src/app/shared/models/point-creation-dto';
+import { PointDTO } from 'src/app/shared/models/point-dto';
 
 @Component({
   selector: 'app-drive-start-cancel-form',
@@ -13,6 +15,9 @@ export class DriveStartCancelFormComponent implements OnInit {
   isChecked = new FormControl(false);
 
   cancelReasoning = new FormControl('');
+
+  @Input() driverPosition!: PointDTO;
+  @Input() startPosition!: PointCreationDTO;
 
   @Output() startDriveEvent = new EventEmitter();
   @Output() cancelDriveEvent = new EventEmitter<string>();
@@ -32,6 +37,10 @@ export class DriveStartCancelFormComponent implements OnInit {
 
   showCancelDriveInputs() {
     this.showCancelDrive = this.isChecked.value!;
+  }
+
+  calculateDistance() {
+    return Math.abs(this.driverPosition.latitude - this.startPosition.latitude) < 10e-4 && Math.abs(this.driverPosition.longitude - this.startPosition.longitude) < 10e-4;
   }
 
 }

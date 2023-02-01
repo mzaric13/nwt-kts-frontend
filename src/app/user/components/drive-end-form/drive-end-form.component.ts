@@ -1,4 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { PointCreationDTO } from 'src/app/shared/models/point-creation-dto';
+import { PointDTO } from 'src/app/shared/models/point-dto';
 
 @Component({
   selector: 'app-drive-end-form',
@@ -6,6 +8,10 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./drive-end-form.component.css']
 })
 export class DriveEndFormComponent implements OnInit {
+
+  @Input() driverPosition!: PointDTO;
+
+  @Input() endLocation!: PointCreationDTO;
 
   @Output() endDriveEvent = new EventEmitter();
 
@@ -16,6 +22,10 @@ export class DriveEndFormComponent implements OnInit {
 
   onSubmit() {
     this.endDriveEvent.emit();
+  }
+
+  calculateDistance() {
+    return Math.abs(this.driverPosition.latitude - this.endLocation.latitude) < 10e-4 && Math.abs(this.driverPosition.longitude - this.endLocation.longitude) < 10e-4;
   }
 
 }
