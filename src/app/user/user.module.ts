@@ -44,6 +44,7 @@ import { PageRegisterDriverComponent } from './pages/page-register-driver/page-r
 import { PageGiveConsentComponent } from './pages/page-give-consent/page-give-consent.component';
 import { DriveAcceptComponent } from './components/drive-accept/drive-accept.component';
 import { DriveRejectComponent } from './components/drive-reject/drive-reject.component';
+import { ChatTableComponent } from './components/chat-table/chat-table.component';
 
 @NgModule({
     declarations: [
@@ -78,6 +79,7 @@ import { DriveRejectComponent } from './components/drive-reject/drive-reject.com
         PageGiveConsentComponent,
         DriveAcceptComponent,
         DriveRejectComponent,
+        ChatTableComponent,
     ],
     imports: [
         CommonModule,

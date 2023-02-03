@@ -1,6 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DriverDTO } from '../../../shared/models/driver-dto';
 import { PassengerDTO } from '../../../shared/models/passenger-dto';
@@ -15,22 +13,13 @@ import { AdminService } from '../../../shared/services/admin.service';
 })
 export class PageChatListComponent implements OnInit {
 
-  @ViewChild('paginatorPassenger') paginatorPassenger!: MatPaginator;
-
-  @ViewChild('paginatorDriver') paginatorDriver!: MatPaginator;
-
-  tableData: PassengerDTO[] = [];
-  displayedColumns: string[] = ['profile-picture', 'email', 'name', 'surname'];
-
-  passengers : PassengerDTO[] = [];
-  loadingPassengers: boolean = true;
-  totalElementsPassengers: number | undefined;
-  dataSourcePassengers = new MatTableDataSource<PassengerDTO>();
+  passengers: PassengerDTO[] = [];
+  totalElementsPassengers: number = 0;
+  passengerHeaderName = "Passenger"
 
   drivers : DriverDTO[] = [];
-  loadingDrivers: boolean = true;
-  totalElementsloadingDrivers: number | undefined;
-  dataSourceDrivers = new MatTableDataSource<DriverDTO>();
+  totalElementsDrivers: number = 0;
+  driverHeaderName = "Driver"
 
   constructor(
     private readonly adminService: AdminService,
@@ -59,43 +48,29 @@ export class PageChatListComponent implements OnInit {
   }
 
   private setPassengers(data: RequestPageObject) {
-    this.loadingPassengers = false;
     this.passengers = data.passengers;
-    this.passengers.length = data.totalItems;
-
-    this.dataSourcePassengers = new MatTableDataSource<PassengerDTO>(this.passengers);
-    this.dataSourcePassengers.paginator = this.paginatorPassenger;
+    this.totalElementsPassengers = data.totalItems;
   }
 
   private setDrivers(data: RequestPageObject) {
-    this.loadingDrivers = false;
     this.drivers = data.drivers;
-    this.drivers.length = data.totalItems;
-
-    this.dataSourceDrivers = new MatTableDataSource<DriverDTO>(this.drivers);
-    this.dataSourceDrivers.paginator = this.paginatorDriver;
+    this.totalElementsDrivers = data.totalItems;
   }
 
   private setNextPassengers(data: RequestPageObject, request: RequestPage) {
-    this.loadingPassengers = false;
-    this.passengers.length = request.page * request.size;
-    this.passengers.push(...data.passengers);
-    this.passengers.length = data.totalItems;
-
-    this.dataSourcePassengers = new MatTableDataSource<any>(this.passengers);
-    this.dataSourcePassengers._updateChangeSubscription();
-    this.dataSourcePassengers.paginator = this.paginatorPassenger;
+    let passengers: PassengerDTO[] = [...this.passengers];
+    passengers.length = request.page * request.size;
+    passengers.push(...data.passengers);
+    this.passengers = passengers;
+    this.totalElementsPassengers = data.totalItems;
   }
 
   private setNextDrivers(data: RequestPageObject, request: RequestPage) {
-    this.loadingDrivers = false;
-    this.drivers.length = request.page * request.size;
-    this.drivers.push(...data.drivers);
-    this.drivers.length = data.totalItems;
-
-    this.dataSourceDrivers = new MatTableDataSource<any>(this.drivers);
-    this.dataSourceDrivers._updateChangeSubscription();
-    this.dataSourceDrivers.paginator = this.paginatorDriver;
+    let drivers: DriverDTO[] = [...this.drivers];
+    drivers.length = request.page * request.size;
+    drivers.push(...data.drivers);
+    this.drivers = drivers;
+    this.totalElementsDrivers = data.totalItems;
   }
 
   private getNextPassengers(request: RequestPage) {
@@ -110,19 +85,11 @@ export class PageChatListComponent implements OnInit {
     });
   }
 
-  public nextPagePassengers(event: PageEvent) {
-    const request: RequestPage = {
-      page: event.pageIndex,
-      size: event.pageSize
-    }
+  public nextPagePassengers(request: RequestPage) {
     this.getNextPassengers(request);
   }
 
-  public nextPageDrivers(event: PageEvent) {
-    const request: RequestPage = {
-      page: event.pageIndex,
-      size: event.pageSize
-    }
+  public nextPageDrivers(request: RequestPage) {
     this.getNextDrivers(request);
   }
 
