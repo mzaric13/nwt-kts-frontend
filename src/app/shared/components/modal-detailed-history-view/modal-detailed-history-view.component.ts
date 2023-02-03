@@ -52,7 +52,6 @@ export class ModalDetailedHistoryViewComponent implements OnInit {
 
   getPassengerImageSrc(i: number) {
     const passenger = this.drive.passengers.at(i);
-    console.log(passenger);
     let imgSrc = '../../../../assets/default.jpg';
     if (passenger !== undefined) {
       if (passenger.city === null) imgSrc = passenger.profilePicture;

@@ -9,7 +9,7 @@
             <th mat-header-cell *matHeaderCellDef> Profile picture </th>
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngIf="element !== undefined">
-                    <img class="card-img-top pic_size" src='../../../../assets/{{element.profilePicture}}' />
+                    <img class="card-img-top pic_size" [src]='getElementImgSrc(element)' />
                 </ng-container>
             </td>
         </ng-container>
