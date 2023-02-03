@@ -11,3 +11,17 @@ Način pokretanja:
     2. Pozicionirati se u korenski folder projekta
     3. Instalirati potrebne biblioteke komandom: npm install
     4. Pokrenuti aplikaciju komandom: ng serve
+
+Paypal kredencijali:
+
+    Putem naloga:
+        email: sb-viji4724167323@personal.example.com
+        sifra: iB98^{8f
+
+    Putem kartice:
+        ime: John
+        prezime: Doe
+        broj kartice: 4032038093235103
+        tip kartice: VISA
+        ističe: 01/2028
+        broj računa: 25392790130
