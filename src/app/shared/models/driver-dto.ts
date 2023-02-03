@@ -1,3 +1,4 @@
+import { ImageDataDTO } from './image-data';
 import { PointDTO } from './point-dto';
 import { VehicleDTO } from './vehicle-dto';
 
@@ -14,4 +15,5 @@ export interface DriverDTO {
   blocked: boolean;
   available: boolean;
   location: PointDTO;
+  imageData?:ImageDataDTO;
 }

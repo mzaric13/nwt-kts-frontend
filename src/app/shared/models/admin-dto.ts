@@ -1,3 +1,5 @@
+import { ImageDataDTO } from "./image-data";
+
 export interface AdminDTO {
     id: number;
     email: string;
@@ -7,4 +9,5 @@ export interface AdminDTO {
     surname: string;
     city: string;
     profilePicture: string;
+    imageData?: ImageDataDTO;
 }

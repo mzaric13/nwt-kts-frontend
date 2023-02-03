@@ -12,6 +12,7 @@ import { RouteDTO } from '../models/route-dto';
 import { RatingDTO } from '../models/rating-dto';
 import { ChartCreationDTO } from '../models/chart-creation-dto';
 import { DatesChartDTO } from '../models/dates-chart-dto';
+import { AdminDTO } from '../models/admin-dto';
 
 const cabecera = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -97,14 +98,15 @@ export class PassengerService {
     }
   }
 
-  public changeProfilePicture(
-    profilePictureCreationDTO: ProfilePictureCreationDTO
-  ) {
-    return this.httpClient.put<PassengerDTO>(
-      this.url + '/passengers/change-profile-picture',
-      profilePictureCreationDTO,
-      this.newHeader
-    );
+  public changeProfilePicture(image: File) {
+    const header = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    const formData = new FormData(); 
+    formData.append("image", image, image.name);
+    return this.httpClient.put<PassengerDTO>(this.url + '/passengers/change-profile-picture', formData, header);
   }
 
   public addTokens(tokensToAdd: number, passengerDTO: PassengerDTO) {
