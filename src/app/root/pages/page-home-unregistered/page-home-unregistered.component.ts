@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DriverDTO } from '../../../shared/models/driver-dto';
 import { PassengerDTO } from '../../../shared/models/passenger-dto';
 import { PointCreationDTO } from '../../../shared/models/point-creation-dto';
 import { DriverService } from '../../../shared/services/driver.service';
 import { GeocodeService } from '../../../shared/services/geocode.service';
-import { PassengerService } from '../../../shared/services/passenger.service';
 import Swal from 'sweetalert2';
+import { RouteApi, RouteApiDTO } from 'src/app/shared/models/route-api-dto';
 
 @Component({
   selector: 'app-page-home-unregistered',
@@ -22,7 +22,7 @@ export class PageHomeUnregisteredComponent implements OnInit {
   drivers: DriverDTO[] = [];
   estimatedTime: number = 0;
   estimatedCost: number = 0;
-  routes: any = [];
+  routes: RouteApi[] = [];
 
   loggedPassenger!: PassengerDTO;
 
@@ -54,7 +54,9 @@ export class PageHomeUnregisteredComponent implements OnInit {
       }
     }
     this.geocodeService.getRoutes(waypoints).subscribe({
-      next: (routes: any) => {
+      next: (response) => {
+        const routes = response as RouteApiDTO;
+        console.log(routes)
         this.routes = routes.routes;
         this.routeWaypoints = waypoints;
       }

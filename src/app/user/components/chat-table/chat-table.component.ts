@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { RequestPage } from 'src/app/shared/models/request-page';
+import { UserDTO } from 'src/app/shared/models/user-dto';
 
 @Component({
   selector: 'app-chat-table',
@@ -14,7 +15,7 @@ export class ChatTableComponent implements OnInit, OnChanges {
 
   @Input() totalItems: number = 0;
 
-  @Input() data: any = [];
+  @Input() data: UserDTO[] = [];
 
   @Input() headerName: string = "";
 
@@ -25,7 +26,7 @@ export class ChatTableComponent implements OnInit, OnChanges {
 
   displayedColumns: string[] = ['profile-picture', 'email', 'name', 'surname'];
 
-  dataSource = new MatTableDataSource<unknown>();
+  dataSource = new MatTableDataSource<UserDTO>();
 
   firstChange: boolean = false;
 
@@ -49,7 +50,7 @@ export class ChatTableComponent implements OnInit, OnChanges {
     } else if (newDataChange) {
       this.data = newDataChange.currentValue;
       this.data.length = this.totalItems;
-      this.dataSource = new MatTableDataSource<any>(this.data);
+      this.dataSource = new MatTableDataSource<UserDTO>(this.data);
       this.dataSource._updateChangeSubscription();
       this.dataSource.paginator = this.paginator;
     }
@@ -63,7 +64,7 @@ export class ChatTableComponent implements OnInit, OnChanges {
     this.changePageEvent.emit(request);
   }
 
-  goToChat(row: unknown) {
+  goToChat(row: UserDTO) {
     this.goToChatEvent.emit(row);
   }
 

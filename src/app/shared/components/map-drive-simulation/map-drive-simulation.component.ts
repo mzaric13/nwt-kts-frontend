@@ -13,6 +13,7 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { DriveDTO } from '../../models/drive-dto';
 import { DriverDTO } from '../../models/driver-dto';
+import { RouteApiDTO } from '../../models/route-api-dto';
 
 @Component({
   selector: 'app-map-drive-simulation',
@@ -25,7 +26,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
   routeLayers: L.LayerGroup[] = [];
 
   @Input() drive!: DriveDTO;
-  @Input() routes!: any;
+  @Input() routes!: RouteApiDTO;
   @Output() getDurationEvent = new EventEmitter<number>();
 
   private routeIdxs = new Map<string, number>();
@@ -33,7 +34,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
     "FFC300", "C70039"];
   
   markerGroup: L.MarkerClusterGroup = L.markerClusterGroup();
-  driverMarkers: any = {};
+  driverMarkers = new Map<number, L.Marker>();
 
   socket!: WebSocket;
   stompClient!: Stomp.Client;
@@ -65,7 +66,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
   ngOnChanges(changes: SimpleChanges): void {
     const newRoutes = changes['routes'];
     if (newRoutes) {
-      const routes: any = newRoutes.currentValue;
+      const routes: RouteApiDTO = newRoutes.currentValue;
       if (routes) {
         let markerLayerGroup: L.LayerGroup = new L.LayerGroup();
         for (let waypoint of this.drive.route.waypoints) {
@@ -81,7 +82,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
         let color = this.colors[Math.floor(Math.random() * 10)];
         for (let leg of route['legs']) {
           for (let step of leg['steps']) {
-            let routeLayer = L.geoJSON(step.geometry);
+            let routeLayer = L.geoJSON(step.geometry as any);
             routeLayer.setStyle({ color: `#${color}` });
             routeLayer.addTo(geoLayerGroup);
           }
@@ -103,7 +104,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
           );
           this.markerGroup.addLayer(marker);
           this.mainGroup = [...this.mainGroup, this.markerGroup];
-          this.driverMarkers[driver.id] = marker;
+          this.driverMarkers.set(driver.id, marker);
       }
     }
   }
@@ -149,9 +150,10 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
   openGlobalSocket() {
     this.stompClient.subscribe('/secured/simulation/update-vehicle-position', (message: { body: string }) => {
       let driver: DriverDTO = JSON.parse(message.body);
-      let existingDriver = this.driverMarkers[driver.id];
+      let existingDriver = this.driverMarkers.get(driver.id)!;
       existingDriver.setLatLng([driver.location.latitude, driver.location.longitude]);
-      existingDriver.update()
+      const updateDriver = existingDriver as any;
+      updateDriver.update();
     });
   }
   

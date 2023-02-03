@@ -14,6 +14,7 @@ import { GeocodeService } from '../../../shared/services/geocode.service';
 import { interval, Subscription } from 'rxjs';
 import { DeclineDriveDTO } from '../../../shared/models/decline-drive-dto';
 import { PointDTO } from 'src/app/shared/models/point-dto';
+import { RouteApiDTO } from 'src/app/shared/models/route-api-dto';
 
 @Component({
   selector: 'app-page-drive-simulation',
@@ -27,7 +28,7 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
   loggedDriver!: DriverDTO;
 
   drive!: DriveDTO;
-  routes!: any;
+  routes!: RouteApiDTO;
 
   socket!: WebSocket;
   stompClient!: Stomp.Client;
@@ -81,14 +82,16 @@ export class PageDriveSimulationComponent implements OnInit, OnDestroy {
             console.log(drive.status);
             console.log(this.statusIsDrivingToStart);
             this.geocodeService.getRoutes([this.drive.driver.location, this.drive.route.waypoints[0]]).subscribe({
-              next: (routes: any) => {
+              next: (response) => {
+                const routes: RouteApiDTO = response as RouteApiDTO;
                 this.estimatedTime = Math.round(routes.routes[0].duration / 60);
                 const source = interval(28000);
                 this.subscription = source.subscribe(val => this.changeDuration());
               }
             });
             this.geocodeService.getRoutes(drive.route.waypoints).subscribe({
-              next: (routes: any) => {
+              next: (response) => {
+                const routes: RouteApiDTO = response as RouteApiDTO;
                 this.routes = routes;
               }
             });
