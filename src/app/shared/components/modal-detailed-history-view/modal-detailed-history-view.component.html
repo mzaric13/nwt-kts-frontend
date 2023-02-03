@@ -21,7 +21,7 @@
                                 <p class="text-muted">Driver rating: {{driverRating | number : '1.2-2'}}, Vehicle rating: {{vehicleRating | number : '1.2-2'}}</p>
                             </div>
                         </div>
-                        <img class="card-img-top pic_size" src='../../../../assets/{{drive.driver.profilePicture}}'>
+                        <img class="card-img-top pic_size" [src]='getDriverImageSrc()'>
                     </div>
                     <h3 class="arial_font"> PASSENGERS </h3>
                     <div *ngFor="let passenger of drive.passengers; let i = index">
@@ -38,8 +38,8 @@
                                             <p class="text-muted">Driver rating: {{driverRatings[i+j]}}, Vehicle rating: {{vehicleRatings[i+j]}}</p>
                                         </div>
                                     </div>
-                                    <img *ngIf="(j < 2 && i+j < drive.passengers.length) && (j === 1 || i+j+1 === drive.passengers.length)" class="card-img-top pic_size" src='../../../../assets/{{drive.passengers[i].profilePicture}}'>
-                                    <img *ngIf="j < 2 && i+j < drive.passengers.length && j === 0 && i+j+1 !== drive.passengers.length" class="card-img-top pic_size mr-2" src='../../../../assets/{{drive.passengers[i].profilePicture}}'>
+                                    <img *ngIf="(j < 2 && i+j < drive.passengers.length) && (j === 1 || i+j+1 === drive.passengers.length)" class="card-img-top pic_size" [src]='getPassengerImageSrc(i + j)'>
+                                    <img *ngIf="j < 2 && i+j < drive.passengers.length && j === 0 && i+j+1 !== drive.passengers.length" class="card-img-top pic_size mr-2" [src]='getPassengerImageSrc(i + j)'>
                                 </ng-container>
                             </div>
                         </ng-container>

@@ -1,3 +1,4 @@
+import { ImageDataDTO } from './image-data';
 import { RouteDTO } from './route-dto';
 
 export interface PassengerDTO {
@@ -14,4 +15,5 @@ export interface PassengerDTO {
   blocked: boolean;
   favoriteRoutes: RouteDTO[];
   hasDrive: boolean;
+  imageData?: ImageDataDTO;
 }

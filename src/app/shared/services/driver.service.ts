@@ -92,14 +92,15 @@ export class DriverService {
     }
   }
 
-  public changeProfilePicture(
-    profilePictureCreationDTO: ProfilePictureCreationDTO
-  ) {
-    return this.httpClient.put<DriverDTO>(
-      this.url + '/drivers/change-profile-picture',
-      profilePictureCreationDTO,
-      this.newHeader
-    );
+  public changeProfilePicture(image: File) {
+    const header = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    const formData = new FormData(); 
+    formData.append("image", image, image.name);
+    return this.httpClient.put<DriverDTO>(this.url + '/drivers/change-profile-picture', formData, header);
   }
 
   public isUnansweredDriverDataPresent(email: string) {
