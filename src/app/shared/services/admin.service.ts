@@ -52,8 +52,15 @@ export class AdminService {
     }
   }
 
-  public changeProfilePicture(profilePictureCreationDTO: ProfilePictureCreationDTO) {
-    return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-profile-picture', profilePictureCreationDTO, this.newHeader);
+  public changeProfilePicture(image: File) {
+    const header = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.tokenService.getToken(),
+      }),
+    };
+    const formData = new FormData(); 
+    formData.append("image", image, image.name);
+    return this.httpClient.put<AdminDTO>(this.url + '/administrators/change-profile-picture', formData, header);
   }
 
   public answerDataChangeRequest(answeredDriverDataCreationDTO : AnsweredDriverDataCreationDTO){

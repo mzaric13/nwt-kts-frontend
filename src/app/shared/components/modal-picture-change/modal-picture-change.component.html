@@ -11,7 +11,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="profilePicture">Choose a new profile picture</label>
-                        <input type="file" accept="image/*" class="form-control-file" id="profilePicture" (change)="onFileSelected($event)">
+                        <input type="file" class="form-control-file" id="profilePicture" (change)="onFileSelected($event)">
                     </div>
                     <div>
                         <button data-dismiss="modal" class="btn btn-dark right_button mt-3" (click)="changeProfilePicture()">Save</button>
@@ -20,5 +20,5 @@
                 </div>
             </div>
         </div>
-    </div>  
+    </div>
 </div>

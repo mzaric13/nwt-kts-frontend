@@ -31,26 +31,28 @@ export class ProfilePageCardsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.createNameAndImageSrc();
+  }
+
+  ngOnChanges() {
+    this.createNameAndImageSrc();
+  }
+
+  createNameAndImageSrc() {
     if (this.tokenService.getRole() === "ROLE_PASSENGER") {
       this.name = this.passenger.name + ' ' + this.passenger.surname;
       if (this.passenger.city === null) this.imgSrc = this.passenger.profilePicture;
       else {
-        if (this.passenger.profilePicture !== null) this.imgSrc = '../../../../assets/' + this.passenger.profilePicture;
+        if (this.passenger.imageData !== undefined && this.passenger.imageData !== null) this.imgSrc = 'data:image/jpeg;base64,' + this.passenger.imageData.imageData;
       }
     }
     else if (this.tokenService.getRole() === "ROLE_ADMIN") {
       this.name = this.admin.name + ' ' + this.admin.surname;
-      if (this.admin.city === null) this.imgSrc = this.admin.profilePicture;
-      else {
-        if (this.admin.profilePicture !== null) this.imgSrc = '../../../../assets/' + this.admin.profilePicture;
-      }
+      if (this.admin.imageData !== undefined && this.admin.imageData !== null) this.imgSrc = 'data:image/jpeg;base64,' + this.admin.imageData.imageData;
     }
     else if (this.tokenService.getRole() === "ROLE_DRIVER") {
       this.name = this.driver.name + ' ' + this.driver.surname;
-      if (this.driver.city === null) this.imgSrc = this.driver.profilePicture;
-      else {
-        if (this.driver.profilePicture !== null) this.imgSrc = '../../../../assets/' + this.driver.profilePicture;
-      }
+      if (this.driver.imageData !== undefined && this.driver.imageData !== null) this.imgSrc = 'data:image/jpeg;base64,' + this.driver.imageData.imageData;
     }
     else {
       throw new Error("Unauthorized access to the profile!");

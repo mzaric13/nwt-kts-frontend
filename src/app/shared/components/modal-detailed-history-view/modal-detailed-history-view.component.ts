@@ -50,4 +50,24 @@ export class ModalDetailedHistoryViewComponent implements OnInit {
     this.modalIsClosed.emit();
   }
 
+  getPassengerImageSrc(i: number) {
+    const passenger = this.drive.passengers.at(i);
+    console.log(passenger);
+    let imgSrc = '../../../../assets/default.jpg';
+    if (passenger !== undefined) {
+      if (passenger.city === null) imgSrc = passenger.profilePicture;
+      else {
+        if (passenger.imageData !== undefined && passenger.imageData !== null) imgSrc = 'data:image/jpeg;base64,' + passenger.imageData.imageData;
+      }
+    }
+    return imgSrc;
+  }
+
+  getDriverImageSrc() {
+    const driver = this.drive.driver;
+    let imgSrc = '../../../../assets/default.jpg';
+    if (driver.imageData !== undefined && driver.imageData !== null) imgSrc = 'data:image/jpeg;base64,' + driver.imageData.imageData;
+    return imgSrc;
+  }
+
 }

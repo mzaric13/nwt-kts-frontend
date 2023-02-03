@@ -1,12 +1,12 @@
 <div class="card p-3 bg-light border-dark">
     <ng-container *ngIf="admin !== undefined">
-        <app-profile-info [imgSrc]="'../../../../assets/' + this.admin.profilePicture" [name]="admin.name + ' ' + admin.surname"></app-profile-info>
+        <app-profile-info [imgSrc]="imgSrc" [name]="admin.name + ' ' + admin.surname"></app-profile-info>
     </ng-container>
     <ng-container *ngIf="passenger !== undefined">
-        <app-profile-info [imgSrc]="'../../../../assets/' + this.passenger.profilePicture" [name]="passenger.name + ' ' + passenger.surname"></app-profile-info>
+        <app-profile-info [imgSrc]="imgSrc" [name]="passenger.name + ' ' + passenger.surname"></app-profile-info>
     </ng-container>
     <ng-container *ngIf="driver !== undefined">
-        <app-profile-info [imgSrc]="'../../../../assets/' + this.driver.profilePicture" [name]="driver.name + ' ' + driver.surname"></app-profile-info>
+        <app-profile-info [imgSrc]="imgSrc" [name]="driver.name + ' ' + driver.surname"></app-profile-info>
     </ng-container>
     <div class="card-deck mt-4 text-center">
         <div app-profile-page-card [type]="'info'" class="card border-dark" (newItemEvent)="personalInfoClicked()"></div>
