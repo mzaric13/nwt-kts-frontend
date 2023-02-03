@@ -14,6 +14,7 @@ import { DriverDTO } from '../../models/driver-dto';
 import { PointCreationDTO } from '../../models/point-creation-dto';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import { RouteApi } from '../../models/route-api-dto';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() waypoints: PointCreationDTO[] = [];
   @Input() drivers!: DriverDTO[];
-  @Input() routes: any = [];
+  @Input() routes: RouteApi[] = [];
   @Output() estimatedTimeEvent = new EventEmitter<number>();
   @Output() estimatedCostEvent = new EventEmitter<number>();
   @Output() waypointsEvent = new EventEmitter<PointCreationDTO[]>();
@@ -35,7 +36,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   private routeIdxs = new Map<string, number>();
   markerGroup: L.MarkerClusterGroup = L.markerClusterGroup();
-  driverMarkers: any = {};
+  driverMarkers = new Map<number, L.Marker>();
 
   private colors = ["000000", "FF0000", "0000FF", "27FF00", "EC00FF", "FF008F", "FF8300", "005863",
     "FFC300", "C70039"];
@@ -73,7 +74,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     const newDrivers = changes['drivers'];
     
     if (newRoutes || newWaypoints) {
-      let routes: any;
+      let routes: RouteApi[];
       if (newRoutes) {
         routes = newRoutes.currentValue;
       }
@@ -114,7 +115,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           this.routeIdxs.set(color, i);
           for (let leg of route['legs']) {
             for (let step of leg['steps']) {
-              let routeLayer = L.geoJSON(step.geometry);
+              let routeLayer = L.geoJSON(step.geometry as any);
               routeLayer.setStyle({ color: `#${color}` });
 
               const that = this;
@@ -151,7 +152,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
           );
           this.markerGroup.addLayer(marker);
           this.mainGroup = [...this.mainGroup, this.markerGroup];
-          this.driverMarkers[driver.id] = marker;
+          this.driverMarkers.set(driver.id, marker);
         }
       }
     }
@@ -185,14 +186,15 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   openGlobalSocket() {
     this.stompClient.subscribe('/secured/simulation/update-vehicle-position', (message: { body: string }) => {
       let driver: DriverDTO = JSON.parse(message.body);
-      let existingDriver = this.driverMarkers[driver.id];
+      let existingDriver = this.driverMarkers.get(driver.id)!;
       existingDriver.setLatLng([driver.location.latitude, driver.location.longitude]);
-      existingDriver.update()
+      const updateDriver = existingDriver as any;
+      updateDriver.update();
     });
 
     this.stompClient.subscribe('/secured/update/driverStatus', (message: { body: string }) => {
       let driver: DriverDTO = JSON.parse(message.body);
-      let existingDriver = this.driverMarkers[driver.id];
+      let existingDriver = this.driverMarkers.get(driver.id)!;
       existingDriver.setTooltipContent(this.buildTooltipContent(driver));
     });
 
@@ -209,7 +211,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
         }
       );
       this.markerGroup.addLayer(marker);
-      this.driverMarkers[driver.id] = marker;
+      this.driverMarkers.set(driver.id, marker);
     });
   }
 

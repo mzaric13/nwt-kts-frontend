@@ -10,6 +10,7 @@ import { PassengerService } from '../../../shared/services/passenger.service';
 import { PassengerDTO } from '../../../shared/models/passenger-dto';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import { RouteApi, RouteApiDTO } from 'src/app/shared/models/route-api-dto';
 
 @Component({
   selector: 'app-page-home-passenger',
@@ -33,7 +34,7 @@ export class PageHomePassengerComponent implements OnInit {
   routeIdx!: number;
   searchClicked: boolean = false;
 
-  routes: any = [];
+  routes: RouteApi[] = [];
 
   loggedPassenger!: PassengerDTO;
   socket!: WebSocket;
@@ -76,7 +77,8 @@ export class PageHomePassengerComponent implements OnInit {
       }
     }
     this.geocodeService.getRoutes(waypoints).subscribe({
-      next: (routes: any) => {
+      next: (response) => {
+        const routes: RouteApiDTO = response as RouteApiDTO;
         this.routes = routes.routes;
         this.routeWaypoints = waypoints;
         this.searchClicked = true;

@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
         this.tokenService.setToken(res.accessToken, decodedToken.role);
         await this.redirect();
       },
-      (error: any) => {
+      (error) => {
         console.log(error);
       }
     );

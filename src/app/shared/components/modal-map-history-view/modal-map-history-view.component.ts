@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DriveDTO } from '../../models/drive-dto';
 import { PassengerDTO } from '../../models/passenger-dto';
 import { PointCreationDTO } from '../../models/point-creation-dto';
+import { RouteApi, RouteApiDTO } from '../../models/route-api-dto';
 import { RouteDTO } from '../../models/route-dto';
 import { GeocodeService } from '../../services/geocode.service';
 import { TokenService } from '../../services/token.service';
@@ -18,7 +19,7 @@ export class ModalMapHistoryViewComponent implements OnInit, OnChanges {
   @Input() passenger!: PassengerDTO;
   @Output() modalIsClosed = new EventEmitter();
 
-  routes: any[] = [];
+  routes: RouteApi[] = [];
   waypoints: PointCreationDTO[] = [];
   loggedPerson!: string;
   displayStyle = "none";
@@ -33,8 +34,9 @@ export class ModalMapHistoryViewComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.displayStyle = "block";
-    this.geocodeService.getRoutes(this.drive.route.waypoints).subscribe((data:any) => {
-      this.routes.push(data.routes[this.drive.route.routeIdx]);
+    this.geocodeService.getRoutes(this.drive.route.waypoints).subscribe((data) => {
+      const routes: RouteApiDTO = data as RouteApiDTO;
+      this.routes.push(routes.routes[this.drive.route.routeIdx]);
       this.waypoints = this.drive.route.waypoints;
     });
     if (this.tokenService.getRole() === "ROLE_ADMIN")
