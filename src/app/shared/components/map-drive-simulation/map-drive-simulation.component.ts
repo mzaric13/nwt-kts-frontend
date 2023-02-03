@@ -141,6 +141,7 @@ export class MapDriveSimulationComponent implements OnInit, AfterViewInit, OnCha
   initializeWebSocketConnection() {
     let ws = new SockJS('http://localhost:9000/secured/map');
     this.stompClient = Stomp.over(ws);
+    this.stompClient.debug = () => {};
     let that = this;
     this.stompClient.connect({}, function () {
       that.openGlobalSocket();

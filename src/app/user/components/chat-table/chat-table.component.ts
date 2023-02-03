@@ -68,7 +68,7 @@ export class ChatTableComponent implements OnInit, OnChanges {
     this.goToChatEvent.emit(row);
   }
 
-  getElementImgSrc(element: any) {
+  getElementImgSrc(element: UserDTO) {
     let imgSrc = '../../../../assets/default.jpg';
     if (element.city === null) imgSrc = element.profilePicture;
     else {

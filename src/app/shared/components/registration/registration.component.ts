@@ -72,7 +72,7 @@ export class RegistrationComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             position: 'center',
-            title: 'You have been successfully registered. Welcome, ' + driverDTO.name + ' ' + driverDTO.surname + '!',
+            title: 'You have successfully registered a new driver: ' + driverDTO.name + ' ' + driverDTO.surname + '!',
             showConfirmButton: false,
             timer: 1500
           })

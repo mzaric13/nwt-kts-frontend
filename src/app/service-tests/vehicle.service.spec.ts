@@ -41,15 +41,18 @@ describe('Vehicle service', () => {
         const mockTypes: TypeDTO[] = [
             {
                 id: 1,
-                name: "SUV"
+                name: "SUV",
+                multiplier: 1.75,
             },
             {
                 id: 2,
-                name: "Crossover"
+                name: "Crossover",
+                multiplier: 1.75,
             },
             {
                 id: 3,
-                name: "Sedan"
+                name: "Sedan",
+                multiplier: 1.75,
             }
         ];
 

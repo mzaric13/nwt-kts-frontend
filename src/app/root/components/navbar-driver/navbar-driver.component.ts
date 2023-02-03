@@ -28,6 +28,9 @@ export class NavbarDriverComponent implements OnInit {
   faLogout = faArrowRightFromBracket;
   faChartSimple = faChartSimple;
   faChat = faFacebookMessenger;
+  hasDrive: boolean = false;
+  statusChange: boolean = false;
+
 
   socket!: WebSocket;
   stompClient!: Stomp.Client;
@@ -67,6 +70,10 @@ export class NavbarDriverComponent implements OnInit {
   openGlobalSocket() {
     this.stompClient.subscribe('/secured/update/driverStatus', (message: { body: string }) => {
       let driver: DriverDTO = JSON.parse(message.body);
+      if (this.hasDrive) {
+        if (this.statusChange) this.hasDrive = false;
+        else this.statusChange = true;
+      }
       if (driver.available) {
         this.available = "../../../../assets/available.png";
       } else {
@@ -77,6 +84,8 @@ export class NavbarDriverComponent implements OnInit {
     this.stompClient.subscribe('/secured/update/newDrive', (message: { body: string }) => {
       let drive: DriveDTO = JSON.parse(message.body);
       if (drive.driver.id === this.loggedDriver.id) {
+        this.hasDrive = true;
+        this.statusChange = false;
         Swal.fire({
           icon: 'info',
           title: 'There is a new drive for you!',
@@ -90,6 +99,7 @@ export class NavbarDriverComponent implements OnInit {
   }
 
   public changeStatus() {
+    if (this.hasDrive) return;
     this.driverService.changeStatus().subscribe(data => {
       if (data.available) {
         this.available = "../../../../assets/available.png";

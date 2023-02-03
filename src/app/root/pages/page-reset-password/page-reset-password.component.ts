@@ -43,7 +43,8 @@ export class PageResetPasswordComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       });
-      this.router.navigate(['/auth/login']);
+      //this.router.navigate(['/auth/login']);
+      window.location.href = 'http://localhost:4200/auth/login';
     }, error => {
       Swal.fire({
         icon: 'error',

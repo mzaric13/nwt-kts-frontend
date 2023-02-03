@@ -1,19 +1,15 @@
 import { ImageDataDTO } from './image-data';
 import { RouteDTO } from './route-dto';
+import { UserDTO } from './user-dto';
 
-export interface PassengerDTO {
+export interface PassengerDTO extends UserDTO {
   id: number;
-  email: string;
-  name: string;
-  surname: string;
-  city: string;
   phoneNumber: string;
   password?: string;
   passwordConfirm?: string;
-  profilePicture: string;
   activated: boolean;
   blocked: boolean;
   favoriteRoutes: RouteDTO[];
   hasDrive: boolean;
-  imageData?: ImageDataDTO;
+  tokens: number;
 }

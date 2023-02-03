@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -33,6 +33,8 @@ export class RideOptionsComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   showTimeInput: boolean = false;
 
+  basePrice: number = 0;
+
   @ViewChild('rideForm') form!: ElementRef<HTMLInputElement>;
 
   showDropdownTag: boolean = false;
@@ -41,9 +43,11 @@ export class RideOptionsComponent implements OnInit {
 
   currentTime: Date = new Date();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.basePrice = 1.25 + this.route.length;
+  }
   
   public onSubmit() {
     const time = new Date();

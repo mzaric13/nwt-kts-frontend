@@ -42,7 +42,8 @@ export class PageForgottenPasswordComponent implements OnInit {
           timer: 3000
         })
       }
-      this.router.navigate(['/auth/login']);
+      //this.router.navigate(['/auth/login']);
+      window.location.href = 'http://localhost:4200/auth/login';
     })
   }
 

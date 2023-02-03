@@ -52,6 +52,7 @@ describe('Passenger service', () => {
                 favoriteRoutes: [],
                 profilePicture: '../../assets/default.jpg',
                 hasDrive: false,
+                tokens: 600,
             }
         ];
 
@@ -87,6 +88,7 @@ describe('Passenger service', () => {
             phoneNumber: '0658987777',
             profilePicture: '../../assets/default.jpg',
             hasDrive: false,
+            tokens: 600,
         }
 
         passengerService.registerPassenger(passengerCreationDTO).subscribe(res => passengerDTO = res);

@@ -1,19 +1,14 @@
 import { ImageDataDTO } from './image-data';
 import { PointDTO } from './point-dto';
+import { UserDTO } from './user-dto';
 import { VehicleDTO } from './vehicle-dto';
 
-export interface DriverDTO {
+export interface DriverDTO extends UserDTO {
   id: number;
-  email: string;
-  name: string;
-  surname: string;
-  city: string;
   phoneNumber: string;
   password: string;
   vehicleDTO: VehicleDTO;
-  profilePicture: string;
   blocked: boolean;
   available: boolean;
   location: PointDTO;
-  imageData?:ImageDataDTO;
 }

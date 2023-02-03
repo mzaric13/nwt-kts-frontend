@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   faUser,
-  faBell,
   faArrowRightFromBracket,
   faRoute,
   faChartSimple,
-  faHome
+  faHome,
+  faCoins,
 } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 import * as Stomp from 'stompjs'
@@ -31,6 +31,7 @@ export class NavbarPassengerComponent implements OnInit {
   faRoute = faRoute;
   faChartSimple = faChartSimple;
   faHome = faHome;
+  faCoins = faCoins;
 
   socket!: WebSocket;
   stompClient!: Stomp.Client;
@@ -89,6 +90,13 @@ export class NavbarPassengerComponent implements OnInit {
         });
       }
     });
+
+    this.stompClient.subscribe('/secured/update/tokens', (message: { body: string }) => { 
+      let passenger: PassengerDTO = JSON.parse(message.body);
+      if (this.loggedPassenger.id === passenger.id) {
+        this.loggedPassenger.tokens = passenger.tokens;
+      }
+    })
   }
 
   logout() {

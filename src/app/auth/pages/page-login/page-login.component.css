@@ -11,3 +11,7 @@
     background-size: cover;
     background-repeat: repeat;
 }
+
+.w-30 {
+    width: 30%;
+}

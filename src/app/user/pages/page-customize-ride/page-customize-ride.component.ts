@@ -83,7 +83,7 @@ export class PageCustomizeRideComponent implements OnInit {
     createRide.passengers.push(this.loggedPassenger.email);
     const tempDrive: TempDriveDTO = {
       startDate: createRide.time,
-      price: 1.25 + this.routeDTO.length * 1,
+      price: createRide.typeDTO.multiplier + this.routeDTO.length * 1,
       length: this.routeDTO.length,
       tags: createRide.tags,
       emails: createRide.passengers,

@@ -6,7 +6,7 @@
             <mat-select id="selectType" [formControl]="ride.controls.vehicleType" required>
                 <mat-option>--</mat-option>
                 <mat-option id="vehicle-type-{{vehicleType.id}}" class="arial_text" *ngFor="let vehicleType of vehicleTypes" [value]="vehicleType">
-                {{vehicleType.name}}
+                {{vehicleType.name}} (Price: {{(basePrice * vehicleType.multiplier) | number : '1.2-2'}})
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="ride.controls.vehicleType.hasError('required')">

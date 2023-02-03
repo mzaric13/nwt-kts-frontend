@@ -21,6 +21,7 @@ export class PassengerServiceMock {
             blocked: false,
             favoriteRoutes: [],
             hasDrive: false,
+            tokens: 600,
         };
         
         return of(passengerDTO);
