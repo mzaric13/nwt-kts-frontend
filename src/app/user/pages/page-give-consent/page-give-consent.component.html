@@ -1,0 +1,4 @@
+<div class="info">
+    <app-drive-accept *ngIf="driveAccepted" [okStatus]="okStatus"></app-drive-accept>
+    <app-drive-reject *ngIf="!driveAccepted" [okStatus]="okStatus"></app-drive-reject>
+</div>

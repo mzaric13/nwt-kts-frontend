@@ -134,14 +134,14 @@ export class PageCustomizeRideComponent implements OnInit {
                 denyButtonText: 'No',
               }).then((result) => {
                 if (result.isConfirmed) {
-                  this.router.navigate(['/user/drive-accepted'], {
+                  this.router.navigate(['/user/give-consent'], {
                     queryParams:
-                      { tempDriveId: tempDriveDTO.id, passengerId: this.loggedPassenger.id }
+                      { tempDriveId: tempDriveDTO.id, passengerId: this.loggedPassenger.id, driveAccepted: true }
                   });
                 } else if (result.isDenied) {
-                  this.router.navigate(['/user/drive-rejected'], {
+                  this.router.navigate(['/user/give-consent'], {
                     queryParams:
-                      { tempDriveId: tempDriveDTO.id, passengerId: this.loggedPassenger.id }
+                      { tempDriveId: tempDriveDTO.id, passengerId: this.loggedPassenger.id, driveAccepted: false }
                   });
                 }
               })

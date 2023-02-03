@@ -6,10 +6,9 @@ import { PageChangeBlockedStatusComponent } from "./pages/page-change-blocked-st
 import { PageChartsComponent } from "./pages/page-charts/page-charts.component";
 import { PageChatListComponent } from "./pages/page-chat-list/page-chat-list.component";
 import { PageCustomizeRideComponent } from "./pages/page-customize-ride/page-customize-ride.component";
-import { PageDriveAcceptedComponent } from "./pages/page-drive-accepted/page-drive-accepted.component";
-import { PageDriveRejectedComponent } from "./pages/page-drive-rejected/page-drive-rejected.component";
 import { PageDriveSimulationComponent } from "./pages/page-drive-simulation/page-drive-simulation.component";
 import { PageDriverProfileComponent } from "./pages/page-driver-profile/page-driver-profile.component";
+import { PageGiveConsentComponent } from "./pages/page-give-consent/page-give-consent.component";
 import { PageHomePassengerComponent } from "./pages/page-home-passenger/page-home-passenger.component";
 import { PageLiveChatComponent } from "./pages/page-live-chat/page-live-chat.component";
 import { PagePassengerProfileComponent } from "./pages/page-passenger-profile/page-passenger-profile.component";
@@ -69,12 +68,8 @@ export const UserRoutes: Routes = [
     data: {expectedRoles: 'ROLE_PASSENGER|ROLE_DRIVER|ROLE_ADMIN'}
   },
   {
-    path: 'drive-accepted',
-    component: PageDriveAcceptedComponent
-  },
-  {
-    path: 'drive-rejected',
-    component: PageDriveRejectedComponent
+    path: 'give-consent',
+    component: PageGiveConsentComponent,
   },
   {
     path: 'chat/:name',

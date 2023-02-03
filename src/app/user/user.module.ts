@@ -15,8 +15,6 @@ import { PageChangeBlockedStatusComponent } from "./pages/page-change-blocked-st
 import { PageChartsComponent } from "./pages/page-charts/page-charts.component";
 import { PageChatListComponent } from "./pages/page-chat-list/page-chat-list.component";
 import { PageCustomizeRideComponent } from "./pages/page-customize-ride/page-customize-ride.component";
-import { PageDriveAcceptedComponent } from "./pages/page-drive-accepted/page-drive-accepted.component";
-import { PageDriveRejectedComponent } from "./pages/page-drive-rejected/page-drive-rejected.component";
 import { PageDriveSimulationComponent } from "./pages/page-drive-simulation/page-drive-simulation.component";
 import { PageDriverProfileComponent } from "./pages/page-driver-profile/page-driver-profile.component";
 import { PageHomePassengerComponent } from "./pages/page-home-passenger/page-home-passenger.component";
@@ -42,7 +40,10 @@ import { UserRoutes } from "./user.routes";
 import { CommonModule } from "@angular/common";
 import { PageViewDriveHistoryComponent } from './pages/page-view-drive-history/page-view-drive-history.component';
 import { PagePurchaseTokensComponent } from './pages/page-purchase-tokens/page-purchase-tokens.component';
-import { PageRegisterDriverComponent } from './pages/page-register-driver/page-register-driver.component'
+import { PageRegisterDriverComponent } from './pages/page-register-driver/page-register-driver.component';
+import { PageGiveConsentComponent } from './pages/page-give-consent/page-give-consent.component';
+import { DriveAcceptComponent } from './components/drive-accept/drive-accept.component';
+import { DriveRejectComponent } from './components/drive-reject/drive-reject.component';
 
 @NgModule({
     declarations: [
@@ -52,8 +53,6 @@ import { PageRegisterDriverComponent } from './pages/page-register-driver/page-r
         PageChartsComponent,
         PageChatListComponent,
         PageCustomizeRideComponent,
-        PageDriveAcceptedComponent,
-        PageDriveRejectedComponent,
         PageDriveSimulationComponent,
         PageDriverProfileComponent,
         PageHomePassengerComponent,
@@ -76,6 +75,9 @@ import { PageRegisterDriverComponent } from './pages/page-register-driver/page-r
         TagFilterUsedPipe,
         ClickOutsideTagDirective,
         PageRegisterDriverComponent,
+        PageGiveConsentComponent,
+        DriveAcceptComponent,
+        DriveRejectComponent,
     ],
     imports: [
         CommonModule,
