@@ -120,6 +120,13 @@ export class RideOptionsComponent implements OnInit {
           text: "You cant add yourself to the list of additional passengers!",
           timer: 4000,
         });
+      } else if (this.people.indexOf(value) !== -1) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Cannot add duplicates',
+          text: "You cant add duplicates to the list of additional passengers!",
+          timer: 4000,
+        });
       }
       else if (this.people.length !== 4) this.people.push(value);
       else {
