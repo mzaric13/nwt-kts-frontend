@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()" class="inconsistency-form card">
+    <h2 class="arial_font center_text mt-2 mb-3"><b>Report inconsistency</b></h2>
+    <div class="form-group">
+        <label class="arial_font" for="driveInconsistency">Drive inconsistency</label>
+        <input autocomplete="off" [formControl]="driveInconsistency" id="driveInconsistency" class="bg_gray borderless_input input_size" type="text" 
+        placeholder="Enter complaint" required>
+    </div>
+    <div class="form-group">
+        <button [disabled]="!driveInconsistency.value" class="btn btn-dark arial_font">Report</button>
+    </div>
+</form>

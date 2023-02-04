@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" class="start-end-form card">
+    <h2 id="startCancelText" class="arial_font center_text mt-2 mb-3"><b>Start or cancel the drive</b></h2>
+    <div class="form-group">
+        <input [formControl]="isChecked" (change)="showCancelDriveInputs()" type="checkbox" id="cancelDrive" name="cancelDrive">
+        <label class="checkbox-label" for="cancelDrive">Cancel drive?</label>
+    </div>
+    <div *ngIf="showCancelDrive" class="form-group">
+        <label class="arial_font" for="cancelReasoning">Drive cancellation reasoning</label>
+        <input autocomplete="off" [formControl]="cancelReasoning" id="cancelReasoning" class="bg_gray borderless_input input_size" type="text" placeholder="Enter the reason for cancelling the drive..." required>
+    </div>
+    <div class="form-group">
+        <button id="startDriveButton" *ngIf="!showCancelDrive" class="btn btn-dark arial_font" [disabled]="!calculateDistance()">Start drive</button>
+        <button *ngIf="showCancelDrive" [disabled]="!cancelReasoning.value" class="btn btn-dark arial_font">Cancel drive</button>
+    </div>
+</form>

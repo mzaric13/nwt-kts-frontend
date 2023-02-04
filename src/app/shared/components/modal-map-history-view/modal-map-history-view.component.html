@@ -1,0 +1,31 @@
+<div class="modal-container">
+    <div class="modal animate__animated animate__fadeInDown" id="detailedView" tabindex="-1" role="dialog" aria-labelledby="detailedViewLabel" aria-hidden="true" [ngStyle]="{'display':displayStyle}">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title arial_font" id="driverDataChangeLabel">Route preview</h5>
+                    <button type="button" class="close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="card arial_font">
+                            <div class="card-body">
+                                <h5 class="card-title">{{drive.route.routeName}}</h5>
+                                <app-favorite-route-button *ngIf="passenger" style="float: right;" 
+                                (changeFavoriteEvent)="changeFavorite($event)" [isFavorite]="isFavorite"></app-favorite-route-button>
+                                <h6 class="card-subtitle mb-2 text-muted">Additional drive route information</h6>
+                                <p class="card-text">Time: {{drive.route.expectedTime}} min, Length: {{drive.route.length}} km</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-map">
+                        <app-map [routes]='routes' [waypoints]='waypoints'></app-map>
+                    </div>
+                    <button *ngIf="loggedPerson === 'passenger'" data-dismiss="modal" class="btn btn-dark right_button mt-3" (click)="selectRouteAgain(drive.route)">Select this route again</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

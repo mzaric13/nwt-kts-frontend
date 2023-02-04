@@ -1,0 +1,17 @@
+.map {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 65%;
+    width: 95%;
+    align-items: stretch;
+    margin-inline: 30px;
+}
+
+.flex-form {
+    width: 25%;
+    margin-right: 10px;
+}
+
+.flex-map {
+    width: 75%;
+}

@@ -1,0 +1,40 @@
+<div class="modal-container">
+    <div class="modal animate__animated animate__fadeInDown" id="updatePassword" tabindex="-1" role="dialog" aria-labelledby="updatePasswordLabel" aria-hidden="true" [ngStyle]="{'display':displayStyle}">
+       <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+             <div class="modal-header">
+                <h5 class="modal-title arial_font" id="updatePasswordLabel">Give rating</h5>
+                <button type="button" class="close" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+                </button>
+             </div>
+             <div class="modal-body">
+                <form [formGroup]="ratingForm">
+                   <div>
+                      <label for="driverRating" class="arial_font">Driver rating:</label>
+                      <input formControlName="driverRating" type="number" name="driverRating" id="driverRating" class="bg_gray borderless_input input_size">
+                      <label *ngIf="ratingForm.get('driverRating')?.hasError('required') && ratingForm.get('driverRating')?.touched" class="error">Driver rating is required.</label>
+                      <label *ngIf="ratingForm.get('driverRating')?.hasError('min') && ratingForm.get('driverRating')?.touched" class="error">Minimum rating has a value of 1.</label>
+                      <label *ngIf="ratingForm.get('driverRating')?.hasError('max') && ratingForm.get('driverRating')?.touched" class="error">Maximum rating has a value of 5.</label>
+                   </div>
+                   <div>
+                      <label for="vehicleRating" class="arial_font mt-3">Vehicle rating:</label>
+                      <input formControlName="vehicleRating" type="number" name="vehicleRating" id="vehicleRating" class="bg_gray borderless_input input_size">
+                      <label *ngIf="ratingForm.get('vehicleRating')?.hasError('required') && ratingForm.get('vehicleRating')?.touched" class="error">Vehicle rating is required.</label>
+                      <label *ngIf="ratingForm.get('vehicleRating')?.hasError('min') && ratingForm.get('vehicleRating')?.touched" class="error">Minimum rating has a value of 1.</label>
+                      <label *ngIf="ratingForm.get('vehicleRating')?.hasError('max') && ratingForm.get('vehicleRating')?.touched" class="error">Maximum rating has a value of 5.</label>
+                   </div>
+                   <div>
+                    <label for="comment" class="arial_font mt-3">Comment:</label>
+                    <input formControlName="comment" type="text" name="comment" id="comment" class="bg_gray borderless_input input_size mb-4">
+                 </div>
+                   <div>
+                      <button data-dismiss="modal" class="btn btn-dark right_button" (click)="giveRating()">Rate</button>
+                      <button type="button" data-dismiss="modal" class="btn btn-secondary left_button" (click)="closeModal()">Close</button>
+                   </div>
+                </form>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>

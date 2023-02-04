@@ -1,0 +1,9 @@
+.info {
+    margin: auto;
+    background-color: white;
+    width: 50%;
+    height: 25%;
+    text-align: center;
+    padding-inline: 5%;
+    align-self: center;
+}

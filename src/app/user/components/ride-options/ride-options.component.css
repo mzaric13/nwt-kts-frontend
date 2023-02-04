@@ -1,0 +1,89 @@
+.example-chip-list {
+  width: 100%;
+}
+
+.ride-customization-field {
+    border: 2px solid black;
+}
+
+.arial_font {
+    font-family: Arial;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.bg_gray {
+    background: rgb(238, 237, 237);
+}
+
+.bg_black {
+    background-color: black;
+}
+
+::placeholder {
+    font-family: Arial;
+}
+
+.borderless_input {
+    border: none;
+    outline: none;
+}
+
+.input_size {
+    padding: 12px;
+    line-height: 2px;
+    width: 100%;
+}
+
+.center_text {
+    text-align: center;
+}
+
+input:focus {
+    border: 2px solid black;
+}
+
+.checkbox-label {
+    margin: 0 12px;
+}
+
+.form-group-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.chip {
+    background-color: black;
+    color: white;
+}
+
+.btn {
+    width: 35%;
+}
+
+.chip-icon {
+    color: white;
+}
+
+.tag {
+    padding: 10px;
+}
+
+.tag-container-dropdown {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.tag:hover {
+    background-color: #C2C2C2;
+}

@@ -1,0 +1,62 @@
+
+<div class="card bg-light border-dark date-width center">
+    <div class="card-body">
+        <h5 class="card-title">Show charts for the given date range</h5>
+        <mat-form-field appearance="fill" class="datepicker-width">
+            <mat-label>Date range</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                <input matStartDate readonly formControlName="start" placeholder="Start date">
+                <input matEndDate readonly formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-hint>Enter dates by pressing the calendar icon!</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <button class="btn btn-dark font-size margin-left" (click)="showGraphs()">Show charts</button>
+    </div>
+</div>
+<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style="height: 15rem;">
+    <h4 class="card-title">Sum: {{drivesPerDaySum | number : '1.2-2'}} drives, Average: {{drivesPerDayAvg | number : '1.2-2'}} drives</h4>
+    <ngx-charts-line-chart *ngIf="graphsAreLoaded === true"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabelDrivesPerDay"
+        [timeline]="timeline"
+        [results]="drivesPerDay"
+        >
+    </ngx-charts-line-chart>
+</div>
+<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style="height: 15rem;">
+    <h4 class="card-title">Sum: {{drivenKilometersPerDaySum | number : '1.2-2'}}km, Average: {{drivenKilometersPerDayAvg | number : '1.2-2'}}km</h4>
+    <ngx-charts-line-chart *ngIf="graphsAreLoaded === true"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabelDrivenKilometersPerDay"
+        [timeline]="timeline"
+        [results]="drivenKilometersPerDay"
+    >
+    </ngx-charts-line-chart>
+</div>
+<div class="card p-3 bg-light border-dark w-90 mt-3 center" *ngIf="graphsAreLoaded === true" style="height: 15rem;">
+    <h4 class="card-title">Sum: {{spentOrEarnedMoneyPerDaySum | number : '1.2-2'}}tokens, Average: {{spentOrEarnedMoneyPerDayAvg | number : '1.2-2'}}tokens;</h4>
+    <ngx-charts-line-chart *ngIf="graphsAreLoaded === true"
+        [legend]="legend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabelSpentOrEarnedMoneyPerDay"
+        [timeline]="timeline"
+        [results]="spentOrEarnedMoneyPerDay"
+    >
+    </ngx-charts-line-chart>
+</div>

@@ -1,0 +1,68 @@
+<form [formGroup]="route" (ngSubmit)="onSubmit()" class="route-form card">
+    <h2 class="arial_font center_text mt-2 mb-3"><b>Request a ride</b></h2>
+    <div *ngIf="loggedPassenger" class="form-group">
+        <mat-form-field class="form-select" appearance="fill">
+            <mat-label class="arial_text">Choose favorite route you want to use...</mat-label>
+            <mat-select [formControl]="route.controls.favoriteRoute">
+                <mat-option>--</mat-option>
+                <mat-option title="{{favoriteRoute.routeName}}" class="arial_text" *ngFor="let favoriteRoute of loggedPassenger.favoriteRoutes" [value]="favoriteRoute">
+                {{favoriteRoute.routeName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <label class="arial_font" for="pickup">Pickup location:</label>
+        <input autocomplete="off" formControlName="pickup" id="pickup" class="bg_gray borderless_input input_size" type="text" 
+        placeholder="Enter pickup location" required (click)="openDropdownPickup()">
+        <div appClickOutsidePickup (clickOutside)="closeDropdownPickup()" class="geoCode-container-dropdown bg_gray">
+            <ng-container *ngIf="showDropdownPickup">
+                <div (click)="selectPickupLocation(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getPickupLocation()">
+                    {{address}}
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="arial_font" for="destination">Destination:</label>
+        <input autocomplete="off" formControlName="destination" id="destination" class="bg_gray borderless_input input_size" type="text" 
+        placeholder="Enter destination" required (click)="openDropdownDestination()">
+        <div appClickOutsideDestination (clickOutside)="closeDropdownDestination()" class="geoCode-container-dropdown bg_gray">
+            <ng-container *ngIf="showDropdownDestination">
+                <div (click)="selectDestination(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getDestination()">
+                    {{address}}
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div *ngIf="loggedPassenger" class="form-group">
+        <input formControlName="isChecked" (change)="showInputForExtraLocations()" type="checkbox" id="additionalDestinations" name="additionalDestinations">
+        <label class="checkbox-label" for="additionalDestinations">Add additional locations?</label>
+    </div>
+    <div *ngIf="showAdditionalInput" class="form-group">
+        <div *ngIf="routeLocations.length > 0" cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let routeLocation of routeLocations" cdkDrag>
+                {{routeLocation}}
+                <button (click)="removeRouteLocation(routeLocation)" mat-icon-button><mat-icon>delete</mat-icon></button>
+            </div>
+        </div>
+        <label class="arial_font" for="extraLocation">Extra location:</label>
+        <input autocomplete="off" formControlName="extraLocation" id="extraLocation" class="bg_gray borderless_input input_size" type="text" 
+        placeholder="Enter destination" (click)="openDropdownExtraDestination()">
+        <div appClickOutsideExtraDestination (clickOutside)="closeDropdownExtraDestination()" class="geoCode-container-dropdown bg_gray">
+            <ng-container *ngIf="showDropdownExtraDestination">
+                <div (click)="selectExtraDestination(address)" class="geocode arial_font" *ngFor="let address of locations | locationFilter: getExtraDestination()">
+                    {{address}}
+                </div>
+            </ng-container>
+        </div>
+        <button type="button" (click)="addExtraLocation()" class="btn btn-dark arial_font">Add extra location</button>
+    </div>
+    <div *ngIf="loggedPassenger" class="form-group form-group-button">
+        <button type="button" id="searchRoutes" (click)="searchRoute()" class="btn btn-dark arial_font">Search routes</button>
+        <button id="customizeDrive" [disabled]="loggedPassenger.hasDrive || (!searchRouteClicked && !favoriteRouteChosen)" type="submit" class="btn btn-dark arial_font">Customize ride order</button>
+    </div>
+    <div *ngIf="!loggedPassenger" class="form-group">
+        <button type="button" id="searchUnRegisterd" (click)="searchRoute()" class="btn btn-dark arial_font">Search routes</button>
+    </div>
+</form>

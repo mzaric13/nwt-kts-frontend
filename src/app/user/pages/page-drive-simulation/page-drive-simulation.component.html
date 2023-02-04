@@ -1,0 +1,15 @@
+<div class="simulation-map">
+    <app-map-drive-simulation [drive]="drive" [routes]="routes" (getDurationEvent)="getRouteDuration($event)"></app-map-drive-simulation>
+
+    <app-drive-inconsistency-form *ngIf="loggedPassenger && statusIsDriveStarted" (reportInconsistencyEvent)="reportInconsistency($event)"></app-drive-inconsistency-form>
+
+    <app-drive-end-form *ngIf="loggedDriver && statusIsDriveStarted" [driverPosition]="driverPosition" [endLocation]="drive.route.waypoints[drive.route.waypoints.length - 1]" (endDriveEvent)="endDrive()"></app-drive-end-form>
+
+    <app-drive-start-cancel-form *ngIf="loggedDriver && statusIsDrivingToStart" [driverPosition]="driverPosition" [startPosition]="drive.route.waypoints[0]" (startDriveEvent)="startDrive()" (cancelDriveEvent)="cancelDrive($event)"></app-drive-start-cancel-form>
+
+    <app-route-details class="details ml-5" *ngIf="estimatedTime" style="position:absolute" [estimatedTime]="estimatedTime"></app-route-details>
+
+    <div *ngIf="giveRating">
+        <app-modal-give-rating [drive]="drive" (modalIsClosed)="redirectPassenger()"></app-modal-give-rating>
+    </div>
+</div>

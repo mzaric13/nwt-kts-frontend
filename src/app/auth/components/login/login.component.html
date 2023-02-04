@@ -1,0 +1,24 @@
+<form class="card p-3 bg-light border-dark" [formGroup]="loginForm" (ngSubmit)="loginCredentials()">
+    <h2 class="arial_font center_text"><b>Login</b></h2>
+    <div>
+        <label for="email" class="arial_font">Email</label>
+        <input type="email" id="email" name="email" class="bg_gray borderless_input input_size mb-3" placeholder="Enter email" formControlName="email" required>
+    </div>
+    <div>
+        <label for="password" class="arial_font">Password</label>
+        <input type="password" id="password" name="password" class="bg_gray borderless_input input_size mb-1" placeholder="Enter password" formControlName="password" required>
+    </div>
+    <div class="mb-4">
+        <a routerLink="/forgotten-password">Forgot password?</a>
+    </div>
+    <section>
+        <div class="left_element mb-2">
+            <div id="googleButtonDiv"></div>
+        </div>
+        <div>
+            <button type="button" id="facebook" (click)="signInWithFB()" class="right_element fb_button btn"><fa-icon [icon]="faFacebookF" size="lg" class="fb_color"></fa-icon>  Sign in with Facebook</button>
+        </div>
+    </section>
+
+    <button [disabled]="loginForm.invalid" id="loginButton" type="submit" class="btn btn-dark arial_font">Login</button>
+</form>

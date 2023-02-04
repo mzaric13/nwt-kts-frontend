@@ -1,0 +1,38 @@
+.table-chat-list {
+    margin-top: 1%;
+    margin-inline: 1%;
+    border: 2px solid black;
+    display: flex;
+}
+
+.table-chat-list-header {
+    display: flex;
+    justify-content: center;
+}
+
+.table-chat-list-button {
+    margin: auto;
+    margin-inline: 1%;
+}
+
+table {
+    width: 100%;
+    align-items: center;
+}
+
+.arial_font {
+    font-family: Arial;
+}
+
+.center_text {
+    text-align: center;
+}
+
+.pic_size {
+    width: 5%;
+}
+
+.clickable-row:hover {
+    cursor: pointer;
+    background-color: #C2C2C2;
+}

@@ -1,0 +1,12 @@
+<div *ngIf="isLoaded" class="info w-37-5">
+    <div app-profile-page-cards [driver]="loggedDriver" (modalEvent)="openModal($event)"></div>
+</div>
+<div *ngIf="isLoaded && personalInfo">
+    <app-modal-personal-info-change [driver]="loggedDriver" (personalInfoModalClosed)="closeModal()"></app-modal-personal-info-change>
+</div>
+<div *ngIf="isLoaded && passwordChange">
+    <app-modal-password-change [driver]="loggedDriver" (passwordChangeModalClosed)="closeModal()"></app-modal-password-change>
+</div>
+<div *ngIf="isLoaded && profilePictureChange">
+    <app-modal-picture-change [driver]="loggedDriver" (driverChange)="changeDriver($event)" (profilePictureChangeModalClosed)="closeModal()"></app-modal-picture-change>
+</div>

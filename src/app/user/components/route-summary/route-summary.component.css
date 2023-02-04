@@ -1,0 +1,32 @@
+.route-summary {
+    margin-top: 30px;
+    border: 2px solid black;
+    display: flex;
+}
+
+.route-summary-header {
+    display: flex;
+    justify-content: center;
+}
+
+.route-summary-title {
+    flex-grow: 2;
+}
+
+.route-summary-header-button {
+    margin: auto;
+    margin-inline: 1%;
+}
+
+table {
+  width: 100%;
+  align-items: center;
+}
+
+.arial_font {
+    font-family: Arial;
+}
+
+.center_text {
+    text-align: center;
+}

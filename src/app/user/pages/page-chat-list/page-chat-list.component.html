@@ -1,0 +1,5 @@
+<app-chat-table [headerName]="passengerHeaderName" [data]="passengers" [totalItems]="totalElementsPassengers" 
+(changePageEvent)="nextPagePassengers($event)" (goToChatEvent)="goToChatPassengers($event)"></app-chat-table>
+
+<app-chat-table [headerName]="driverHeaderName" [data]="drivers" [totalItems]="totalElementsDrivers" 
+(changePageEvent)="nextPageDrivers($event)" (goToChatEvent)="goToChatDrivers($event)"></app-chat-table>
